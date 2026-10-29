@@ -1,0 +1,81 @@
+name: Publish catalog
+
+# Builds the catalog the way upstream's deploy does and publishes its JSON
+# endpoints to GitHub Pages, so https://mozilla-ai.github.io/models.dev/api.json
+# serves what https://models.dev/api.json serves upstream. Pages has no worker,
+# so the ?type= filter is not available; each filtered variant is its own file
+# (api-all.json, api-embedding.json, and so on).
+
+on:
+  push:
+    branches: [dev]
+  # A merge the sync makes with GITHUB_TOKEN does not trigger a push event.
+  workflow_run:
+    workflows: [Sync upstream]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish-catalog
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: >-
+      github.repository == 'mozilla-ai/models.dev'
+      && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: dev
+          persist-credentials: false
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Validate models
+        run: bun validate
+
+      - name: Build
+        working-directory: packages/web
+        run: ./script/build.ts
+
+      - name: Collect the JSON endpoints
+        run: |
+          set -euo pipefail
+          mkdir site
+          # The build names each endpoint _<name>.json; the worker serves it as <name>.json.
+          for file in packages/web/dist/_*.json; do
+            name="$(basename "$file")"
+            cp "$file" "site/${name#_}"
+          done
+          jq -e 'length > 0' site/api.json > /dev/null
+          ls -l site | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
