@@ -1,0 +1,26 @@
+# T2V-01-Director and I2V-01-Director, released 2025-03-03: https://www.minimax.io/news/01-director
+# Input image formats (first_frame_image: JPG, JPEG, PNG, WebP): https://platform.minimax.io/docs/api-reference/video-generation-i2v
+# Output: an MP4 file (output_aigc.mp4): https://platform.minimax.io/docs/api-reference/video-generation-download
+schema = 2
+v2_only = true
+type = "video"
+name = "Video-01-Director"
+description = "Video model with camera-movement instructions for text-to-video and image-to-video"
+family = "minimax"
+open_weights = false
+release_date = "2025-03-03"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
