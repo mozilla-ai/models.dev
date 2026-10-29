@@ -1,0 +1,26 @@
+# Released 2025-09-09 (as recorded in providers/vercel/models/bytedance/seedream-4.0.toml); report:
+# https://arxiv.org/abs/2509.20427. Unified generation and multi-image editing.
+# Output JPEG only for 4.0/4.5: https://ai.byteplus.com/ark/region:ap-southeast-1/docs/image-generation-api
+schema = 2
+v2_only = true
+type = "image"
+name = "Seedream 4.0"
+description = "Unified image generation and editing model with multi-image references"
+family = "seed"
+open_weights = false
+release_date = "2025-09-09"
+
+[modalities]
+input = ["text", "image"]
+output = ["image/jpeg"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

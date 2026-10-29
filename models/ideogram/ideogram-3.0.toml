@@ -1,0 +1,26 @@
+# Released 2025-03-25 per https://www.together.ai/models/ideogram-3-0 (accessed 2026-10-29).
+# Text-to-image; Ideogram's editing and remix are separate operations
+# (https://docs.ideogram.ai/edit/edit.md). Not open weights.
+schema = 2
+v2_only = true
+type = "image"
+name = "Ideogram 3.0"
+description = "Text-to-image model with strong typography and style control"
+family = "ideogram"
+open_weights = false
+release_date = "2025-03-25"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

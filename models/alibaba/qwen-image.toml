@@ -1,0 +1,25 @@
+# Released 2025-08-04 with open weights (Apache-2.0): https://huggingface.co/Qwen/Qwen-Image,
+# https://arxiv.org/abs/2508.02324. Text-to-image; editing is the separate Qwen-Image-Edit model.
+schema = 2
+v2_only = true
+type = "image"
+name = "Qwen-Image"
+description = "Text-to-image foundation model with complex text rendering in English and Chinese"
+family = "qwen"
+open_weights = true
+release_date = "2025-08-04"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
