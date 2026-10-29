@@ -1,0 +1,25 @@
+# Released 2025-08-28 (PixVerse launch post, as quoted): https://www.atlascloud.ai/blog/guides/pixverse-v5
+# Inputs: text and image (text-to-video, image-to-video). PixVerse's API docs name no formats,
+#   so the generic entries are kept. Audio arrived later, with V5.5.
+schema = 2
+v2_only = true
+type = "video"
+name = "PixVerse V5"
+description = "Video model for text-to-video and image-to-video generation up to 1080p"
+open_weights = false
+release_date = "2025-08-28"
+
+[modalities]
+input = ["text", "image"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
