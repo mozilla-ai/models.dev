@@ -1,0 +1,32 @@
+name: Sync upstream
+
+# Keeps this fork's dev branch up to date with anomalyco/models.dev. GitHub
+# merges upstream into dev on the server: a fast-forward when dev has no
+# commits of its own, a merge commit when it has, and a failed run on a
+# conflict, which a person then resolves by hand.
+
+on:
+  schedule:
+    # Upstream syncs its model catalogs hourly, at :17.
+    - cron: "47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: sync-upstream
+
+jobs:
+  sync:
+    if: github.repository == 'mozilla-ai/models.dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge upstream dev
+        env:
+          # GITHUB_TOKEN cannot write workflow files, so a merge that brings
+          # in an upstream workflow change needs UPSTREAM_SYNC_TOKEN: a token
+          # with the workflow scope.
+          GH_TOKEN: ${{ secrets.UPSTREAM_SYNC_TOKEN || github.token }}
+        run: |
+          gh api --method POST "repos/$GITHUB_REPOSITORY/merge-upstream" -f branch=dev \
+            --jq '"\(.merge_type): \(.message)"' | tee -a "$GITHUB_STEP_SUMMARY"
