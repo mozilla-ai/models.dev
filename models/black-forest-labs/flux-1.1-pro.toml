@@ -1,0 +1,25 @@
+# Released 2024-10-02 (as recorded in providers/vercel/models/bfl/flux-pro-1.1.toml).
+# Text-to-image. Output: output_format jpeg | png | webp (OutputFormat in https://api.bfl.ai/openapi.json)
+schema = 2
+v2_only = true
+type = "image"
+name = "FLUX1.1 [pro]"
+description = "Fast text-to-image model for high-quality commercial generation"
+family = "flux"
+open_weights = false
+release_date = "2024-10-02"
+
+[modalities]
+input = ["text"]
+output = ["image/jpeg", "image/png", "image/webp"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

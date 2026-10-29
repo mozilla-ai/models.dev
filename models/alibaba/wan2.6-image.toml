@@ -1,0 +1,25 @@
+# Released 2026-01-28 per https://www.together.ai/models/wan-2-6-image (accessed 2026-10-29): Alibaba's 20B
+# parameter MMDiT image model for generation and editing with 1 to 3 reference images, 1 to 4 outputs per
+# request. Distinct from the Wan2.6 video model (models/alibaba/wan2.6.toml). Not open weights.
+schema = 2
+v2_only = true
+type = "image"
+name = "Wan2.6 Image"
+description = "Image generation and editing model with multi-reference composition"
+open_weights = false
+release_date = "2026-01-28"
+
+[modalities]
+input = ["text", "image"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

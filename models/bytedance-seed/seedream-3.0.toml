@@ -1,0 +1,25 @@
+# Released 2025-04-15 with the technical report: https://arxiv.org/abs/2504.11346
+# Text-to-image; editing arrived with Seedream 4.0 (https://arxiv.org/abs/2509.20427).
+schema = 2
+v2_only = true
+type = "image"
+name = "Seedream 3.0"
+description = "Bilingual text-to-image model with native 2K output"
+family = "seed"
+open_weights = false
+release_date = "2025-04-15"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
