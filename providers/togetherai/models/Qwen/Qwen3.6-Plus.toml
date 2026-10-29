@@ -6,16 +6,13 @@
 # https://www.alibabacloud.com/help/en/model-studio/qwen3-6-plus
 # Serverless: $0.50 input, $3.00 output per 1M, no cached-input price; context 1,000,000;
 # structured outputs: yes (https://docs.together.ai/docs/serverless-models, accessed 2026-10-21).
-# Text only: Together's serverless vision list doesn't include it
-# (https://docs.together.ai/docs/serverless-models#vision-models).
+# Inputs: text, image and video (https://www.together.ai/models/qwen36-plus: "Multimodal input: text,
+# image, and video"; the pricing page lists it under Vision and Video, accessed 2026-10-29). The
+# route forwards to Alibaba, so the types are the lab's.
 # Not probed: the route forwards prompts to a third-party provider and returns 403 unless the
 # organization enables third-party data sharing.
 schema = 2
 base_model = "alibaba/qwen3.6-plus"
-
-[modalities]
-input = ["text"]
-output = ["text"]
 
 [capabilities]
 reasoning = { supported = true, toggle = true }

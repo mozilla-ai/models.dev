@@ -8,6 +8,8 @@
 # Mid-conversation (live 2026-10-21, rendered prompt): a late system message stays in place after
 # the earlier turns (and was followed, keeping the cache); the effort line and the tool list are
 # rendered before the first user turn.
+# Together retires this model on 2026-11-06, replaced by meta-models/Muse-Spark-Open-816B-A42B
+# (https://docs.together.ai/docs/deprecations, accessed 2026-10-29).
 schema = 2
 base_model = "thinkingmachines/inkling"
 

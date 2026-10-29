@@ -1,9 +1,11 @@
 # Output limit 131_072 per Alibaba Model Studio qwen3.7-max (Max Output Length 131072):
 # https://www.alibabacloud.com/help/en/model-studio/qwen3-7-max
 # Serverless 1M context per https://www.together.ai/models/qwen37-max
-# Serverless: $2.50 input, $0.50 cached input, $7.50 output per 1M; structured outputs: yes
-# (https://docs.together.ai/docs/serverless-models and GET https://api.together.xyz/v1/models,
-# accessed 2026-10-21).
+# Serverless: $1.50 input, $0.30 cached input, $4.50 output per 1M (https://www.together.ai/pricing
+# and https://www.together.ai/models/qwen37-max, accessed 2026-10-29). The docs table still lists
+# $2.50, $0.50 cached and $7.50 (https://docs.together.ai/docs/serverless-models, accessed 2026-10-29);
+# the pricing page and the model page agree with each other, so their prices are used.
+# Structured outputs: yes (docs table).
 # Reasoning: on, as on Alibaba's own API, where Qwen3.7 Max thinks by default (lab file and
 # https://www.alibabacloud.com/help/en/model-studio/qwen3-7-max); Together forwards the request there.
 # No control is documented for this route (https://docs.together.ai/docs/inference/chat/reasoning).
@@ -19,8 +21,8 @@ structured_output = true
 prompt_cache_key = true
 
 [cost.text.input]
-price = 2.5
-cache = { read = 0.5 }
+price = 1.5
+cache = { read = 0.3 }
 
 [cost.text.output]
-price = 7.5
+price = 4.5

@@ -11,6 +11,8 @@
 # Mid-conversation (live 2026-10-21): a system message after the first turn is dropped. The
 # rendered prompt doesn't contain it, prompt tokens match the request without it, and the
 # instruction was ignored in 3 of 3 trials. Adding a tool dropped the cache (8,064 → 128).
+# Together retires this model on 2026-11-06, replaced by MiniMaxAI/MiniMax-M3.1-Flash
+# (https://docs.together.ai/docs/deprecations, accessed 2026-10-29).
 schema = 2
 base_model = "minimax/MiniMax-M3"
 
