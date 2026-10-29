@@ -1,0 +1,26 @@
+# Snapshots sonic-3-2025-10-27 and sonic-3-2026-01-12 (the current sonic-3), 42 languages:
+#   https://docs.cartesia.ai/build-with-cartesia/tts-models/older-models
+# Output containers wav, mp3 and raw PCM: https://docs.cartesia.ai/api-reference/tts/bytes
+schema = 2
+v2_only = true
+type = "speech"
+name = "Sonic 3"
+description = "Low-latency, expressive text-to-speech model in 42 languages"
+open_weights = false
+release_date = "2025-10-27"
+last_updated = "2026-01-12"
+
+[modalities]
+input = ["text"]
+output = ["audio/wav", "audio/mpeg", "audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

@@ -1,0 +1,32 @@
+# Released January 2026, updated checkpoint 2026-03-12 (NVIDIA Open Model License):
+#   https://huggingface.co/nvidia/nemotron-speech-streaming-en-0.6b
+# Input: mono WAV; output: English text with punctuation and capitalization (same model card).
+schema = 2
+v2_only = true
+type = "transcription"
+name = "Nemotron ASR Streaming English 0.6B"
+description = "Open English streaming speech recognition model with runtime chunk sizes from 80 ms to 1120 ms"
+family = "nemotron"
+open_weights = true
+release_date = "2026-01"
+last_updated = "2026-03-12"
+license = "nvidia-open-model-license"
+
+[modalities]
+input = ["audio/wav"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/nvidia/nemotron-speech-streaming-en-0.6b"
