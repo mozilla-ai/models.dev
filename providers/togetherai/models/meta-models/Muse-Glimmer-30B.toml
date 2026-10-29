@@ -1,0 +1,25 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/muse-glimmer and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Serverless: $0.35 input, $0.04 cached input, $1.50 output per 1M; context 131,072; function calling
+# and structured outputs: yes. Inputs: text and images (model page); the image types are the ones
+# other Together vision routes read (see Qwen/Qwen3.5-9B.toml).
+# Effort: Together documents no levels for this model; low|medium|high|xhigh follows the other relays
+# that list the model (providers/openrouter and providers/kilo). Not probed.
+schema = 2
+base_model = "meta/muse-glimmer-30b"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/gif", "image/webp"]
+output = ["text"]
+
+[capabilities]
+reasoning = { supported = true, effort = ["low", "medium", "high", "xhigh"] }
+cache = { implicit = true }
+structured_output = true
+
+[cost.text.input]
+price = 0.35
+cache = { read = 0.04 }
+
+[cost.text.output]
+price = 1.5

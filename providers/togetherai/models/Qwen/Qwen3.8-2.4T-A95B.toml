@@ -1,0 +1,29 @@
+# Source: https://www.together.ai/pricing and https://www.together.ai/models/qwen3-8-max (accessed 2026-10-29).
+# Serverless: $2.00 input, $0.25 cached input, $6.00 output per 1M. The docs table lists a $0.50 cached
+# input price (https://docs.together.ai/docs/serverless-models, accessed 2026-10-29); the pricing page
+# and the model page say $0.25, which is used here.
+# Context 1M on Together (model page: "1M-token context window with a 131,072-token maximum output").
+# Effort: reasoning_effort = low|high|xhigh, thinking always on, xhigh is the default (model page).
+# Not probed. Inputs: text and images per the model page ("Processes text and images together");
+# the image types are the ones other Together vision routes read (see Qwen/Qwen3.5-9B.toml).
+schema = 2
+base_model = "alibaba/qwen3.8-2.4t-a95b"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/gif", "image/webp"]
+output = ["text"]
+
+[capabilities]
+reasoning = { supported = true, default = { type = "effort", value = "xhigh" }, effort = ["low", "high", "xhigh"] }
+cache = { implicit = true }
+structured_output = true
+
+[limit]
+context = 1_000_000
+
+[cost.text.input]
+price = 2
+cache = { read = 0.25 }
+
+[cost.text.output]
+price = 6

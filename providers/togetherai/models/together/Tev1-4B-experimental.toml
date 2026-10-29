@@ -1,0 +1,37 @@
+# Source: https://www.together.ai/models/tev1-4b-experimental, https://docs.together.ai/docs/serverless-models
+# and https://huggingface.co/togethercomputer/Tev1-4B-experimental (accessed 2026-10-29).
+# Together's own fine-tune of Qwen3.5-4B, so the file is inline. It is a decision model by design
+# (structured state, question and lettered options in, one letter out), but Together serves it only on
+# Chat Completions with a recommended system prompt, so it is published as a chat model.
+# Serverless: $0.042 input per 1M (the pricing page rounds it to $0.04), output free; context 32,768;
+# no function calling or structured outputs (docs table).
+# Toggle: chat_template_kwargs.enable_thinking = false, which the model page says to send ("these
+# settings are not injected automatically by the endpoint"). Not probed.
+# No license field: the model card says the license for the fine-tuned weights is being finalized.
+schema = 2
+name = "Tev1 4B Experimental"
+description = "Experimental decision model that picks one labeled option from a structured state and question"
+open_weights = true
+release_date = "2026-09-22"
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = true, toggle = true }
+structured_output = false
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 32_768
+output = 32_768
+
+[cost.text.input]
+price = 0.042
+
+[cost.text.output]
+price = 0
