@@ -1,0 +1,26 @@
+# Listed on DeepInfra 2026-01-16 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; Boson AI publishes no dated release note and no weights for v2.5.
+# Model page: https://deepinfra.com/bosonai/HiggsAudioV2.5; parameters: https://api.deepinfra.com/models/bosonai/HiggsAudioV2.5
+# 1B-parameter text-to-speech model with preset and cloned voices; output pcm only.
+schema = 2
+v2_only = true
+type = "speech"
+name = "Higgs Audio v2.5"
+description = "Neural text-to-speech model with stable prosody for short prompts and long narration"
+open_weights = false
+release_date = "2026-01-16"
+
+[modalities]
+input = ["text"]
+output = ["audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

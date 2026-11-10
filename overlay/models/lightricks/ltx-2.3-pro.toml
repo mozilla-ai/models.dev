@@ -1,0 +1,26 @@
+# LTX-2.3 weights published 2026-03-04: https://huggingface.co/Lightricks/LTX-2.3. Pro is Lightricks'
+#   higher-fidelity hosted variant, so the weights flag is off here.
+# Inputs (first and last frame PNG, JPEG or WebP), 16:9 and 9:16 up to 4K, 24-50 fps, 6-10 s clips, optional
+#   audio track: https://api.deepinfra.com/models/Lightricks/LTX-2.3-Pro (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "video"
+name = "LTX-2.3 Pro"
+description = "Higher-fidelity LTX-2.3 video model for text- and image-to-video up to 4K with synchronized audio"
+open_weights = false
+release_date = "2026-03-04"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

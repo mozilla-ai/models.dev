@@ -1,0 +1,29 @@
+# FIBO Edit weights published 2026-01-04: https://huggingface.co/briaai/Fibo-Edit
+# Source image JPEG, PNG or WEBP with an optional mask; output image URL:
+#   https://api.deepinfra.com/models/Bria/fibo_edit (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "image"
+name = "FIBO Edit"
+description = "8B instruction-based image editing model with native masking and structured JSON edits"
+open_weights = true
+release_date = "2026-01-04"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/briaai/Fibo-Edit"

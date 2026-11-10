@@ -1,0 +1,26 @@
+# Listed on DeepInfra 2025-12-01 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; Pruna's launch post (https://www.pruna.ai/performance-models-rayan/p-image) names no date.
+# Model page: https://deepinfra.com/PrunaAI/p-image; parameters: https://api.deepinfra.com/models/PrunaAI/p-image
+# Text-to-image in 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 or custom 256-1440 px; output png, jpeg or webp.
+schema = 2
+v2_only = true
+type = "image"
+name = "P-Image"
+description = "Real-time text-to-image model with strong text rendering and prompt adherence"
+open_weights = false
+release_date = "2025-12-01"
+
+[modalities]
+input = ["text"]
+output = ["image/png", "image/jpeg", "image/webp"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

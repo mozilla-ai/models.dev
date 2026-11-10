@@ -1,0 +1,29 @@
+# FIBO Edit 1.5 weights published 2026-08-10: https://huggingface.co/briaai/Fibo-Edit-1.5-base
+# Source image JPEG, PNG or WEBP, optional mask, up to four reference images; output png or jpeg:
+#   https://api.deepinfra.com/models/Bria/fibo_edit-1.5 (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "image"
+name = "FIBO Edit 1.5"
+description = "Instruction-based image editing model with masks and multi-reference composition"
+open_weights = true
+release_date = "2026-08-10"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image/png", "image/jpeg"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/briaai/Fibo-Edit-1.5-base"

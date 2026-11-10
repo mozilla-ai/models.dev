@@ -1,0 +1,26 @@
+# Listed on DeepInfra 2026-10-14 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; Bria publishes no dated release note.
+# Model page: https://deepinfra.com/Bria/remove_background_guided; parameters: https://api.deepinfra.com/models/Bria/remove_background_guided
+# Input image JPEG, PNG or WEBP with an optional prompt naming what stays or goes; output: PNG with alpha.
+schema = 2
+v2_only = true
+type = "image"
+name = "Guided Remove Background"
+description = "Prompt-guided background removal that returns a transparent PNG at the original resolution"
+open_weights = false
+release_date = "2026-10-14"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image/png"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

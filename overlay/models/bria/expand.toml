@@ -1,0 +1,26 @@
+# Listed on DeepInfra 2025-09-01 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; part of Bria's Image Editing API.
+# Model page: https://deepinfra.com/Bria/expand; parameters: https://api.deepinfra.com/models/Bria/expand
+# Input: one base64 image plus an optional prompt and target aspect ratio; output: PNG data URL.
+schema = 2
+v2_only = true
+type = "image"
+name = "Expand"
+description = "Outpainting model that extends an image to a new aspect ratio"
+open_weights = false
+release_date = "2025-09-01"
+
+[modalities]
+input = ["text", "image"]
+output = ["image/png"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

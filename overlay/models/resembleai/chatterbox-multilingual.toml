@@ -1,0 +1,31 @@
+# Chatterbox Multilingual announced 2025-09-04 (MIT): https://huggingface.co/ResembleAI/chatterbox (model card,
+#   "09/04 Introducing Chatterbox Multilingual in 23 Languages")
+# Output mp3, opus, flac, wav or pcm as served by DeepInfra:
+#   https://api.deepinfra.com/models/ResembleAI/chatterbox-multilingual (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "speech"
+name = "Chatterbox Multilingual"
+description = "Open text-to-speech model with voice cloning and emotion control in 23 languages"
+open_weights = true
+release_date = "2025-09-04"
+license = "MIT"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/ResembleAI/chatterbox"
