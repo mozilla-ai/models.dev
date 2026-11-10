@@ -23,7 +23,7 @@ capabilities = { tools = { updates = true } }
 sdk = { opencodeai = "@opencode/ai/providers/openai/chat" }
 
 [cost.text.input]
-price = 1.25
+price = 9.99
 cache = { read = 0.125 }
 
 [cost.text.output]
