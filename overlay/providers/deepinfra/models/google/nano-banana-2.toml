@@ -2,7 +2,9 @@
 #   https://api.deepinfra.com/models/google/nano-banana-2; model page https://deepinfra.com/google/nano-banana-2.
 # Price: 0.006 cents per token = $60/M tokens (cents_per_input_token); the page
 #   states the per-image token counts: 1120 tokens per input image, with output image costs scaling by resolution: 747 tokens ($0.045) for 512 (roughly 0.25MP), 1120 tokens ($0.067) for 1K (roughly 1MP), 1680 tokens ($0.101) for 2K (roughly 4MP), and 2520 tokens ($0.151) for 4K (roughly 16MP)
-#   Here: image output per image by resolution, input images per image, text per 1M tokens.
+#   Here: image output per image by resolution and input images per image. The text tokens of the prompt
+#   ($60/M) are left out: a route priced in two units is one a gateway cannot meter, and the
+#   prompt is a small share of an image's cost.
 # API: POST https://api.deepinfra.com/v1/images/generations and /v1/images/edits (OpenAI-compatible),
 #   or native POST https://api.deepinfra.com/v1/inference/{model}.
 # The image endpoint exposes no reasoning control, so reasoning is off on this route.
@@ -17,9 +19,6 @@ reasoning = { supported = false }
 [api.images]
 base_url = "https://api.deepinfra.com/v1"
 sdk = { aisdk = "@ai-sdk/deepinfra", opencodeai = "@opencode/ai/providers/deepinfra/images" }
-
-[cost.text.input]
-price = 60
 
 [cost.image.input]
 unit = "image"
