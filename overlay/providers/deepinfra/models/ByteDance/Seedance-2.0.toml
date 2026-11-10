@@ -1,7 +1,11 @@
 # Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
 #   https://api.deepinfra.com/models/ByteDance/Seedance-2.0; model page https://deepinfra.com/ByteDance/Seedance-2.0.
-# Price: per 1M video tokens (cents_per_input_token 0.00047 = $4.7/M is the with-video rate); the page: $4.7/M with video, $7.7/M without for 480p and 780p; $5.1/M with video, $8.4/M without for 1080p
-# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content.
+# Price: per 1M video tokens, $7.7 ($4.7 with a reference video) at 480p and 720p, $8.4 ($5.1) at 1080p (cents_per_input_token and the page's note).
+# Tokens per second: width x height x 24 fps / 1024 (https://docs.byteplus.com/docs/ModelArk/1544106):
+#   9,720 at 480p (864x480), 21,600 at 720p (1280x720), 48,600 at 1080p (1920x1080). Priced here per second
+#   of output at the 720p rate, with the other resolutions as rules, which bills the same as the token rate.
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
 
 schema = 2
 v2_only = true
@@ -12,17 +16,25 @@ base_url = "https://api.deepinfra.com/v1"
 sdk = { opencodeai = "none" }
 
 [cost.video.output]
-unit = "token"
-price = 7.7
+unit = "second"
+price = 0.16632
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "480p" } }
+price = 0.074844
 
 [[cost.video.output.overrides]]
 when = { resolution = { equals = "1080p" } }
-price = 8.4
+price = 0.40824
 
 [[cost.video.output.overrides]]
 when = { input_video = { equals = true } }
-price = 4.7
+price = 0.10152
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "480p" }, input_video = { equals = true } }
+price = 0.045684
 
 [[cost.video.output.overrides]]
 when = { resolution = { equals = "1080p" }, input_video = { equals = true } }
-price = 5.1
+price = 0.24786
