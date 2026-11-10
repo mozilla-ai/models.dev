@@ -1,0 +1,30 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/PrunaAI/p-video; model page https://deepinfra.com/PrunaAI/p-video.
+# Price: $0.02 per second of output video (cents_per_output_sec); by resolution: $0.02 / second for 720P, $0.04 / second for 1080P, $0.005 / second for 720P DRAFT, $0.01 / second for 1080P DRAFT.
+# The draft option is read as quality = "draft".
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
+
+schema = 2
+v2_only = true
+base_model = "prunaai/p-video"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.02
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.04
+
+[[cost.video.output.overrides]]
+when = { quality = { equals = "draft" } }
+price = 0.005
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" }, quality = { equals = "draft" } }
+price = 0.01

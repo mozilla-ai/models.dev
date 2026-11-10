@@ -1,0 +1,20 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/google/gemma-4-31B-it-Ultra; model page https://deepinfra.com/google/gemma-4-31B-it-Ultra.
+# Price: $0.27 input, $0.76 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+# Toggle: reasoning.enabled = true|false (reasoning_effort = "none" also disables); https://docs.deepinfra.com/chat/reasoning
+
+schema = 2
+base_model = "google/gemma-4-31b-it"
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+
+[limit]
+context = 131_072
+
+[cost.text.input]
+price = 0.27
+
+[cost.text.output]
+price = 0.76

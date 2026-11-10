@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "automatic-speech-recognition") and
+#   https://api.deepinfra.com/models/Qwen/Qwen3-ASR-0.6B; model page https://deepinfra.com/Qwen/Qwen3-ASR-0.6B.
+# Price: $0.00000333 per second of audio (0.000333 cents per second, $0.0002 per minute).
+# API: POST https://api.deepinfra.com/v1/audio/transcriptions (OpenAI-compatible) or native POST /v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "alibaba/qwen3-asr-0.6b"
+
+[api.transcriptions]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[cost.audio.input]
+unit = "second"
+price = 0.00000333

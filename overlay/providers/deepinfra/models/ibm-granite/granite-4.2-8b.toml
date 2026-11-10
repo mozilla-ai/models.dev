@@ -1,0 +1,19 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/ibm-granite/granite-4.2-8b; model page https://deepinfra.com/ibm-granite/granite-4.2-8b.
+# Price: $0.06 input, $0.25 output per 1M tokens, cache read x0.25 (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "ibm/granite-4.2-8b"
+
+[capabilities]
+reasoning = { supported = true }
+cache = { implicit = true }
+prompt_cache_key = true
+
+[cost.text.input]
+price = 0.06
+cache = { read = 0.015 }
+
+[cost.text.output]
+price = 0.25

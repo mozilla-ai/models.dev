@@ -1,0 +1,18 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "automatic-speech-recognition") and
+#   https://api.deepinfra.com/models/mistralai/Voxtral-Small-24B-2507; model page https://deepinfra.com/mistralai/Voxtral-Small-24B-2507.
+# Price: $0.00005 per second of audio (0.005 cents per second, $0.003 per minute).
+# API: POST https://api.deepinfra.com/v1/audio/transcriptions (OpenAI-compatible) or native POST /v1/inference/{model}.
+# The lab file is an audio chat model; DeepInfra serves this route as speech recognition only.
+
+schema = 2
+v2_only = true
+base_model = "mistral/voxtral-small-24b-2507"
+type = "transcription"
+
+[api.transcriptions]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[cost.audio.input]
+unit = "second"
+price = 0.00005

@@ -1,0 +1,23 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/Sao10K/L3-8B-Lunaris-v1-Turbo; model page https://deepinfra.com/Sao10K/L3-8B-Lunaris-v1-Turbo.
+# Price: $0.04 input, $0.05 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# Service tiers: flex x0.8 (rate_per_service_tier_*).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "sao10k/l3-lunaris-8b"
+
+[capabilities]
+reasoning = { supported = false }
+structured_output = true
+service_tier = ["flex"]
+
+[cost.text.input]
+price = 0.04
+
+[cost.text.output]
+price = 0.05
+
+[[cost.multipliers]]
+when = { service_tier = { equals = "flex" } }
+factor = 0.8

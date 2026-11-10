@@ -1,0 +1,23 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/inclusionAI/Ling-3.0-flash; model page https://deepinfra.com/inclusionAI/Ling-3.0-flash.
+# Price: $0.06 input, $0.18 output per 1M tokens, cache read x0.2 (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "inclusionai/ling-3.0-flash"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+cache = { implicit = true }
+prompt_cache_key = true
+
+[limit]
+context = 131_072
+
+[cost.text.input]
+price = 0.06
+cache = { read = 0.012 }
+
+[cost.text.output]
+price = 0.18

@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "automatic-speech-recognition") and
+#   https://api.deepinfra.com/models/openai/whisper-large-v3; model page https://deepinfra.com/openai/whisper-large-v3.
+# Price: $0.0000075 per second of audio (0.00075 cents per second, $0.00045 per minute).
+# API: POST https://api.deepinfra.com/v1/audio/transcriptions (OpenAI-compatible) or native POST /v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "openai/whisper-large-v3"
+
+[api.transcriptions]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[cost.audio.input]
+unit = "second"
+price = 0.0000075

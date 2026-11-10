@@ -1,0 +1,20 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/google/gemini-2.5-flash; model page https://deepinfra.com/google/gemini-2.5-flash.
+# Price: $0.3 input, $2.5 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "google/gemini-2.5-flash"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+
+[limit]
+context = 1_000_000
+
+[cost.text.input]
+price = 0.3
+
+[cost.text.output]
+price = 2.5

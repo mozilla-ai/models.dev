@@ -1,0 +1,30 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/Lightricks/LTX-2.5-Pro; model page https://deepinfra.com/Lightricks/LTX-2.5-Pro.
+# Price: $0.17 per second of output video (cents_per_output_sec); by resolution: $0.12 / second for 720p, $0.17 / second for 1080p, $0.25 / second for 1440p, $0.39 / second for 4K.
+# The resolution option is WIDTHxHEIGHT; the price follows the short side (720p, 1080p, 1440p, 4K). Base: 1080p.
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
+
+schema = 2
+v2_only = true
+base_model = "lightricks/ltx-2.5-pro"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.17
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.12
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1440p" } }
+price = 0.25
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "4K" } }
+price = 0.39

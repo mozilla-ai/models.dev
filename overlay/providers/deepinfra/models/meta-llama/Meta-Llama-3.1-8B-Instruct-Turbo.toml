@@ -1,0 +1,25 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo; model page https://deepinfra.com/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo.
+# Price: $0.02 input, $0.04 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# Service tiers: flex x0.8 (rate_per_service_tier_*).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "meta/llama-3.1-8b-instruct"
+
+[capabilities]
+reasoning = { supported = false }
+service_tier = ["flex"]
+
+[limit]
+context = 131_072
+
+[cost.text.input]
+price = 0.02
+
+[cost.text.output]
+price = 0.04
+
+[[cost.multipliers]]
+when = { service_tier = { equals = "flex" } }
+factor = 0.8
