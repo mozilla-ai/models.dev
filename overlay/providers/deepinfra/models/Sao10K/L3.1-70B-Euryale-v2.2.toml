@@ -1,0 +1,23 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/Sao10K/L3.1-70B-Euryale-v2.2; model page https://deepinfra.com/Sao10K/L3.1-70B-Euryale-v2.2.
+# Price: $0.85 input, $0.85 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# Service tiers: flex x0.8 (rate_per_service_tier_*).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "sao10k/l3.1-euryale-70b"
+
+[capabilities]
+reasoning = { supported = false }
+structured_output = true
+service_tier = ["flex"]
+
+[cost.text.input]
+price = 0.85
+
+[cost.text.output]
+price = 0.85
+
+[[cost.multipliers]]
+when = { service_tier = { equals = "flex" } }
+factor = 0.8

@@ -1,0 +1,17 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-image") and
+#   https://api.deepinfra.com/models/black-forest-labs/FLUX-2-klein-4b; model page https://deepinfra.com/black-forest-labs/FLUX-2-klein-4b.
+# Price: $0.014 per image (1.4 cents per image unit).
+# API: POST https://api.deepinfra.com/v1/images/generations (OpenAI-compatible; edits at /v1/images/edits),
+#   or native POST https://api.deepinfra.com/v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "black-forest-labs/flux-2-klein-4b"
+
+[api.images]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { aisdk = "@ai-sdk/deepinfra", opencodeai = "@opencode/ai/providers/deepinfra/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.014

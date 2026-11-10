@@ -1,0 +1,46 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/Pixverse/Pixverse-6-T2V; model page https://deepinfra.com/Pixverse/Pixverse-6-T2V.
+# Price: $0.045 per second of output video (cents_per_output_sec); by resolution: Per-second pricing varies by quality and audio toggle. 360p: $0.025/$0.035 · 540p: $0.035/$0.045 · 720p: $0.045/$0.060 · 1080p: $0.090/$0.115 (no audio / with audio)..
+# The quality option (360p to 1080p) is read as resolution; the base price is 720p without audio.
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
+
+schema = 2
+v2_only = true
+base_model = "pixverse/pixverse-v6"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.045
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "360p" } }
+price = 0.025
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "540p" } }
+price = 0.035
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.09
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true } }
+price = 0.06
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "360p" }, generate_audio = { equals = true } }
+price = 0.035
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "540p" }, generate_audio = { equals = true } }
+price = 0.045
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" }, generate_audio = { equals = true } }
+price = 0.115

@@ -1,0 +1,17 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/anthropic/claude-opus-5; model page https://deepinfra.com/anthropic/claude-opus-5.
+# Price: $5 input, $25 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "anthropic/claude-opus-5"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+
+[cost.text.input]
+price = 5
+
+[cost.text.output]
+price = 25

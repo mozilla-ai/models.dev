@@ -1,0 +1,17 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/anthropic/claude-sonnet-4-6; model page https://deepinfra.com/anthropic/claude-sonnet-4-6.
+# Price: $3 input, $15 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "anthropic/claude-sonnet-4-6"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+
+[cost.text.input]
+price = 3
+
+[cost.text.output]
+price = 15

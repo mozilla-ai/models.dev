@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/ByteDance/Seedance-1.5-Pro; model page https://deepinfra.com/ByteDance/Seedance-1.5-Pro.
+# Price: $1.2 per 1M video tokens (cents_per_input_token).
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content.
+
+schema = 2
+v2_only = true
+base_model = "bytedance-seed/seedance-1.5-pro"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "token"
+price = 1.2

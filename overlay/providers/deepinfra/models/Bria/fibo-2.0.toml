@@ -1,0 +1,17 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-image") and
+#   https://api.deepinfra.com/models/Bria/fibo-2.0; model page https://deepinfra.com/Bria/fibo-2.0.
+# Price: $0.04 per image (4 cents per image unit).
+# API: POST https://api.deepinfra.com/v1/images/generations (OpenAI-compatible; edits at /v1/images/edits),
+#   or native POST https://api.deepinfra.com/v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "bria/fibo-2.0"
+
+[api.images]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { aisdk = "@ai-sdk/deepinfra", opencodeai = "@opencode/ai/providers/deepinfra/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.04

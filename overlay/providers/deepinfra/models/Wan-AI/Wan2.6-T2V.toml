@@ -1,0 +1,22 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/Wan-AI/Wan2.6-T2V; model page https://deepinfra.com/Wan-AI/Wan2.6-T2V.
+# Price: $0.1 per second of output video (cents_per_output_sec); by resolution: $0.15 / second for 1080P, $0.10 / second for 720P.
+# The size option is width*height; 1920*1080 and 1080*1920 are 1080p, the rest bill at the base price.
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
+
+schema = 2
+v2_only = true
+base_model = "alibaba/wan2.6"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.1
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.15

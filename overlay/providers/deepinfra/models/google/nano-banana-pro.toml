@@ -1,0 +1,34 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-image") and
+#   https://api.deepinfra.com/models/google/nano-banana-pro; model page https://deepinfra.com/google/nano-banana-pro.
+# Price: 0.012 cents per token = $120/M tokens (cents_per_input_token); the page
+#   states the per-image token counts: 560 tokens per input image, with output image costs scaling by resolution: 1120 tokens ($0.134) for 1K and 2K (roughly 1MP and 4MP), and 2000 tokens ($0.24) for 4K (roughly 16MP)
+#   Here: image output per image by resolution, input images per image, text per 1M tokens.
+# API: POST https://api.deepinfra.com/v1/images/generations and /v1/images/edits (OpenAI-compatible),
+#   or native POST https://api.deepinfra.com/v1/inference/{model}.
+# The image endpoint exposes no reasoning control, so reasoning is off on this route.
+
+schema = 2
+v2_only = true
+base_model = "google/gemini-3-pro-image"
+
+[capabilities]
+reasoning = { supported = false }
+
+[api.images]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { aisdk = "@ai-sdk/deepinfra", opencodeai = "@opencode/ai/providers/deepinfra/images" }
+
+[cost.text.input]
+price = 120
+
+[cost.image.input]
+unit = "image"
+price = 0.0672
+
+[cost.image.output]
+unit = "image"
+price = 0.134
+
+[[cost.image.output.overrides]]
+when = { resolution = { equals = "4K" } }
+price = 0.24

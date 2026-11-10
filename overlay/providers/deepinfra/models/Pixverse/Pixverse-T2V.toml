@@ -1,0 +1,22 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-video") and
+#   https://api.deepinfra.com/models/Pixverse/Pixverse-T2V; model page https://deepinfra.com/Pixverse/Pixverse-T2V.
+# Price: $0.2 per video (cents_per_image_unit). The duration option allows only 5 or 8 seconds,
+#   so a per-second price with a duration override bills the same: $0.04/s for 5 s, $0.025/s for 8 s.
+# API: POST https://api.deepinfra.com/v1/videos (OpenAI-compatible), then GET /v1/videos/{id} and /content;
+#   native POST https://api.deepinfra.com/v1/inference/{model} takes the options named above.
+
+schema = 2
+v2_only = true
+base_model = "pixverse/pixverse-v5"
+
+[api.videos]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.04
+
+[[cost.video.output.overrides]]
+when = { duration = { equals = 8 } }
+price = 0.025

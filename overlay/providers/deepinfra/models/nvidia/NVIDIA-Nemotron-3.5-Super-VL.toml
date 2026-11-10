@@ -1,0 +1,23 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/nvidia/NVIDIA-Nemotron-3.5-Super-VL; model page https://deepinfra.com/nvidia/NVIDIA-Nemotron-3.5-Super-VL.
+# Price: $0.15 input, $0.5 output per 1M tokens, cache read x0.13333333 (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "nvidia/nemotron-3.5-super-vl-120b-a12b"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+cache = { implicit = true }
+prompt_cache_key = true
+
+[limit]
+context = 262_144
+
+[cost.text.input]
+price = 0.15
+cache = { read = 0.02 }
+
+[cost.text.output]
+price = 0.5

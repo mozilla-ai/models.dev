@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-speech") and
+#   https://api.deepinfra.com/models/inworld-ai/realtime-tts-2; model page https://deepinfra.com/inworld-ai/realtime-tts-2.
+# Price: $35 per 1M input characters (0.0035 cents per character).
+# API: POST https://api.deepinfra.com/v1/audio/speech (OpenAI-compatible) or native POST /v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "inworld/inworld-tts-2"
+
+[api.speech]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 35

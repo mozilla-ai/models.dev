@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/openai/gpt-oss-120b-Ultra; model page https://deepinfra.com/openai/gpt-oss-120b-Ultra.
+# Price: $0.2 input, $0.95 output per 1M tokens (cents_per_input_token / cents_per_output_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "openai/gpt-oss-120b"
+
+[capabilities]
+reasoning = { supported = true }
+
+[cost.text.input]
+price = 0.2
+
+[cost.text.output]
+price = 0.95

@@ -1,0 +1,16 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-to-speech") and
+#   https://api.deepinfra.com/models/XiaomiMiMo/MiMo-V2.5-tts-voicedesign; model page https://deepinfra.com/XiaomiMiMo/MiMo-V2.5-tts-voicedesign.
+# Price: $0 per 1M input characters (0 cents per character). The page lists no charge (free preview).
+# API: POST https://api.deepinfra.com/v1/audio/speech (OpenAI-compatible) or native POST /v1/inference/{model}.
+
+schema = 2
+v2_only = true
+base_model = "xiaomi/mimo-v2.5-tts-voicedesign"
+
+[api.speech]
+base_url = "https://api.deepinfra.com/v1"
+sdk = { opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 0

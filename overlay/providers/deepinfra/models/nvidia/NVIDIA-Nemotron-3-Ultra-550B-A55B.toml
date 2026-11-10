@@ -1,0 +1,34 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B; model page https://deepinfra.com/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B.
+# Price: $0.5 input, $2.2 output per 1M tokens, cache read x0.2 (cents_per_input_token / cents_per_output_token).
+# Service tiers: priority x1.5, flex x0.8 (rate_per_service_tier_*).
+# Explicit cache writes: 5m x1.25 of input, 1h x2 of input (rate_per_explicit_cache_write_token).
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "nvidia/nemotron-3-ultra-550b-a55b"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+cache = { implicit = true }
+prompt_cache_key = true
+service_tier = ["priority", "flex"]
+
+[limit]
+context = 262_144
+
+[cost.text.input]
+price = 0.5
+cache = { read = 0.1, write = { "5m" = 0.625, "1h" = 1 } }
+
+[cost.text.output]
+price = 2.2
+
+[[cost.multipliers]]
+when = { service_tier = { equals = "priority" } }
+factor = 1.5
+
+[[cost.multipliers]]
+when = { service_tier = { equals = "flex" } }
+factor = 0.8

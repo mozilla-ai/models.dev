@@ -1,0 +1,30 @@
+# Catalog (accessed 2026-11-10): https://api.deepinfra.com/models/list (type "text-generation") and
+#   https://api.deepinfra.com/models/ByteDance/Seed-1.8; model page https://deepinfra.com/ByteDance/Seed-1.8.
+# Price: $0.25 input, $2 output per 1M tokens, cache read x0.2 (cents_per_input_token / cents_per_output_token).
+# Pricing note on the page: $0.25 in $2 out $0.05 cached <= 128K, $0.5 in $4 out $0.1 cached
+# API: OpenAI-compatible POST https://api.deepinfra.com/v1/openai/chat/completions (provider default).
+
+schema = 2
+base_model = "bytedance-seed/seed-1-8"
+
+[capabilities]
+reasoning = { supported = true }
+structured_output = true
+cache = { implicit = true }
+prompt_cache_key = true
+
+[cost.text.input]
+price = 0.25
+cache = { read = 0.05 }
+
+[[cost.text.input.overrides]]
+when = { context = { gt = 128_000 } }
+price = 0.5
+cache = { read = 0.1 }
+
+[cost.text.output]
+price = 2
+
+[[cost.text.output.overrides]]
+when = { context = { gt = 128_000 } }
+price = 4
