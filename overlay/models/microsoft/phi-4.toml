@@ -1,0 +1,30 @@
+# Model card (https://huggingface.co/microsoft/phi-4): "Release date: December 12, 2024", 16K context, cutoff
+#   June 2024, MIT license. No tool-calling template is published, so tools are off.
+# Sampling: open weights; temperature, top_p and top_k are standard sampling controls for this checkpoint.
+schema = 2
+name = "Phi-4"
+description = "14B Microsoft model trained on synthetic and curated data for reasoning-heavy chat"
+family = "phi"
+open_weights = true
+knowledge = "2024-06"
+release_date = "2024-12-12"
+license = "MIT"
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 16_384
+output = 16_384
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/microsoft/phi-4"

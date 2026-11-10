@@ -1,0 +1,29 @@
+# FIBO 2.0 weights published 2026-10-18: https://huggingface.co/briaai/Fibo-2.0-dev
+# Reference images JPEG, PNG or WEBP; 1MP or 4MP output as png or jpeg:
+#   https://api.deepinfra.com/models/Bria/fibo-2.0 (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "image"
+name = "FIBO 2.0"
+description = "JSON-native text-to-image model with structured control of lighting, composition and camera"
+open_weights = true
+release_date = "2026-10-18"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image/png", "image/jpeg"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/briaai/Fibo-2.0-dev"

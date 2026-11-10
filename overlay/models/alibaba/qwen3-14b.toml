@@ -1,0 +1,30 @@
+# Sources: https://huggingface.co/Qwen/Qwen3-14B (Apache-2.0; Qwen3 release 2025-04-29,
+#   https://qwenlm.github.io/blog/qwen3/). Dense 14.8B; thinking and non-thinking modes; tool calling;
+#   context 32,768 natively (131,072 with YaRN).
+# Sampling: open weights, so temperature, top_p and top_k are runtime sampler settings on any host.
+schema = 2
+name = "Qwen3 14B"
+description = "Dense 14B Qwen3 model with switchable thinking for chat, reasoning, and tool use"
+family = "qwen"
+open_weights = true
+release_date = "2025-04-29"
+license = "Apache-2.0"
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 32_768
+output = 32_768
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/Qwen/Qwen3-14B"

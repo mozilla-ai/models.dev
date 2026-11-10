@@ -1,0 +1,26 @@
+# Snapshot qwen-image-max-2025-12-30 on Alibaba Cloud Model Studio: https://help.aliyun.com/en/model-studio/qwen-image-max
+# Hosted only; text in, image out, sizes as width*height (default 1280*1280), 1-4 images per call:
+#   https://api.deepinfra.com/models/Qwen/Qwen-Image-Max (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "image"
+name = "Qwen-Image-Max"
+description = "Top Qwen image model with more realistic textures and better text rendering than the Plus series"
+family = "qwen"
+open_weights = false
+release_date = "2025-12-30"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

@@ -1,0 +1,25 @@
+# Released 2026-03-30: https://pixverse.ai/blog/pixverse-launches-v6-advancing-ai-video-generation
+# 360p to 1080p, 1 to 15 s, optional audio and multi-clip generation; PixVerse names no input formats:
+#   https://api.deepinfra.com/models/Pixverse/Pixverse-6-T2V (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "video"
+name = "PixVerse V6"
+description = "Video model with 15-second 1080p clips, native audio and multi-shot generation"
+open_weights = false
+release_date = "2026-03-30"
+
+[modalities]
+input = ["text", "image"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

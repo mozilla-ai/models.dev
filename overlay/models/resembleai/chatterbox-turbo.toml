@@ -1,0 +1,30 @@
+# Chatterbox Turbo weights published 2025-12-02 (MIT): https://huggingface.co/ResembleAI/chatterbox-turbo
+# 350M parameters, one-step decoder, paralinguistic tags; output mp3, opus, flac, wav or pcm as served by
+#   DeepInfra: https://api.deepinfra.com/models/ResembleAI/chatterbox-turbo (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "speech"
+name = "Chatterbox Turbo"
+description = "Low-latency 350M open text-to-speech model with paralinguistic tags for voice agents"
+open_weights = true
+release_date = "2025-12-02"
+license = "MIT"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/ResembleAI/chatterbox-turbo"

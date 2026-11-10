@@ -1,0 +1,30 @@
+# Released 2023-11-28: https://stability.ai/news/stability-ai-sdxl-turbo
+# Weights (Stability AI community license): https://huggingface.co/stabilityai/sdxl-turbo
+# Real-time text-to-image distilled from SDXL; the open weights produce pixels and the host picks the format.
+schema = 2
+v2_only = true
+type = "image"
+name = "SDXL Turbo"
+description = "Real-time text-to-image model distilled from SDXL with adversarial diffusion distillation"
+family = "stable-diffusion"
+open_weights = true
+release_date = "2023-11-28"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/stabilityai/sdxl-turbo"

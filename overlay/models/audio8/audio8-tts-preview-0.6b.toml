@@ -1,0 +1,31 @@
+# Weights published 2026-08-10 (Apache-2.0): https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b and
+#   https://github.com/Audio8-AI/Audio8_TTS
+# 0.6B parameters, 11 languages, zero-shot voice cloning; output mp3, opus, flac, wav or pcm as served by
+#   DeepInfra: https://api.deepinfra.com/models/Audio8/Audio8-TTS-Preview-0.6b (accessed 2026-11-10)
+schema = 2
+v2_only = true
+type = "speech"
+name = "Audio8 TTS Preview 0.6B"
+description = "Compact multilingual text-to-speech model with zero-shot voice cloning in 11 languages"
+open_weights = true
+release_date = "2026-08-10"
+license = "Apache-2.0"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/opus", "audio/flac", "audio/wav", "audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/Audio8/Audio8-TTS-Preview-0.6b"

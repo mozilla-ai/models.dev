@@ -1,0 +1,27 @@
+# Listed on DeepInfra 2026-02-26 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; Pruna's docs (https://docs.pruna.ai) name no date.
+# Model page: https://deepinfra.com/PrunaAI/p-video; parameters: https://api.deepinfra.com/models/PrunaAI/p-video
+# Text-, image- and audio-to-video up to 1080p at 24 or 48 fps, 1-10 s, built-in audio and a draft mode.
+#   Image and audio inputs are URLs with no format list, so the generic entries are kept.
+schema = 2
+v2_only = true
+type = "video"
+name = "P-Video"
+description = "Real-time video model for text-, image- and audio-to-video up to 1080p with built-in audio"
+open_weights = false
+release_date = "2026-02-26"
+
+[modalities]
+input = ["text", "image", "audio"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

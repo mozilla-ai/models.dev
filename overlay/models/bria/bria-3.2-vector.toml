@@ -1,0 +1,26 @@
+# Listed on DeepInfra 2025-09-11 (create_ts of https://api.deepinfra.com/models/list, accessed 2026-11-10),
+#   which is the release date used here; Bria publishes no dated release note for the vector variant.
+# Model page: https://deepinfra.com/Bria/Bria-3.2-vector; parameters: https://api.deepinfra.com/models/Bria/Bria-3.2-vector
+# Bria 3.2 variant for vector-style graphics (same prompt, aspect ratio and steps parameters).
+schema = 2
+v2_only = true
+type = "image"
+name = "Bria 3.2 Vector"
+description = "Bria 3.2 variant tuned for vector-style graphics and illustrations"
+open_weights = false
+release_date = "2025-09-11"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
