@@ -1,0 +1,24 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/prism-ml-ternary-bonsai-27b and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Serverless: free (input and output); context 262,144; function calling and structured outputs: yes.
+# Inputs: text and images (model page); the image types are the ones other Together vision routes
+# read (see Qwen/Qwen3.5-9B.toml).
+# Reasoning: a Qwen3.6-27B derivative evaluated in thinking mode; the toggle is Together's
+# reasoning.enabled for hybrid models (https://docs.together.ai/docs/inference/chat/reasoning).
+# Not probed.
+schema = 2
+base_model = "prism-ml/ternary-bonsai-27b"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/gif", "image/webp"]
+output = ["text"]
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+structured_output = true
+
+[cost.text.input]
+price = 0
+
+[cost.text.output]
+price = 0

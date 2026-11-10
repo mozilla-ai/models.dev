@@ -1,0 +1,31 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Price: $0.0015 per audio minute for files, $0.0035 per audio minute streamed over the WebSocket
+#   (the pricing page's "Whisper Large v3 (Streaming)" row, same model id).
+# API: POST https://api.together.ai/v1/audio/transcriptions (OpenAI-compatible); formats wav, mp3, m4a, webm,
+#   flac, ogg, opus, aac: https://docs.together.ai/docs/speech-to-text
+# Translations: POST /v1/audio/translations, same model and formats.
+# Streaming: wss://api.together.ai/v1/realtime?model=openai/whisper-large-v3&input_audio_format=pcm_s16le_16000,
+#   OpenAI Realtime events (OpenAI-Beta: realtime=v1): https://docs.together.ai/docs/inference/transcription/streaming
+schema = 2
+v2_only = true
+base_model = "openai/whisper-large-v3"
+
+[modalities]
+input = ["audio/wav", "audio/mpeg", "audio/mp4", "audio/webm", "audio/flac", "audio/ogg", "audio/opus", "audio/aac", "audio/pcm"]
+output = ["text"]
+
+[api.transcriptions]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[api.realtime]
+base_url = "wss://api.together.ai/v1"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.audio.input]
+unit = "minute"
+price = 0.0015
+
+[[cost.audio.input.overrides]]
+when = { websocket = { equals = true } }
+price = 0.0035

@@ -1,0 +1,27 @@
+# Released 2026-06-02 per https://www.together.ai/models/ideogram-40 (accessed 2026-10-29): 9.3B parameter
+# text-to-image model with bounding-box layout and color palette control, native 2K output.
+# Open weights under the ideogram-4-non-commercial license (gated):
+# https://huggingface.co/ideogram-ai/ideogram-4-fp8 (pipeline text-to-image).
+schema = 2
+v2_only = true
+type = "image"
+name = "Ideogram 4.0"
+description = "Open-weight text-to-image model with multilingual text rendering and layout control"
+family = "ideogram"
+open_weights = true
+release_date = "2026-06-02"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

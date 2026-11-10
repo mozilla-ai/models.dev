@@ -1,0 +1,34 @@
+# Source: https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf (model card, accessed 2026-10-29).
+# Derived from Qwen3.6-27B with ternary language weights and a 4-bit vision tower; 262K context;
+# Apache 2.0. The repository was created on 2026-07-04; Together lists the model as released on
+# 2026-07-14 (https://www.together.ai/models/prism-ml-ternary-bonsai-27b), used here as the public date.
+# Output limit: the card gives none, so it is the base model's (models/alibaba/qwen3.6-27b.toml).
+schema = 2
+name = "Ternary Bonsai 27B"
+description = "27B-class reasoning model in ternary weights, with image input and a 262K context"
+open_weights = true
+release_date = "2026-07-14"
+license = "Apache 2.0"
+
+[modalities]
+input = ["text", "image"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 262_144
+output = 65_536
+
+[[weights]]
+label = "Hugging Face (GGUF)"
+url = "https://huggingface.co/prism-ml/Ternary-Bonsai-27B-gguf"
+
+[[weights]]
+label = "Hugging Face (MLX)"
+url = "https://huggingface.co/prism-ml/Ternary-Bonsai-27B-mlx-2bit"

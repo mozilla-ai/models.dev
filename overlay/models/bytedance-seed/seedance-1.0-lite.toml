@@ -1,0 +1,27 @@
+# Version: seedance-1-0-lite-t2v / -i2v-250428 (2025-04-28), Volcengine Ark create video task API:
+#   https://www.volcengine.com/docs/82379/1520757 and https://docs.byteplus.com/en/docs/ModelArk/1520757
+# Image formats jpeg, png, webp, bmp, tiff, gif (heic/heif only from Seedance 2.0): same API reference.
+# Output: MP4, silent (sound arrived with Seedance 1.5 Pro).
+schema = 2
+v2_only = true
+type = "video"
+name = "Seedance 1.0 Lite"
+description = "Lower-cost Seedance video model for text-to-video and image-to-video generation"
+family = "seed"
+open_weights = false
+release_date = "2025-04-28"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp", "image/bmp", "image/tiff", "image/gif"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

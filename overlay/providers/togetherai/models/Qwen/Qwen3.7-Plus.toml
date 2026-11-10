@@ -1,0 +1,27 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/qwen37-plus and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Serverless: $0.32 input, $1.28 output per 1M, no cached-input price; context 1,000,000 with up to
+# 65,536 output tokens; function calling and structured outputs: yes.
+# Inputs: text and images (model page: "Text and image input with text output"); video is not
+# listed for this route. The image types are the lab's.
+# Reasoning: Together documents no control for this model; the toggle follows Qwen/Qwen3.6-Plus on
+# this host (reasoning.enabled). Not probed.
+schema = 2
+base_model = "alibaba/qwen3.7-plus"
+
+[modalities]
+input = ["text", "image/bmp", "image/jpeg", "image/png", "image/tiff", "image/webp", "image/heic"]
+output = ["text"]
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+structured_output = true
+
+[limit]
+output = 65_536
+
+[cost.text.input]
+price = 0.32
+
+[cost.text.output]
+price = 1.28

@@ -1,0 +1,20 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Price: $0.0015 per audio minute; Together's "Nemotron 3 ASR Streaming 0.6B" is the English nemotron-speech-streaming-en-0.6b
+#   (same 80/160/560/1120 ms chunk sizes and Riva ASR training set).
+# API: POST https://api.together.ai/v1/audio/transcriptions (OpenAI-compatible); formats wav, mp3, m4a, webm,
+#   flac, ogg, opus, aac: https://docs.together.ai/docs/speech-to-text
+schema = 2
+v2_only = true
+base_model = "nvidia/nemotron-speech-streaming-en-0.6b"
+
+[modalities]
+input = ["audio/wav", "audio/mpeg", "audio/mp4", "audio/webm", "audio/flac", "audio/ogg", "audio/opus", "audio/aac"]
+output = ["text"]
+
+[api.transcriptions]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[cost.audio.input]
+unit = "minute"
+price = 0.0015

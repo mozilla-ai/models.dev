@@ -1,0 +1,14 @@
+# Source: https://www.together.ai/models/flux-1-kontext-pro and https://docs.together.ai/docs/serverless-models#image-models (accessed 2026-10-29).
+# $0.04 per megapixel. Billed per output megapixel at 28 default steps; above the default, cost scales by steps / 28, which the schema can't express. Fewer steps don't lower it (https://docs.together.ai/docs/serverless-models#per-megapixel-cost-formula).
+# Images: POST https://api.together.xyz/v1/images/generations; input images go in image_url or reference_images
+# (https://docs.together.ai/reference/post-images-generations).
+schema = 2
+v2_only = true
+base_model = "black-forest-labs/flux-kontext-pro"
+
+[api.images]
+sdk = { opencodeai = "@opencode/ai/providers/togetherai/images" }
+
+[cost.image.output]
+unit = "megapixel"
+price = 0.04

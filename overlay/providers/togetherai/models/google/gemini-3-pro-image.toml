@@ -1,0 +1,29 @@
+# Source: https://www.together.ai/models/nano-banana-pro and https://docs.together.ai/docs/serverless-models#image-models (accessed 2026-10-29).
+# $0.134 per image at 1K or 2K, about $0.24 at 4K. Billed per image at the upstream provider's own charge; the price is Together's estimate and varies with resolution, quality and reference images (https://docs.together.ai/docs/serverless/overview#how-image-models-bill).
+# The images endpoint returns images only (no text) and takes no sampling or reasoning parameters.
+# Images: POST https://api.together.xyz/v1/images/generations; input images go in image_url or reference_images
+# (https://docs.together.ai/reference/post-images-generations).
+schema = 2
+v2_only = true
+base_model = "google/gemini-3-pro-image"
+
+[modalities]
+input = ["text", "image/png", "image/jpeg", "image/webp", "image/heic", "image/heif"]
+output = ["image/png", "image/jpeg"]
+
+[capabilities]
+reasoning = { supported = true }
+temperature = false
+top_p = false
+top_k = false
+
+[api.images]
+sdk = { opencodeai = "@opencode/ai/providers/togetherai/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.134
+
+[[cost.image.output.overrides]]
+when = { resolution = { equals = "4K" } }
+price = 0.24

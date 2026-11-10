@@ -1,0 +1,15 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Price: $65.00 per 1M input characters.
+# API: POST https://api.together.ai/v1/audio/speech (OpenAI-compatible; response_format wav, mp3, raw or mulaw):
+#   https://docs.together.ai/docs/text-to-speech
+schema = 2
+v2_only = true
+base_model = "cartesia/sonic-3"
+
+[api.speech]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 65

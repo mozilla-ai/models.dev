@@ -1,0 +1,26 @@
+# Source: https://www.together.ai/models/gemini-31-flash-image and https://docs.together.ai/docs/serverless-models#image-models (accessed 2026-10-29).
+# $0.04657 per image at 512x512 per the docs catalog (the pricing page rounds it to $0.05). Billed per image at the upstream provider's own charge; the price is Together's estimate and varies with resolution, quality and reference images (https://docs.together.ai/docs/serverless/overview#how-image-models-bill).
+# The images endpoint takes reference images only (no video or PDF), returns images only (no text), and takes no
+# sampling or reasoning parameters.
+# Images: POST https://api.together.xyz/v1/images/generations; input images go in image_url or reference_images
+# (https://docs.together.ai/reference/post-images-generations).
+schema = 2
+v2_only = true
+base_model = "google/gemini-3.1-flash-image"
+
+[modalities]
+input = ["text", "image/png", "image/jpeg", "image/webp", "image/heic", "image/heif"]
+output = ["image/png", "image/jpeg"]
+
+[capabilities]
+reasoning = { supported = true }
+temperature = false
+top_p = false
+top_k = false
+
+[api.images]
+sdk = { opencodeai = "@opencode/ai/providers/togetherai/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.04657

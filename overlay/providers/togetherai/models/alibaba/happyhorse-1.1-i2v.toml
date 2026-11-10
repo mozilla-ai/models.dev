@@ -1,0 +1,12 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Price: $0.14 per video at the lowest resolution and duration; image-to-video.
+# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/videos-overview
+# No [cost]: Together bills a flat price per video (the docs example bills video-01-director $0.28 for a
+# 6-second clip), and the schema has no per-video unit.
+schema = 2
+v2_only = true
+base_model = "alibaba/happyhorse-1.1"
+
+[api.videos]
+base_url = "https://api.together.ai/v2"
+sdk = { aisdk = "none", opencodeai = "none" }

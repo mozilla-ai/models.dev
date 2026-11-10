@@ -1,0 +1,24 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/qwen3-8-flash and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Serverless: $0.15 input, $0.47 output per 1M, no cached-input price; context 1,000,000; function
+# calling and structured outputs: yes.
+# Effort: reasoning_effort = low|medium|xhigh, on a hybrid thinking model (model page: "Fast hybrid
+# thinking model", "adjustable per request across xhigh, medium, and low levels"); the toggle is
+# Together's reasoning.enabled for hybrid models (https://docs.together.ai/docs/inference/chat/reasoning).
+# Not probed. Inputs: text and images (model page); the image types are the lab's.
+schema = 2
+base_model = "alibaba/qwen3.8-flash"
+
+[modalities]
+input = ["text", "image/bmp", "image/jpeg", "image/png", "image/tiff", "image/webp", "image/heic"]
+output = ["text"]
+
+[capabilities]
+reasoning = { supported = true, toggle = true, effort = ["low", "medium", "xhigh"] }
+structured_output = true
+
+[cost.text.input]
+price = 0.15
+
+[cost.text.output]
+price = 0.47

@@ -1,0 +1,19 @@
+# Source: https://www.together.ai/models/sd-xl and https://docs.together.ai/docs/serverless-models#image-models (accessed 2026-10-29).
+# $0.0019 per image per the docs catalog (the model page says per megapixel). Billed per image at the upstream provider's own charge; the price is Together's estimate and varies with resolution, quality and reference images (https://docs.together.ai/docs/serverless/overview#how-image-models-bill).
+# Input: text only on Together (model page input modalities: Text).
+# Images: POST https://api.together.xyz/v1/images/generations; input images go in image_url or reference_images
+# (https://docs.together.ai/reference/post-images-generations).
+schema = 2
+v2_only = true
+base_model = "stabilityai/stable-diffusion-xl-base-1.0"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[api.images]
+sdk = { opencodeai = "@opencode/ai/providers/togetherai/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.0019

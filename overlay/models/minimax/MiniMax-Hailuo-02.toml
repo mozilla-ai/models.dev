@@ -1,0 +1,26 @@
+# Released 2025-06-18, versions 768p-6s, 768p-10s and 1080p-6s: https://www.minimax.io/news/minimax-hailuo-02
+# Input image formats (first_frame_image: JPG, JPEG, PNG, WebP): https://platform.minimax.io/docs/api-reference/video-generation-i2v
+# Output: an MP4 file (output_aigc.mp4): https://platform.minimax.io/docs/api-reference/video-generation-download
+schema = 2
+v2_only = true
+type = "video"
+name = "Hailuo 02"
+description = "Video model with native 1080p output for text-to-video and image-to-video"
+family = "minimax"
+open_weights = false
+release_date = "2025-06-18"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

@@ -1,0 +1,133 @@
+name: Catalog
+
+# Three jobs. sync force-pushes anomalyco/models.dev:dev to this fork's dev, so
+# dev stays a byte-for-byte mirror. build lays overlay/ over that mirror,
+# validates, and builds the catalog JSON the way upstream's deploy does. deploy
+# publishes it to GitHub Pages, so https://mozilla-ai.github.io/models.dev/
+# serves what https://models.dev/ serves upstream, plus the overlay.
+#
+# Pages has no worker, so the ?type= filter is a file per variant (api-all.json
+# and so on), and the v2 document lives at experimental/v2.0/api.json as upstream
+# serves it. A build failure leaves the previous deployment live.
+
+on:
+  schedule:
+    # Upstream syncs its own catalogs hourly at :17.
+    - cron: "47 * * * *"
+  push:
+    branches: [otari]
+  pull_request:
+    branches: [otari]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    if: github.repository == 'mozilla-ai/models.dev' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror upstream dev
+        env:
+          # A fine-grained PAT with Contents and Workflows write: the built-in
+          # token may not push workflow files, and upstream edits its own often.
+          TOKEN: ${{ secrets.UPSTREAM_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init --quiet mirror
+          cd mirror
+          git fetch --quiet https://github.com/anomalyco/models.dev dev
+          sha="$(git rev-parse FETCH_HEAD)"
+          git push --quiet --force "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}" FETCH_HEAD:refs/heads/dev
+          echo "dev mirrors anomalyco/models.dev@${sha}" | tee -a "$GITHUB_STEP_SUMMARY"
+
+  build:
+    needs: sync
+    # A failed sync still rebuilds from the last mirrored dev.
+    if: ${{ !cancelled() && github.repository == 'mozilla-ai/models.dev' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the mirror
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: dev
+          path: upstream
+          persist-credentials: false
+
+      - name: Checkout the overlay
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          path: overlay-src
+          persist-credentials: false
+
+      - name: Apply the overlay
+        run: overlay-src/scripts/apply-overlay.sh overlay-src/overlay upstream
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+
+      - name: Install dependencies
+        working-directory: upstream
+        run: bun install --frozen-lockfile
+
+      - name: Validate models
+        working-directory: upstream
+        run: bun validate
+
+      - name: Build
+        working-directory: upstream/packages/web
+        run: ./script/build.ts
+
+      - name: Collect the JSON endpoints
+        run: |
+          set -euo pipefail
+          mkdir -p site/experimental/v2.0
+          # The build names each endpoint _<name>.json; upstream's worker serves
+          # it as <name>.json, and _experimental_v2.0_api.json as
+          # experimental/v2.0/api.json.
+          for file in upstream/packages/web/dist/_*.json; do
+            name="$(basename "$file" .json)"
+            name="${name#_}"
+            case "$name" in
+              experimental_v2.0_*) cp "$file" "site/experimental/v2.0/${name#experimental_v2.0_}.json" ;;
+              *) cp "$file" "site/$name.json" ;;
+            esac
+          done
+          jq -e 'length > 0' site/api.json > /dev/null
+          jq -e 'length > 0' site/experimental/v2.0/api.json > /dev/null
+          jq -n \
+            --arg upstream "$(git -C upstream rev-parse HEAD)" \
+            --arg overlay "$(git -C overlay-src rev-parse HEAD)" \
+            --argjson overlay_files "$(find overlay-src/overlay -path overlay-src/overlay/.base -prune -o -type f -print | wc -l)" \
+            --arg built_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            '{upstream: $upstream, overlay: $overlay, overlay_files: $overlay_files, built_at: $built_at}' \
+            > site/version.json
+          { echo '```'; ls -l site site/experimental/v2.0; cat site/version.json; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

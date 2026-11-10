@@ -1,0 +1,26 @@
+# Released 2025-03-05 per https://www.together.ai/models/juggernaut-lightning-flux (accessed 2026-10-29).
+# Few-step variant of RunDiffusion's FLUX-based Juggernaut, text-to-image. Weights are not published
+# (https://huggingface.co/RunDiffusion lists no Juggernaut Lightning Flux repository, checked 2026-10-29).
+schema = 2
+v2_only = true
+type = "image"
+name = "Juggernaut Lightning Flux"
+description = "Fast few-step FLUX-based text-to-image model"
+family = "flux"
+open_weights = false
+release_date = "2025-03-05"
+
+[modalities]
+input = ["text"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

@@ -1,0 +1,25 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/deepseek-v4-1-flash-1017 and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
+# Serverless: $0.30 input, $0.006 cached input, $1.20 output per 1M; context 1,000,000; function
+# calling and structured outputs: yes. US-only inference costs 25% more.
+# Effort: the model page says reasoning_effort takes an integer from 1 to 100, on "the same
+# architecture as DeepSeek V4.1 Flash"; the named levels are those of deepseek-ai/DeepSeek-V4.1-Flash
+# on this host (none turns thinking off). Not probed.
+# Inputs: text and images (model page: "Supports text and image input in a single request").
+schema = 2
+base_model = "deepseek/deepseek-v4.1-flash-1017"
+
+[capabilities]
+reasoning = { supported = true, effort = ["none", "low", "high", "max"] }
+cache = { implicit = true }
+structured_output = true
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 0.3
+cache = { read = 0.006 }
+
+[cost.text.output]
+price = 1.2
