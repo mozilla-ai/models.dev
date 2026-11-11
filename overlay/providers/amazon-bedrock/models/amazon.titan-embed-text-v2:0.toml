@@ -2,9 +2,13 @@
 # Pricing: AWS Price List for us-east-2 (AmazonBedrock, 2026-11-11): $0.00002 per 1K input tokens
 #   (TitanEmbeddingsV2-Text-input-tokens).
 # Live check (InvokeModel, us-east-2, 2026-11-11): {"inputText": "hi", "dimensions": 256} returned an embedding.
+# Output price 0: an embedding bills input tokens only. Upstream's OpenAI embedding files write it the same way.
 schema = 2
 v2_only = true
 base_model = "amazon/titan-embed-text-v2"
 
 [cost.text.input]
 price = 0.02
+
+[cost.text.output]
+price = 0

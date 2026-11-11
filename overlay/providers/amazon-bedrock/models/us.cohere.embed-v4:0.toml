@@ -5,6 +5,7 @@
 #   tokens ("Tokens from an image input ≈ (image pixels ÷ 784) x 4"), so images bill at this rate too.
 # Live checks (InvokeModel, us-east-2, 2026-11-11): a text embedding returned 200 on both us. and global.; a PNG image
 #   embedding on us. returned 200 with x-amzn-bedrock-input-token-count: 24.
+# Output price 0: an embedding bills input tokens only. Upstream's OpenAI embedding files write it the same way.
 schema = 2
 v2_only = true
 base_model = "cohere/embed-v4.0"
@@ -12,3 +13,6 @@ name = "Embed 4 (US)"
 
 [cost.text.input]
 price = 0.12
+
+[cost.text.output]
+price = 0
