@@ -1,0 +1,31 @@
+# Sources (accessed 2026-11-11):
+#   https://docs.mistral.ai/models/voxtral-mini-transcribe-realtime-3-0 (Voxtral Mini Transcribe Realtime 3, API ID
+#     voxtral-mini-transcribe-realtime-3-0, released 2026-10-20, streams over WebSocket)
+#   GET https://api.mistral.ai/v1/models (voxtral-mini-transcribe-realtime-3, alias voxtral-mini-transcribe-realtime-3-0;
+#     capability audio_transcription_realtime, diarization, speaker references, turn detection)
+# No weights on https://huggingface.co/mistralai and none named in the docs, so open_weights = false.
+# Input encodings as for Voxtral Mini Transcribe Realtime (pcm_s16le|pcm_s32le|pcm_f16le|pcm_f32le|pcm_mulaw|pcm_alaw):
+#   https://docs.mistral.ai/api/endpoint/realtime/sessions
+schema = 2
+v2_only = true
+type = "transcription"
+name = "Voxtral Mini Transcribe Realtime 3"
+description = "Low-latency streaming speech-to-text model with diarization for live transcription"
+family = "voxtral"
+open_weights = false
+release_date = "2026-10-20"
+
+[modalities]
+input = ["audio/pcm", "audio/pcmu", "audio/pcma"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
