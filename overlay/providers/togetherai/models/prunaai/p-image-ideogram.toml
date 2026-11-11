@@ -1,0 +1,16 @@
+# Source: https://www.together.ai/models/p-image-ideogram and https://docs.together.ai/docs/serverless-models#image-models (accessed 2026-11-11).
+# $0.00225 per image ("Pricing starts at $0.00225 per image", GET /v1/models). Billed per image at the upstream provider's own charge; the price is Together's estimate and varies with resolution and thinking level (https://docs.together.ai/docs/serverless/overview#how-image-models-bill).
+# Images: POST https://api.together.xyz/v1/images/generations; input images go in image_url or reference_images
+# (https://docs.together.ai/reference/post-images-generations).
+# Not probed: Together routes this model to a third-party provider, and the test account has third-party data
+# sharing off (403, 2026-11-11).
+schema = 2
+v2_only = true
+base_model = "prunaai/p-image-ideogram"
+
+[api.images]
+sdk = { opencodeai = "@opencode/ai/providers/togetherai/images" }
+
+[cost.image.output]
+unit = "image"
+price = 0.00225
