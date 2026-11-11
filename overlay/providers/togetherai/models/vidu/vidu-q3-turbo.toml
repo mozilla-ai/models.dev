@@ -1,12 +1,14 @@
-# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
-# Together: $0.195 (docs table) and "0.13 - 0.26 per second depending on resolution" (GET /v1/models). The
-# tiers are read as 540p $0.13, 720p $0.195, 1080p $0.26. NOT VERIFIED: Runware lists 360p $0.026, 540p
-# $0.0227, 720p $0.0357, 1080p $0.0423: https://runware.ai/docs/models/vidu-q3-turbo.
-# Test job 01a1cad1-b81a-7bc4-b7e0-a50f54147a23 (1 s, 540p, with audio) waits for a billing check.
-# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
-# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
-# parameter errors list Runware fields), and Runware publishes per-second rates per model.
+# Source: https://runware.ai/docs/models/vidu-q3-turbo, GET /v1/models and
+# https://docs.together.ai/docs/serverless/overview (accessed 2026-11-11).
+# Unit: "Video generation: Per second of output" (serverless overview). The pricing page's "Price per video"
+# header does not match. Together's video backend is Runware (the API's parameter errors list Runware fields).
+# GET /v1/models gives "0.13 - 0.26 per second depending on resolution"; the billing check below shows
+# Together charges Runware's rates instead: 360p $0.026, 540p $0.02275, 720p $0.0357, 1080p $0.0423
+# (Runware shows 540p rounded to $0.0227; the bill gives $0.02275).
+# Base: 720p.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
+# Live (2026-11-11): job 01a1cad1-b81a-7bc4-b7e0-a50f54147a23, 1 s at 540p (960x528) with audio, billed
+# $0.02275 on the account's cost-analytics page.
 schema = 2
 v2_only = true
 base_model = "shengshu/vidu-q3-turbo"
@@ -17,12 +19,16 @@ sdk = { aisdk = "none", opencodeai = "none" }
 
 [cost.video.output]
 unit = "second"
-price = 0.195
+price = 0.0357
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "360p" } }
+price = 0.026
 
 [[cost.video.output.overrides]]
 when = { resolution = { equals = "540p" } }
-price = 0.13
+price = 0.02275
 
 [[cost.video.output.overrides]]
 when = { resolution = { equals = "1080p" } }
-price = 0.26
+price = 0.0423
