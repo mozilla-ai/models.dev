@@ -1,0 +1,48 @@
+# Global cross-Region inference profile, served by Bedrock core (Converse). The model card lists only the
+# us. and global. IDs for bedrock-runtime; the base openai.gpt-5.5 ID is Mantle-only.
+# Model card (context, IDs, pricing): https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-openai-gpt-55.html
+# Pricing: the card and the AWS Price List for us-east-2 (AmazonBedrockFoundationModels, 2026-11-11) give one Standard rate
+#   ("In-Region": input / cache read / output, USD per 1M tokens) and no separate Geo or Global SKU, unlike GPT-5.6,
+#   whose Global SKUs are 10% lower. So this file uses the published rate. Long-context rates apply to all tokens
+#   when the input is over 272K tokens.
+# Live checks (Converse, us-east-2, 2026-11-11, us.openai.gpt-5.5): PNG image input, a tool call, outputConfig.textFormat
+#   JSON schema and a system message all returned 200. additionalModelRequestFields.reasoning.effort accepts
+#   none|low|medium|high|xhigh; "max" returned 400 ("Supported values are: 'none', 'low', 'medium', 'high', and 'xhigh'").
+#   A PDF document block returned 400 ("This model doesn't support documents.").
+# v2 cache: Converse supports implicit caching only (cachePoint unsupported) per
+#   https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html; the card lists no cache write fee.
+schema = 2
+v2_only = true
+base_model = "openai/gpt-5.5"
+base_model_omit = ["cost.tiers", "cost.context_over_200k", "experimental.modes.fast", "limit.input"]
+name = "GPT-5.5 (Global)"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/gif", "image/webp"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true, effort = ["none", "low", "medium", "high", "xhigh"] }
+structured_output = true
+cache = { implicit = { min_tokens = 1_024 } }
+
+[limit]
+context = 1_050_000
+output = 128_000
+
+[cost.text.input]
+price = 5.5
+cache = { read = 0.55 }
+
+[[cost.text.input.overrides]]
+when = { context = { gt = 272_000 } }
+price = 11
+cache = { read = 1.1 }
+
+[cost.text.output]
+price = 33
+
+[[cost.text.output.overrides]]
+when = { context = { gt = 272_000 } }
+price = 49.5
