@@ -1,0 +1,26 @@
+# Snapshots sonic-2-2025-03-07 to sonic-2-2025-06-11; Cartesia says sonic-2 "will stop working after
+#   October 20, 2026": https://docs.cartesia.ai/build-with-cartesia/tts-models/older-models
+# Output containers wav, mp3 and raw PCM: https://docs.cartesia.ai/api-reference/tts/bytes
+schema = 2
+v2_only = true
+type = "speech"
+name = "Sonic 2"
+description = "Low-latency text-to-speech model, predecessor of Sonic 3"
+open_weights = false
+release_date = "2025-03-07"
+last_updated = "2025-06-11"
+
+[modalities]
+input = ["text"]
+output = ["audio/wav", "audio/mpeg", "audio/pcm"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
