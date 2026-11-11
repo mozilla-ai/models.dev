@@ -1,0 +1,46 @@
+# Model card: https://huggingface.co/ricursiveAI/Ripple-65B-Preview (repo created 2026-11-04; launch blog
+#   https://www.ricursive.com/ripple). 65B dense Transformer pretrained on 12T tokens; up to 1,048,576 tokens of
+#   context; text in, text out; Apache 2.0; BF16 and NVFP4 weights.
+# Knowledge cutoff December 17, 2025: https://www.together.ai/models/ripple-65b-preview (model card section).
+# Reasoning and tools: the repo's server runs --reasoning-parser ripple and --tool-call-parser ripple, and its
+#   template "does not implement a thinking on/off switch or reasoning-effort levels"
+#   (https://huggingface.co/ricursiveAI/Ripple-65B-Preview/blob/main/inference/server/README.md).
+# Output: the card gives one context window and no separate output cap.
+# Sampling: open weights, so temperature, top_p and top_k are runtime sampler settings on any host.
+schema = 2
+v2_only = true
+name = "Ripple 65B Preview"
+description = "Dense open-weight model for agentic coding and reasoning, with up to 1M tokens of context"
+open_weights = true
+knowledge = "2025-12-17"
+release_date = "2026-11-04"
+license = "Apache-2.0"
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 1_048_576
+output = 1_048_576
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/ricursiveAI/Ripple-65B-Preview"
+
+[[weights]]
+label = "Hugging Face (NVFP4)"
+url = "https://huggingface.co/ricursiveAI/Ripple-65B-Preview-NVFP4"
+quantization = "nvfp4"
+
+[[links]]
+label = "Model card"
+url = "https://huggingface.co/ricursiveAI/Ripple-65B-Preview"
+type = "model_card"

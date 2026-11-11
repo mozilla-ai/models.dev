@@ -1,0 +1,31 @@
+# Source: https://www.together.ai/pricing, https://www.together.ai/models/ripple-65b-preview and
+# https://docs.together.ai/docs/serverless-models (accessed 2026-11-11).
+# Serverless: $0.20 input, $0.02 cached input, $0.60 output per 1M; context 131,072. The docs table gives no
+# cached price; the pricing page and GET /v1/models give $0.02.
+# Live (2026-11-11): tool calls returned a get_weather call; json_schema output returned valid JSON; an image
+# input returned 400, so the input is text only. Reasoning comes back in message.reasoning_content when the model
+# reasons; on simple prompts it often does not. reasoning_effort and reasoning.enabled were accepted but did not
+# reliably change this, so no effort levels and no toggle are listed.
+# Output: Together has no output cap below the context window (see provider.toml).
+schema = 2
+v2_only = true
+base_model = "ricursive/ripple-65b-preview"
+
+[capabilities]
+reasoning = { supported = true }
+cache = { implicit = true }
+structured_output = true
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[limit]
+context = 131_072
+output = 131_072
+
+[cost.text.input]
+price = 0.2
+cache = { read = 0.02 }
+
+[cost.text.output]
+price = 0.6
