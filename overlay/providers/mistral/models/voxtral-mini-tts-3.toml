@@ -1,0 +1,14 @@
+# Sources (accessed 2026-11-11):
+#   GET https://api.mistral.ai/v1/models (voxtral-mini-tts-3 (alias of voxtral-mini-tts-3-0), billing_model_name voxtral-mini-tts-3-0)
+#   https://docs.mistral.ai/inference/pricing and https://docs.mistral.ai/models/voxtral-mini-tts-3-0 ($13 per 1M input characters, cached $1.3)
+schema = 2
+v2_only = true
+base_model = "mistral/voxtral-mini-tts-3"
+
+[api.speech]
+sdk = { opencodeai = "none" }
+
+[cost.text.input]
+unit = "character"
+price = 13
+cache = { read = 1.3 }
