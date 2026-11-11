@@ -1,0 +1,14 @@
+# Sources (accessed 2026-11-11):
+#   GET https://api.mistral.ai/v1/models (voxtral-mini-transcribe-3-0 (alias of voxtral-mini-transcribe-3), billing_model_name voxtral-mini-transcribe-3)
+#   https://docs.mistral.ai/inference/pricing and https://docs.mistral.ai/models/voxtral-mini-transcribe-3-0 ($0.0035 per minute of audio, cached $0.00035)
+schema = 2
+v2_only = true
+base_model = "mistral/voxtral-mini-transcribe-3"
+
+[api.transcriptions]
+sdk = { opencodeai = "none" }
+
+[cost.audio.input]
+unit = "minute"
+price = 0.0035
+cache = { read = 0.00035 }
