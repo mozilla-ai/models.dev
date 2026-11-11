@@ -1,11 +1,13 @@
-# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
-# Together: $0.57 for 1080p / 5s (docs table; GET /v1/models says $0.565 for 720p / 5s), read as $0.114 per
-# second. NOT VERIFIED: Runware lists 480p $0.0192 and 1080p $0.0969: https://runware.ai/docs/models/bytedance-seedance-1-0-pro.
-# Test job 01a1cad1-b820-7bc4-bb31-693bc951b1d5 (3 s, 1248x704, no audio track) waits for a billing check.
-# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
-# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
-# parameter errors list Runware fields), and Runware publishes per-second rates per model.
+# Source: https://runware.ai/docs/models/bytedance-seedance-1-0-pro, GET /v1/models and
+# https://docs.together.ai/docs/serverless/overview (accessed 2026-11-11).
+# Unit: "Video generation: Per second of output" (serverless overview). The pricing page's "Price per video"
+# header does not match. Together's video backend is Runware (the API's parameter errors list Runware fields).
+# The docs table gives $0.57 for 1080p / 5s; the billing check below shows Together charges Runware's rates
+# instead: 480p $0.0192, 1080p $0.0969 per second. The price follows the pixel count, and Runware lists no
+# 720p rate, so the 720p base is the billed rate ($0.12401532 / 3 s).
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
+# Live (2026-11-11): job 01a1cad1-b820-7bc4-bb31-693bc951b1d5, 3 s at 1248x704 without audio, billed
+# $0.12401532 on the account's cost-analytics page.
 schema = 2
 v2_only = true
 base_model = "bytedance-seed/seedance-1.0-pro"
@@ -16,4 +18,12 @@ sdk = { aisdk = "none", opencodeai = "none" }
 
 [cost.video.output]
 unit = "second"
-price = 0.114
+price = 0.0413
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "480p" } }
+price = 0.0192
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.0969
