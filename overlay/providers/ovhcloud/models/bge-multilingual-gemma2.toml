@@ -1,0 +1,18 @@
+# OVHcloud AI Endpoints embedding model: bge-multilingual-gemma2
+# Price: $0.01 per 1M input tokens (https://www.ovhcloud.com/en/public-cloud/prices/, AI Endpoints table, accessed
+#   2026-11-11). GET /v1/models gives prompt "0.00000001" per token, the same rate.
+# API: POST https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/embeddings. A live request returned 3584-dimension vectors
+#   with prompt tokens in usage (2026-11-11).
+# Upstream syncs OVHcloud from its OpenRouter feed, which lists chat models only, so it has no file for this model.
+schema = 2
+v2_only = true
+base_model = "baai/bge-multilingual-gemma2"
+
+[api.embeddings]
+sdk = { opencodeai = "@opencode/ai/providers/openai-compatible/embeddings" }
+
+[cost.text.input]
+price = 0.01
+
+[cost.text.output]
+price = 0
