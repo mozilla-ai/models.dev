@@ -1,0 +1,20 @@
+# Qwen3 Reranker 8B on Fireworks Serverless: accounts/fireworks/models/qwen3-reranker-8b
+# Docs: https://docs.fireworks.ai/guides/querying-embeddings-models#reranking-documents ("Serverless usage of
+#   qwen3-reranker-8b is billed at $0.20 per million tokens"; 40k context) (accessed 2026-11-11).
+# Serverless feed https://api.fireworks.ai/v1/serverless/models: output "embeddings", "Embedding input tokens"
+#   $0.20/MTok, context_length 40960; List Models kind EMBEDDING_MODEL, supportsServerless (accessed 2026-11-11).
+# API: POST /inference/v1/rerank (https://docs.fireworks.ai/api-reference/rerank-documents). A live call returned
+#   relevance scores and usage with prompt tokens only (2026-11-11).
+# Context inherits the lab's 32,768 (the model's documented maximum), not the catalog's 40,960.
+schema = 2
+v2_only = true
+base_model = "alibaba/qwen3-reranker-8b"
+
+[api.rerank]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.text.input]
+price = 0.2
+
+[cost.text.output]
+price = 0
