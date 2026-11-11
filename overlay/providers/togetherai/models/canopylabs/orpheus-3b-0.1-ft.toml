@@ -1,0 +1,20 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#audio-models (accessed 2026-11-11).
+# Price: $15.00 per 1M input characters.
+# API: POST https://api.together.ai/v1/audio/speech (OpenAI-compatible; response_format mp3, wav, raw or mulaw):
+#   https://docs.together.ai/docs/inference/text-to-speech/overview
+# Voices: tara, leah, jess, leo, dan, mia, zac, zoe (GET /v1/voices). Live (2026-11-11): voice tara returned audio/mpeg.
+schema = 2
+v2_only = true
+base_model = "canopylabs/orpheus-3b-0.1-ft"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/wav", "audio/pcm"]
+
+[api.speech]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 15

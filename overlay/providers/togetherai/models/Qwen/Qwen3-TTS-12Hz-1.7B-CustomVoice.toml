@@ -1,0 +1,21 @@
+# Source: https://docs.together.ai/docs/serverless-models#audio-models and GET /v1/models (accessed 2026-11-11).
+# Price: $4.00 per 1M input characters, from GET /v1/models (pricing.input = 4). The docs table gives "-" and the
+# pricing page does not list the model.
+# API: POST https://api.together.ai/v1/audio/speech (OpenAI-compatible): https://docs.together.ai/docs/inference/text-to-speech/overview
+# Voices: aiden, dylan, eric, ono_anna, ryan, serena, sohee, uncle_fu, vivian (from the 400 error for an unknown
+# voice; GET /v1/voices does not list this model). Live (2026-11-11): voice Vivian returned audio/mpeg.
+schema = 2
+v2_only = true
+base_model = "alibaba/qwen3-tts"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/wav", "audio/pcm"]
+
+[api.speech]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 4

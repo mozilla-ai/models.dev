@@ -1,0 +1,20 @@
+# Source: https://docs.together.ai/docs/serverless-models#audio-models and GET /v1/models (accessed 2026-11-11).
+# Price: $65.00 per 1M input characters (docs table and GET /v1/models; the pricing page lists Sonic and Sonic-3
+# at the same price).
+# API: POST https://api.together.ai/v1/audio/speech (OpenAI-compatible; response_format mp3, wav, raw or mulaw):
+#   https://docs.together.ai/docs/inference/text-to-speech/overview
+# Live (2026-11-11): returned audio/mpeg, after Cartesia's own 2026-10-20 sunset of sonic-2. Together does not say
+# which Cartesia snapshot it serves; GET /v1/voices gives it the same 133 voices as cartesia/sonic-3.
+# cartesia/sonic is not added: the docs list it, but a request returns 400 "Unsupported Cartesia model:
+# cartesia/sonic. Supported models: cartesia/sonic-2, cartesia/sonic-3".
+schema = 2
+v2_only = true
+base_model = "cartesia/sonic-2"
+
+[api.speech]
+base_url = "https://api.together.ai/v1"
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-speech" }
+
+[cost.text.input]
+unit = "character"
+price = 65
