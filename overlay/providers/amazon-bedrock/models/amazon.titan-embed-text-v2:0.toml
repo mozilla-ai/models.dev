@@ -1,0 +1,10 @@
+# In-Region, On-Demand (ListFoundationModels in us-east-2, 2026-11-11).
+# Pricing: AWS Price List for us-east-2 (AmazonBedrock, 2026-11-11): $0.00002 per 1K input tokens
+#   (TitanEmbeddingsV2-Text-input-tokens).
+# Live check (InvokeModel, us-east-2, 2026-11-11): {"inputText": "hi", "dimensions": 256} returned an embedding.
+schema = 2
+v2_only = true
+base_model = "amazon/titan-embed-text-v2"
+
+[cost.text.input]
+price = 0.02
