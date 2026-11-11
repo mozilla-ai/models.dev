@@ -1,8 +1,11 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
-# Price: $0.115 per video at the lowest resolution and duration.
-# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/videos-overview
-# No [cost]: Together bills a flat price per video (the docs example bills video-01-director $0.28 for a
-# 6-second clip), and the schema has no per-video unit.
+# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
+# Together: "480P: $0.115/sec & 720P: from $0.249/sec" (GET /v1/models). Runware lists lower rates (480p
+# $0.102, 720p $0.23, 1080p $0.614: https://runware.ai/docs/models/bytedance-seedance-2-5); Together's own rates are used. No 1080p
+# price from Together.
+# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
+# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
+# parameter errors list Runware fields), and Runware publishes per-second rates per model.
+# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
 schema = 2
 v2_only = true
 base_model = "bytedance-seed/seedance-2.5"
@@ -10,3 +13,11 @@ base_model = "bytedance-seed/seedance-2.5"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.249
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "480p" } }
+price = 0.115

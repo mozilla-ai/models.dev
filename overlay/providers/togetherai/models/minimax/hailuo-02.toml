@@ -1,8 +1,13 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models (accessed 2026-10-29).
-# Price: $0.49 per video at 768p / 10s (1080p / 6s is offered; its price is not published).
-# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/videos-overview
-# No [cost]: Together bills a flat price per video (the docs example bills video-01-director $0.28 for a
-# 6-second clip), and the schema has no per-video unit.
+# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
+# MiniMax: $0.28 for 768P / 6s, $0.56 for 768P / 10s, $0.49 for 1080P / 6s (no 1080P / 10s):
+# https://platform.minimax.io/docs/pricing/pay-as-you-go. Runware lists the same clips and $0.056 (768p) and
+# $0.0817 (1080p) per second: https://runware.ai/docs/models/minimax-hailuo-02. Together: $0.56 for 768p / 10s (GET /v1/models; the docs
+# table says $0.49 for 768p / 10s, which is MiniMax's 1080P / 6s price). Per second: 768p 10 s $0.056,
+# 768p 6 s $0.046667, 1080p 6 s $0.081667.
+# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
+# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
+# parameter errors list Runware fields), and Runware publishes per-second rates per model.
+# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
 schema = 2
 v2_only = true
 base_model = "minimax/MiniMax-Hailuo-02"
@@ -10,3 +15,15 @@ base_model = "minimax/MiniMax-Hailuo-02"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.056
+
+[[cost.video.output.overrides]]
+when = { duration = { equals = 6 } }
+price = 0.046667
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.081667
