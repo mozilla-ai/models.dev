@@ -1,0 +1,19 @@
+# OVHcloud AI Endpoints embedding model: Qwen3-Embedding-8B
+# Price: $0.12 per 1M input tokens (https://www.ovhcloud.com/en/public-cloud/prices/, AI Endpoints table, accessed
+#   2026-11-11). GET /v1/models gives prompt "0.00000012" per token, the same rate.
+# API: POST https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/embeddings. A live request returned 4096-dimension vectors
+#   with prompt tokens in usage (2026-11-11).
+# The id keeps the API's case: /v1/embeddings returns 404 model_not_found for "qwen3-embedding-8b" (2026-11-11).
+# Upstream syncs OVHcloud from its OpenRouter feed, which lists chat models only, so it has no file for this model.
+schema = 2
+v2_only = true
+base_model = "alibaba/qwen3-embedding-8b"
+
+[api.embeddings]
+sdk = { opencodeai = "@opencode/ai/providers/openai-compatible/embeddings" }
+
+[cost.text.input]
+price = 0.12
+
+[cost.text.output]
+price = 0
