@@ -1,0 +1,28 @@
+# Pruna AI's P-Image-Ideogram, built with Ideogram. Release date 2026-07-30 per Runware's model page
+#   (https://runware.ai/docs/models/prunaai-p-image-ideogram); Pruna's pages name no date.
+# Docs: https://docs.pruna.ai/en/stable/docs_pruna_endpoints/performance_models/p-image-ideogram.html
+#   Text prompt only (natural language or JSON following the Ideogram 4.0 caption schema); image_size 1K or 2K;
+#   aspect ratios 1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3 or custom up to 2560 px; output jpg (default) or png;
+#   thinking levels very_low, low, medium and high (an image-quality setting, not text reasoning).
+schema = 2
+v2_only = true
+type = "image"
+name = "P-Image-Ideogram"
+description = "Fast text-to-image model built with Ideogram for precise in-image text, layout and branding"
+open_weights = false
+release_date = "2026-07-30"
+
+[modalities]
+input = ["text"]
+output = ["image/jpeg", "image/png"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
