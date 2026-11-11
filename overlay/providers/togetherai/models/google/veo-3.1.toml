@@ -1,9 +1,11 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#video-models (accessed 2026-11-11).
-# Price: $0.08 per video (GET /v1/models: "0.08/ per 4s at 720p without audio. .60/s with audio").
+# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
+# Together: "0.08/ per 4s at 720p without audio. .60/s with audio" (GET /v1/models), read as $0.02 per second
+# without audio. NOT VERIFIED: Runware lists $0.20 per second at 720p / 1080p without audio: https://runware.ai/docs/models/google-veo-3-1.
+# Test job 01a1cacf-b6d7-7bc3-aaa9-bbe08be5ebb4 (4 s, 720p, no audio track) waits for a billing check.
+# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
+# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
+# parameter errors list Runware fields), and Runware publishes per-second rates per model.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
-# No [cost]: the docs and pricing page give a flat "price per video", but GET /v1/models describes some of these
-# prices per second or per 5 seconds, so the unit is unclear. The schema has no per-video unit.
-# Not probed (a video costs $0.05 to $0.57).
 schema = 2
 v2_only = true
 base_model = "google/veo-3.1-generate-preview"
@@ -11,3 +13,7 @@ base_model = "google/veo-3.1-generate-preview"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.02
