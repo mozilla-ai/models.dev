@@ -1,0 +1,14 @@
+# mistral-ocr-4: GET https://api.mistral.ai/v1/models (accessed 2026-11-11) lists it with billing_model_name
+#   "mistral-ocr-4", the same as mistral-ocr-4-1. The rest of this file is a copy of
+#   providers/mistral/models/mistral-ocr-4-1.toml, whose notes below were written for mistral-ocr-4-1.
+# Sources:
+#   GET https://api.mistral.ai/v1/models (mistral-ocr-4-1; served on POST /v1/ocr)
+#   https://docs.mistral.ai/models/ocr-4-1 and https://docs.mistral.ai/inference/pricing ($4 per 1,000 pages, $5 per 1,000 annotated pages)
+# No [cost]: OCR is billed per page, which the cost schema has no unit for.
+# APIs: the /v1/models capabilities (completion_fim: POST /v1/fim/completions; moderation: /v1/moderations; ocr: /v1/ocr), https://docs.mistral.ai/api. No AI SDK or OpenCode package calls them.
+schema = 2
+v2_only = true
+base_model = "mistral/mistral-ocr-4-1"
+
+[api.ocr]
+sdk = { aisdk = "none", opencodeai = "none" }
