@@ -1,0 +1,33 @@
+# Spot serverless router for DeepSeek V4 Flash: accounts/fireworks/routers/spot-deepseek-v4-flash
+# Serverless feed https://api.fireworks.ai/v1/serverless/models (accessed 2026-11-11): id
+#   accounts/fireworks/models/deepseek-v4-flash, serverless_mode "spot", usage_identifier
+#   accounts/fireworks/routers/spot-deepseek-v4-flash; $0.105 input, $0.021 cached input, $0.21 output per 1M tokens.
+# GET /inference/v1/models lists the router, and a live chat completion returned 200 with model
+#   accounts/fireworks/models/deepseek-v4-flash and reasoning in reasoning_content (2026-11-11).
+# The Spot docs (https://docs.fireworks.ai/guides/spot-serverless) do not list this router. Spot is best-effort.
+# List Models marks the standard deepseek-v4-flash deprecated on 2026-08-14 (supportsServerless = false), and
+#   upstream removed its standard file then (anomalyco/models.dev#5763). Only this Spot router still serves it.
+# Reasoning, live tests (2026-11-11): reasoning_effort = "none" and thinking.type = "disabled" both gave 0 reasoning
+#   tokens. low, medium, high and max were all accepted, with 33, 22, 39 and 47 reasoning tokens on one prompt, so
+#   the tiers are not clear. Effort keeps high|max from upstream's earlier deepseek-v4-flash file and DeepSeek's
+#   native set (https://api-docs.deepseek.com/guides/thinking_mode/). tool_choice = "required" returned a tool call.
+schema = 2
+v2_only = true
+base_model = "deepseek/deepseek-v4-flash"
+name = "DeepSeek V4 Flash Spot"
+status = "deprecated"
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true, toggle = true, effort = ["high", "max"] }
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 0.105
+cache = { read = 0.021 }
+
+[cost.text.output]
+price = 0.21
