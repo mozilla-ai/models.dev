@@ -1,11 +1,12 @@
-# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
-# Together: $0.10 "per 5 seconds of video" (GET /v1/models), read as $0.02 per second. NOT VERIFIED:
-# Alibaba lists $0.10 (720P) and $0.15 (1080P) per second: https://www.alibabacloud.com/help/en/model-studio/wan2-7-t2v.
-# The text-to-video test job (Wan-AI/wan2.7-t2v) waits for a billing check; this model has the same note.
-# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
-# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
-# parameter errors list Runware fields), and Runware publishes per-second rates per model.
+# Source: https://www.alibabacloud.com/help/en/model-studio/wan2-7-t2v, GET /v1/models and
+# https://docs.together.ai/docs/serverless/overview (accessed 2026-11-11).
+# Unit: "Video generation: Per second of output" (serverless overview). The pricing page's "Price per video"
+# header does not match. GET /v1/models gives $0.10 "per 5 seconds of video"; the billing check below shows
+# Together charges Alibaba's rate instead: 720P $0.10, 1080P $0.15 per second.
+# Image-to-video, 2-15 s, 720p or 1080p.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
+# Not billed directly: it has the same Together note as Wan-AI/wan2.7-t2v, whose billing check matched
+# Alibaba's rate.
 schema = 2
 v2_only = true
 base_model = "alibaba/wan2.7"
@@ -16,4 +17,8 @@ sdk = { aisdk = "none", opencodeai = "none" }
 
 [cost.video.output]
 unit = "second"
-price = 0.02
+price = 0.1
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.15
