@@ -1,0 +1,27 @@
+# Writer's 7B image-to-text model. Launched on Amazon Bedrock 2026-03-26
+#   (https://aws.amazon.com/about-aws/whats-new/2026/03/palmyra-vision-7b-writer-bedrock/); Writer names no other date.
+# Model card (4K context, 4K max output, text and image in, text out):
+#   https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-writer-palmyra-vision-7b.html
+# No public weights from Writer were found, so open_weights is false.
+schema = 2
+v2_only = true
+name = "Palmyra Vision 7B"
+description = "Image-to-text model for handwriting extraction, chart reading and visual compliance checks"
+family = "palmyra"
+open_weights = false
+release_date = "2026-03-26"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/gif", "image/webp"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = true
+top_p = true
+top_k = false
+
+[limit]
+context = 4_096
+output = 4_096

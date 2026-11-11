@@ -1,0 +1,24 @@
+# In-Region only: the model card lists no Geo or Global ID.
+#   https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-writer-palmyra-vision-7b.html
+# Pricing: AWS Price List for us-east-2 (AmazonBedrock, 2026-11-11), Standard tier: $0.00015 / $0.0006 per 1K
+#   input / output tokens, the same on bedrock-runtime and bedrock-mantle.
+# Live checks (Converse, us-east-2, 2026-11-11): text and a PNG image returned 200; outputConfig.textFormat JSON
+#   schema returned valid JSON. A toolConfig request returned 400 ("\"auto\" tool choice requires
+#   --enable-auto-tool-choice and --tool-call-parser to be set"), and a system message returned 400
+#   ("Conversation roles must alternate user/assistant/user/assistant/...").
+# Image formats: Converse image blocks are png|jpeg|gif|webp
+#   (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ImageBlock.html).
+schema = 2
+v2_only = true
+base_model = "writer/palmyra-vision-7b"
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+structured_output = true
+
+[cost.text.input]
+price = 0.15
+
+[cost.text.output]
+price = 0.6
