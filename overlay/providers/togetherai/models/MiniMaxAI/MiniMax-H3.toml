@@ -1,9 +1,11 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#video-models (accessed 2026-11-11).
-# Price: $0.1391 at 2k / 1s (GET /v1/models: "$0.1391 per second of generated output video at 2k").
+# Source: https://docs.together.ai/docs/serverless-models#video-models and GET /v1/models (accessed 2026-11-11).
+# Together: "$0.1391 per second of generated output video at 2k" (GET /v1/models); no 768p price. The 2K rate
+# is used as the base. NOT VERIFIED: Runware lists 768p $0.08 and 2K $0.13: https://runware.ai/docs/models/minimax-h3.
+# Test job 01a1cacf-b6d9-7bc3-89d4-9173b53f912f (4 s, 768p, with audio) waits for a billing check.
+# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview). The
+# pricing page's "Price per video" header does not match. Together's video backend is Runware (the API's
+# parameter errors list Runware fields), and Runware publishes per-second rates per model.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
-# No [cost]: the docs and pricing page give a flat "price per video", but GET /v1/models describes some of these
-# prices per second or per 5 seconds, so the unit is unclear. The schema has no per-video unit.
-# Not probed (a video costs $0.05 to $0.57).
 schema = 2
 v2_only = true
 base_model = "minimax/MiniMax-H3"
@@ -11,3 +13,7 @@ base_model = "minimax/MiniMax-H3"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.1391
