@@ -1,0 +1,16 @@
+# Sources (accessed 2026-11-11):
+#   GET https://api.mistral.ai/v1/models (voxtral-mini-tts-2603, alias voxtral-mini-tts-latest, billing_model_name
+#     voxtral-mini-tts-2603)
+#   https://mistral.ai/news/voxtral-tts ("$0.016 per 1k characters" of input text)
+#   https://docs.mistral.ai/models/voxtral-tts-26-03 marks the model deprecated on 2026-10-31, with Voxtral TTS 3 as the
+#     replacement; the API still serves it. Same price as voxtral-mini-tts-latest.
+schema = 2
+v2_only = true
+base_model = "mistral/voxtral-mini-tts-2603"
+
+[api.speech]
+sdk = { opencodeai = "none" }
+
+[cost.text.input]
+unit = "character"
+price = 16
