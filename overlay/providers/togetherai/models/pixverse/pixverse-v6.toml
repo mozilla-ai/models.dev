@@ -1,9 +1,18 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#video-models (accessed 2026-11-11).
-# Price: $0.09 per video (GET /v1/models: "0.090/s at 1080p without audio. 0.115/s with audio").
+# Source: https://docs.together.ai/docs/serverless-models#video-models, GET /v1/models and
+# https://docs.together.ai/docs/serverless/overview (accessed 2026-11-11).
+# Unit: "Video generation: Per second of output" (serverless overview). The pricing page's "Price per video"
+# header does not match; GET /v1/models gives "0.090/s at 1080p without audio. 0.115/s with audio".
+# By resolution, without / with audio: 360p $0.025 / $0.035, 540p $0.035 / $0.045, 720p $0.045 / $0.060,
+# 1080p $0.090 / $0.115. Together states only the 1080p pair; it equals PixVerse's own rate (18 and 23 credits per
+# second at $0.005), and the other tiers are the same PixVerse rates as resold by DeepInfra
+# (providers/deepinfra/models/Pixverse/Pixverse-6-T2V.toml) and Atlas Cloud
+# (https://www.atlascloud.ai/blog/guides/pixverse-v6-review).
+# Base: 720p without audio. Together rejects `generate_audio` for this model ("Unsupported use of
+# 'generate_audio' parameter", live 2026-11-11), and a default request returned a video with no audio track,
+# so the audio prices are not listed as overrides.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
-# No [cost]: the docs and pricing page give a flat "price per video", but GET /v1/models describes some of these
-# prices per second or per 5 seconds, so the unit is unclear. The schema has no per-video unit.
-# Not probed (a video costs $0.05 to $0.57).
+# Live (2026-11-11): 1 s at 640x360 completed; the job has no outputs.cost field, and the account's billing page
+# showed the expected $0.025.
 schema = 2
 v2_only = true
 base_model = "pixverse/pixverse-v6"
@@ -11,3 +20,19 @@ base_model = "pixverse/pixverse-v6"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.045
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "360p" } }
+price = 0.025
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "540p" } }
+price = 0.035
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.09

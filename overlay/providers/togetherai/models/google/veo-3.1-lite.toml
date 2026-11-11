@@ -1,9 +1,18 @@
-# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#video-models (accessed 2026-11-11).
-# Price: $0.05 per video (GET /v1/models: "0.05/s at 1080p without audio. 0.80/s with audio.").
+# Source: https://docs.together.ai/docs/serverless-models#video-models, GET /v1/models and
+# https://docs.together.ai/docs/serverless/overview (accessed 2026-11-11).
+# Unit: "Video generation: Per second of output" (serverless overview). The pricing page's "Price per video"
+# header does not match; GET /v1/models gives "0.05/s at 1080p without audio. 0.80/s with audio." (0.80 is read
+# as a typo for 0.08, Google's own 1080p rate with audio).
+# By resolution, without / with audio: 720p $0.03 / $0.05, 1080p $0.05 / $0.08. Together states only the 1080p
+# pair; it equals Google's Gemini API rates, and the 720p pair is Google's
+# (https://the-decoder.com/googles-veo-3-1-lite-cuts-video-generation-costs-by-more-than-half/; the same tiers
+# are in providers/openrouter/models/google/veo-3.1-lite.toml).
+# Base: 720p without audio. Together rejects `generate_audio` for this model ("Unsupported use of
+# 'generate_audio' parameter", live 2026-11-11), and a default request returned a video with no audio track,
+# so the audio prices are not listed as overrides.
 # API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
-# No [cost]: the docs and pricing page give a flat "price per video", but GET /v1/models describes some of these
-# prices per second or per 5 seconds, so the unit is unclear. The schema has no per-video unit.
-# Not probed (a video costs $0.05 to $0.57).
+# Live (2026-11-11): 4 s at 1280x720 completed; the job has no outputs.cost field, and the account's billing page
+# showed the expected $0.12 (4 s x $0.03).
 schema = 2
 v2_only = true
 base_model = "google/veo-3.1-lite-generate-preview"
@@ -11,3 +20,11 @@ base_model = "google/veo-3.1-lite-generate-preview"
 [api.videos]
 base_url = "https://api.together.ai/v2"
 sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.03
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.05
