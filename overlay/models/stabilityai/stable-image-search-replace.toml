@@ -1,0 +1,25 @@
+# Stability AI image service on Amazon Bedrock. Model card (launch date): https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-stability-ai-stable-image-search-and-replace.html
+# Request parameters: https://docs.aws.amazon.com/bedrock/latest/userguide/stable-image-services.html
+#   Takes a text prompt and an input image. Input images are jpeg, png or webp; output_format is jpeg, png (default) or webp.
+schema = 2
+v2_only = true
+type = "image"
+name = "Stable Image Search and Replace"
+description = "Finds objects in an image from a text prompt and replaces them with new content"
+open_weights = false
+release_date = "2024-10"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image/jpeg", "image/png", "image/webp"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0

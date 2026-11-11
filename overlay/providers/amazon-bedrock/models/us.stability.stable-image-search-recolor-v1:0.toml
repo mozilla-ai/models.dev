@@ -1,0 +1,15 @@
+# US cross-Region inference profile (us-east-1, us-east-2, us-west-2). The base stability.stable-image-search-recolor-v1:0 ID is
+#   profile-only in us-east-2 (ListFoundationModels, 2026-11-11). Model card: https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-stability-ai-stable-image-search-and-recolor.html
+# API: InvokeModel with the JSON body in https://docs.aws.amazon.com/bedrock/latest/userguide/stable-image-services.html
+# Pricing: https://aws.amazon.com/bedrock/pricing/ (Stability AI Image Services, On-Demand, US regions, 2026-11-11):
+#   $0.07 per image. The AWS Price List has no SKU for this model.
+# Live check (InvokeModel, us-east-2, 2026-11-11): a request without an image returned 400 from Stability's service
+#   (the image field is required), so the profile is reachable. No image was generated.
+schema = 2
+v2_only = true
+base_model = "stabilityai/stable-image-search-recolor"
+name = "Stable Image Search and Recolor (US)"
+
+[cost.image.output]
+unit = "image"
+price = 0.07

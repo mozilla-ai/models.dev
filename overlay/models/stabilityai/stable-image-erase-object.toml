@@ -1,0 +1,25 @@
+# Stability AI image service on Amazon Bedrock. Model card (launch date): https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-stability-ai-stable-image-erase-object.html
+# Request parameters: https://docs.aws.amazon.com/bedrock/latest/userguide/stable-image-services.html
+#   Takes an input image (no text prompt). Input images are jpeg, png or webp; output_format is jpeg, png (default) or webp.
+schema = 2
+v2_only = true
+type = "image"
+name = "Stable Image Erase Object"
+description = "Removes unwanted objects from an image using a mask and fills the area"
+open_weights = false
+release_date = "2024-05-20"
+
+[modalities]
+input = ["image/jpeg", "image/png", "image/webp"]
+output = ["image/jpeg", "image/png", "image/webp"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
