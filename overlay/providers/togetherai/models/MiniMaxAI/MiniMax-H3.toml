@@ -1,0 +1,13 @@
+# Source: https://www.together.ai/pricing and https://docs.together.ai/docs/serverless-models#video-models (accessed 2026-11-11).
+# Price: $0.1391 at 2k / 1s (GET /v1/models: "$0.1391 per second of generated output video at 2k").
+# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
+# No [cost]: the docs and pricing page give a flat "price per video", but GET /v1/models describes some of these
+# prices per second or per 5 seconds, so the unit is unclear. The schema has no per-video unit.
+# Not probed (a video costs $0.05 to $0.57).
+schema = 2
+v2_only = true
+base_model = "minimax/MiniMax-H3"
+
+[api.videos]
+base_url = "https://api.together.ai/v2"
+sdk = { aisdk = "none", opencodeai = "none" }

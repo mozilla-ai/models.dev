@@ -1,0 +1,26 @@
+# ShengShu Technology's Vidu Q3, released 2026-01-30: https://cgworld.jp/flashnews/01-202602-ViduQ3.html
+# Up to 16 s of 1080p video at 24 fps with native audio; text, image, start and end frame, and reference to video
+#   (up to four reference images): https://www.together.ai/models/vidu-q3 and
+#   https://platform.vidu.com/docs/overview/model-map. ShengShu names no input formats.
+schema = 2
+v2_only = true
+type = "video"
+name = "Vidu Q3"
+description = "1080p video model with native audio for text, image, start-end frame and reference to video"
+open_weights = false
+release_date = "2026-01-30"
+
+[modalities]
+input = ["text", "image"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
