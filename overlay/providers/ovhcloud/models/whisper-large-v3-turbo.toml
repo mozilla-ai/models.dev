@@ -1,0 +1,17 @@
+# OVHcloud AI Endpoints transcription model: whisper-large-v3-turbo
+# Price: $0.051 per hour of audio = $0.00085 per minute (https://www.ovhcloud.com/en/public-cloud/prices/, AI Endpoints
+#   "Speech to Text" table, accessed 2026-11-11). OVHcloud bills per second. GET /v1/models gives no price (all "0").
+# API: POST https://oai.endpoints.kepler.ai.cloud.ovh.net/v1/audio/transcriptions
+#   (https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/whisper-large-v3-turbo/). A live request returned the text and
+#   usage {"type": "duration", "seconds": 1.0} (2026-11-11). The catalog page lists max audio 3h and 2048 MB.
+# Upstream syncs OVHcloud from its OpenRouter feed, which lists chat models only, so it has no file for this model.
+schema = 2
+v2_only = true
+base_model = "openai/whisper-large-v3-turbo"
+
+[api.transcriptions]
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/protocols/openai-transcription" }
+
+[cost.audio.input]
+unit = "minute"
+price = 0.00085
