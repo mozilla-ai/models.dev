@@ -1,0 +1,19 @@
+# codestral-embed-2505: GET https://api.mistral.ai/v1/models (accessed 2026-11-11) lists it with billing_model_name
+#   "codestral-embed-2505", the same as codestral-embed. The rest of this file is a copy of
+#   providers/mistral/models/codestral-embed.toml, whose notes below were written for codestral-embed.
+# Sources:
+#   GET https://api.mistral.ai/v1/models (codestral-embed is the canonical row, alias codestral-embed-2505)
+#   https://docs.mistral.ai/models/codestral-embed-25-05 and https://docs.mistral.ai/inference/pricing ($0.15 per MTok input)
+# API: POST https://api.mistral.ai/v1/embeddings (https://docs.mistral.ai/api/endpoint/embeddings).
+schema = 2
+v2_only = true
+base_model = "mistral/codestral-embed-2505"
+
+[api.embeddings]
+sdk = { opencodeai = "@opencode/ai/providers/openai-compatible/embeddings" }
+
+[cost.text.input]
+price = 0.15
+
+[cost.text.output]
+price = 0
