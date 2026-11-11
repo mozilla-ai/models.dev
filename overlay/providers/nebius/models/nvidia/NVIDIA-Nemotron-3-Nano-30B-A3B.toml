@@ -1,0 +1,36 @@
+# Nemotron 3 Nano 30B A3B on Nebius Token Factory: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+# Sources (accessed 2026-11-11):
+# - https://tokenfactory.nebius.com/api/public/models_info (type text2text, fp8, eu-north1, max_model_len = 262_144,
+#   use_cases text/reasoning/function_calling/code/context_and_rag/responses_api; $0.06 input, $0.012 cached input,
+#   $0.24 output per 1M tokens)
+# - GET https://api.tokenfactory.nebius.com/v1/models?verbose=true (same prices; supported_features tools, reasoning)
+# Upstream removed the earlier Nebius file in anomalyco/models.dev#5802 (2026-09-02). Nebius serves the model again.
+# Live checks 2026-11-11 against /v1/chat/completions:
+# - Thinking is on by default. Reasoning text is returned on message.reasoning. No reasoning_field is set: v1's
+#   interleaved.field allows only reasoning_content|reasoning_details (same as DeepSeek-V4.1-Flash-1017 here).
+# - chat_template_kwargs.enable_thinking = false turns thinking off and returns a clean content answer: toggle.
+# - reasoning_effort = none is accepted, but the answer comes back in message.reasoning with no content, so it is
+#   not a usable off switch. low, medium and high gave 95, 283 and 85 completion tokens on one prompt: no clear
+#   tiers, so no effort list.
+# - tool_choice = "required" returned a get_weather tool call.
+# Limits: context and output inherit the lab's 262_144 (equal to max_model_len).
+schema = 2
+v2_only = true
+base_model = "nvidia/nemotron-3-nano-30b-a3b"
+name = "Nemotron-3-Nano-30B-A3B"
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true, toggle = true }
+
+[api.chat-completions]
+
+[api.responses]
+sdk = { aisdk = "@ai-sdk/openai", opencodeai = "@opencode/ai/providers/openai-compatible/responses" }
+
+[cost.text.input]
+price = 0.06
+cache = { read = 0.012 }
+
+[cost.text.output]
+price = 0.24
