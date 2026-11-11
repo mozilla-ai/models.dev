@@ -1,0 +1,25 @@
+# US cross-Region inference profile. The base twelvelabs.pegasus-1-2-v1:0 ID is profile-only in us-east-2
+#   (ListFoundationModels, 2026-11-11). Model card: https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-twelvelabs-pegasus-v1-2.html
+# API: InvokeModel only (https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-pegasus.html). Converse
+#   returned 400 ("This action doesn't support the model that you provided"), so a client that uses Converse cannot call it.
+# Pricing: AWS Price List for us-east-2 (AmazonBedrockFoundationModels, 2026-11-11), the same for Geo and Global:
+#   $0.00049 per second of input video and $7.50 per 1M output tokens. The text prompt has no SKU, so text input is 0.
+#   Pricing page example: "10 seconds * $0.00049 + 2K tokens / 1000 * $0.0075 = $0.0199".
+# Live check (InvokeModel, us-east-2, 2026-11-11): a request without a video returned 400 from the model
+#   (mediaSource is required), so the profile is reachable. No video was sent.
+# Status: Legacy since 2026-09-22, EOL 2027-03-22 (ListFoundationModels modelLifecycle, us-east-2, 2026-11-11).
+schema = 2
+v2_only = true
+base_model = "twelvelabs/pegasus-1.2"
+name = "Pegasus 1.2 (US)"
+status = "deprecated"
+
+[cost.video.input]
+unit = "second"
+price = 0.00049
+
+[cost.text.input]
+price = 0
+
+[cost.text.output]
+price = 7.5

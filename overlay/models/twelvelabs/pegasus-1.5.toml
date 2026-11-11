@@ -1,0 +1,25 @@
+# TwelveLabs Pegasus 1.5. Model card (launch date, modalities): https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-twelvelabs-pegasus-v1-5.html
+# Limits: 261,120-token context and 98,304 max output tokens per the model card.
+# Video in, text out. A request carries a text prompt and one video (mediaSource: base64String or s3Location);
+#   responseFormat.jsonSchema gives structured output; temperature 0 to 1.
+schema = 2
+v2_only = true
+name = "Pegasus 1.5"
+description = "Video-to-text model for summaries, structured responses and timestamped video segmentation"
+open_weights = false
+release_date = "2026-10-08"
+
+[modalities]
+input = ["text", "video"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = true
+top_p = false
+top_k = false
+
+[limit]
+context = 261_120
+output = 98_304
