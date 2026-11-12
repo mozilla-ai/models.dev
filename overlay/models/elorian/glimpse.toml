@@ -1,0 +1,34 @@
+# Sources (accessed 2026-11-12):
+# - https://techcrunch.com/2026/10/16/elorians-first-ai-model-wants-to-reason-with-images-not-just-about-them/
+#   (released Friday 2026-10-16 as a research preview "with API access and a chat interface").
+# - https://www.together.ai/models/elorian-glimpse: input "Text Image Video", output "Text"; "Trained end to end to
+#   use multimodal tools"; "Post-trained on an open-weights base model". Glimpse's own weights are not published.
+# Limit: 262,144 context and 256,000 output tokens (https://openrouter.ai/api/v1/models/elorian/glimpse/endpoints,
+#   Together's endpoint). Elorian publishes no context window of its own.
+# Input: no source names image or video formats, so the generic modalities are used.
+# Sampling: OpenRouter lists temperature, top_p and top_k as accepted on Together's endpoint.
+schema = 2
+v2_only = true
+name = "Glimpse"
+description = "Visual reasoning model that inspects images and video while it thinks"
+open_weights = false
+release_date = "2026-10-16"
+
+[modalities]
+input = ["text", "image", "video"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = true }
+reasoning = { supported = true }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 262_144
+output = 256_000
+
+[[links]]
+url = "https://www.together.ai/models/elorian-glimpse"
+type = "model_card"

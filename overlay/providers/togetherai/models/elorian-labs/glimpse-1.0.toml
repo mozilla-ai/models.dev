@@ -1,0 +1,23 @@
+# Source: GET https://api.together.ai/v1/models (as copied into
+#   https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json, accessed 2026-11-12) and
+#   https://openrouter.ai/api/v1/models/elorian/glimpse/endpoints (Together's endpoint):
+#   $0.60 input, $0.06 cached input, $3.00 output per 1M tokens; context 262,144. Together's billing for 2026-11-11
+#   charged $0.60 input and $3.00 output.
+# Structured output and reasoning: OpenRouter lists response_format, structured_outputs and reasoning on Together's
+# endpoint. No effort levels or toggle are documented, so none are listed.
+# The docs table (https://docs.together.ai/docs/serverless-models) does not list it; the model page says dedicated only.
+schema = 2
+v2_only = true
+base_model = "elorian/glimpse"
+
+[capabilities]
+reasoning = { supported = true }
+cache = { implicit = true }
+structured_output = true
+
+[cost.text.input]
+price = 0.6
+cache = { read = 0.06 }
+
+[cost.text.output]
+price = 3

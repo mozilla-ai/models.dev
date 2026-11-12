@@ -1,0 +1,15 @@
+# Source: GET https://api.together.ai/v1/models (as copied into
+#   https://github.com/BerriAI/litellm/blob/main/model_prices_and_context_window.json, accessed 2026-11-12):
+#   $0.10 input, $0.10 output per 1M tokens; context 32,768. Together's billing for 2026-11-11 charged the same rates.
+# Base: Together serves it under Arize AI's namespace, and Arize publishes no model card
+#   (huggingface.co/arize-ai/qwen-2-1.5b-instruct answers 401). The name and the 32,768 context match Qwen2-1.5B-Instruct.
+# The docs table (https://docs.together.ai/docs/serverless-models) does not list it.
+schema = 2
+v2_only = true
+base_model = "alibaba/qwen2-1.5b-instruct"
+
+[cost.text.input]
+price = 0.1
+
+[cost.text.output]
+price = 0.1
