@@ -1,0 +1,245 @@
+From 98256c7a1742d25cc227769b96cf78f9d0153b0f Mon Sep 17 00:00:00 2001
+From: Dimitris Poulopoulos <dimitris@mozilla.ai>
+Date: Thu, 12 Nov 2026 10:02:55 +0200
+Subject: [PATCH] feat(v2): add a moderation model type for guardrails
+
+---
+ AGENTS.md                                                  | 2 +-
+ models/meta/llama-guard-3-8b.toml                          | 1 +
+ models/meta/llama-guard-4-12b.toml                         | 1 +
+ models/meta/llama-prompt-guard-2-22m.toml                  | 1 +
+ models/meta/llama-prompt-guard-2-86m.toml                  | 1 +
+ models/mistral/mistral-moderation-2603.toml                | 1 +
+ models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml   | 1 +
+ models/nvidia/nemotron-3-content-safety.toml               | 1 +
+ models/nvidia/nemotron-3.5-content-safety.toml             | 1 +
+ models/nvidia/nemotron-content-safety-reasoning-4b.toml    | 1 +
+ models/openai/gpt-oss-safeguard-120b.toml                  | 1 +
+ models/openai/gpt-oss-safeguard-20b.toml                   | 1 +
+ models/openai/omni-moderation-latest.toml                  | 1 +
+ packages/core/src/schema-v2.ts                             | 3 +++
+ packages/core/src/translate.ts                             | 6 +++---
+ packages/core/test/generate-v2.test.ts                     | 3 +++
+ packages/core/test/model-file-v2.test.ts                   | 7 ++++++-
+ providers/cortecs/models/qwen3guard-gen-0.6b.toml          | 1 +
+ providers/cortecs/models/qwen3guard-gen-8b.toml            | 1 +
+ providers/helicone/models/llama-guard-4.toml               | 1 +
+ providers/ovhcloud/models/qwen3guard-gen-0.6b.toml         | 1 +
+ providers/ovhcloud/models/qwen3guard-gen-8b.toml           | 1 +
+ .../models/fastino/gliguard-LLMGuardrails-300M.toml        | 1 +
+ providers/pioneer/models/fastino/gliguard-PII-multi.toml   | 1 +
+ 24 files changed, 35 insertions(+), 5 deletions(-)
+
+diff --git a/AGENTS.md b/AGENTS.md
+index 8deb83964..83918147f 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -63,3 +63,3 @@ output = 128_000
+ 
+-Required: `name`, `description`, `open_weights`, `release_date`, `[modalities]`, `[capabilities]` (`tools`, `reasoning = { supported = … }`, and explicit `temperature`, `top_p`, `top_k`), and `[limit]`. Recommended: `family`, `knowledge`, `type` (defaults to `"chat"`; set it on `image`, `video`, `embedding`, `reranking`, `decision`, `transcription`, `speech`, `realtime`, and `audio` (music and sound effect generation, not speech) models), `license`, `links`, `weights`, `benchmarks`.
++Required: `name`, `description`, `open_weights`, `release_date`, `[modalities]`, `[capabilities]` (`tools`, `reasoning = { supported = … }`, and explicit `temperature`, `top_p`, `top_k`), and `[limit]`. Recommended: `family`, `knowledge`, `type` (defaults to `"chat"`; set it on `image`, `video`, `embedding`, `reranking`, `decision`, `transcription`, `speech`, `realtime`, `audio` (music and sound effect generation, not speech), and `moderation` (guardrails that classify content as safe or unsafe, such as Llama Guard or gpt-oss-safeguard; v1 keeps publishing them untyped) models), `license`, `links`, `weights`, `benchmarks`.
+ 
+diff --git a/models/meta/llama-guard-3-8b.toml b/models/meta/llama-guard-3-8b.toml
+index a95dad86c..d4bc268f9 100644
+--- a/models/meta/llama-guard-3-8b.toml
++++ b/models/meta/llama-guard-3-8b.toml
+@@ -1,2 +1,3 @@
+ schema = 2
++type = "moderation"
+ name = "Llama-Guard-3-8B"
+diff --git a/models/meta/llama-guard-4-12b.toml b/models/meta/llama-guard-4-12b.toml
+index 53e93bd3e..65fb059a8 100644
+--- a/models/meta/llama-guard-4-12b.toml
++++ b/models/meta/llama-guard-4-12b.toml
+@@ -7,2 +7,3 @@
+ schema = 2
++type = "moderation"
+ name = "Llama Guard 4 12B"
+diff --git a/models/meta/llama-prompt-guard-2-22m.toml b/models/meta/llama-prompt-guard-2-22m.toml
+index 91296ad3b..885be0d10 100644
+--- a/models/meta/llama-prompt-guard-2-22m.toml
++++ b/models/meta/llama-prompt-guard-2-22m.toml
+@@ -8,2 +8,3 @@
+ schema = 2
++type = "moderation"
+ name = "Llama Prompt Guard 2 22M"
+diff --git a/models/meta/llama-prompt-guard-2-86m.toml b/models/meta/llama-prompt-guard-2-86m.toml
+index 04c421ec2..1136eb6d3 100644
+--- a/models/meta/llama-prompt-guard-2-86m.toml
++++ b/models/meta/llama-prompt-guard-2-86m.toml
+@@ -8,2 +8,3 @@
+ schema = 2
++type = "moderation"
+ name = "Llama Prompt Guard 2 86M"
+diff --git a/models/mistral/mistral-moderation-2603.toml b/models/mistral/mistral-moderation-2603.toml
+index f24fe7047..f34980cb0 100644
+--- a/models/mistral/mistral-moderation-2603.toml
++++ b/models/mistral/mistral-moderation-2603.toml
+@@ -7,2 +7,3 @@ schema = 2
+ v2_only = true
++type = "moderation"
+ name = "Mistral Moderation 26.03"
+diff --git a/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml b/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
+index cff473209..5c573c2e0 100644
+--- a/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
++++ b/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
+@@ -2,2 +2,3 @@
+ schema = 2
++type = "moderation"
+ name = "Llama 3.1 Nemotron Safety Guard 8B v3"
+diff --git a/models/nvidia/nemotron-3-content-safety.toml b/models/nvidia/nemotron-3-content-safety.toml
+index 063a46959..1fcb4bd5f 100644
+--- a/models/nvidia/nemotron-3-content-safety.toml
++++ b/models/nvidia/nemotron-3-content-safety.toml
+@@ -3,2 +3,3 @@
+ schema = 2
++type = "moderation"
+ name = "Nemotron 3 Content Safety"
+diff --git a/models/nvidia/nemotron-3.5-content-safety.toml b/models/nvidia/nemotron-3.5-content-safety.toml
+index b74b1f6d8..5d3807575 100644
+--- a/models/nvidia/nemotron-3.5-content-safety.toml
++++ b/models/nvidia/nemotron-3.5-content-safety.toml
+@@ -6,2 +6,3 @@
+ schema = 2
++type = "moderation"
+ name = "Nemotron 3.5 Content Safety"
+diff --git a/models/nvidia/nemotron-content-safety-reasoning-4b.toml b/models/nvidia/nemotron-content-safety-reasoning-4b.toml
+index c6afd6169..eac47102f 100644
+--- a/models/nvidia/nemotron-content-safety-reasoning-4b.toml
++++ b/models/nvidia/nemotron-content-safety-reasoning-4b.toml
+@@ -2,2 +2,3 @@
+ schema = 2
++type = "moderation"
+ name = "Nemotron Content Safety Reasoning 4B"
+diff --git a/models/openai/gpt-oss-safeguard-120b.toml b/models/openai/gpt-oss-safeguard-120b.toml
+index 26d8d58ff..c5a9e8e22 100644
+--- a/models/openai/gpt-oss-safeguard-120b.toml
++++ b/models/openai/gpt-oss-safeguard-120b.toml
+@@ -1,2 +1,3 @@
+ schema = 2
++type = "moderation"
+ name = "GPT OSS Safeguard 120B"
+diff --git a/models/openai/gpt-oss-safeguard-20b.toml b/models/openai/gpt-oss-safeguard-20b.toml
+index 99645a604..24da3a0b9 100644
+--- a/models/openai/gpt-oss-safeguard-20b.toml
++++ b/models/openai/gpt-oss-safeguard-20b.toml
+@@ -10,2 +10,3 @@
+ schema = 2
++type = "moderation"
+ name = "GPT OSS Safeguard 20B"
+diff --git a/models/openai/omni-moderation-latest.toml b/models/openai/omni-moderation-latest.toml
+index 06f419613..a873e5d9b 100644
+--- a/models/openai/omni-moderation-latest.toml
++++ b/models/openai/omni-moderation-latest.toml
+@@ -10,2 +10,3 @@ schema = 2
+ v2_only = true
++type = "moderation"
+ name = "omni-moderation"
+diff --git a/packages/core/src/schema-v2.ts b/packages/core/src/schema-v2.ts
+index 8da2503d1..38e88bc5f 100644
+--- a/packages/core/src/schema-v2.ts
++++ b/packages/core/src/schema-v2.ts
+@@ -24,2 +24,5 @@ export const ModelTypeV2Values = [
+   "audio",
++  // Guardrail models that classify content as safe or unsafe (Llama Guard,
++  // Prompt Guard, gpt-oss-safeguard, moderation endpoints).
++  "moderation",
+ ] as const;
+diff --git a/packages/core/src/translate.ts b/packages/core/src/translate.ts
+index ccf3ed86f..835114915 100644
+--- a/packages/core/src/translate.ts
++++ b/packages/core/src/translate.ts
+@@ -81,4 +81,4 @@ export function providerTomlToV1(toml: Record<string, unknown>): Record<string,
+ // must set `v2_only = true`, and v1 leaves the type out. `audio` (music, sound
+-// effects) is the exception: those models were in v1 untyped before the type
+-// existed, so v1 keeps publishing them untyped.
++// effects) and `moderation` (guardrails) are the exceptions: those models were
++// in v1 untyped before the type existed, so v1 keeps publishing them untyped.
+ export function v1ModelType(
+@@ -89,3 +89,3 @@ export function v1ModelType(
+   if (type === undefined || (MODEL_TYPES as readonly string[]).includes(type)) return type;
+-  if (type === "audio") return undefined;
++  if (type === "audio" || type === "moderation") return undefined;
+   if (v2Only !== true) {
+diff --git a/packages/core/test/generate-v2.test.ts b/packages/core/test/generate-v2.test.ts
+index c5adbd911..629f63b12 100644
+--- a/packages/core/test/generate-v2.test.ts
++++ b/packages/core/test/generate-v2.test.ts
+@@ -161,2 +161,5 @@ describe("v2 catalog generation", () => {
+     expect(providersV2["cloudflare-workers-ai"]?.models["@cf/cloudflare/clairic"]?.type).toBe("extraction");
++    // Guardrails are typed in v2 only; v1 keeps publishing them untyped.
++    expect(providersV2.groq?.models["meta-llama/llama-prompt-guard-2-86m"]?.type).toBe("moderation");
++    expect(providersV2.openrouter?.models["openai/gpt-oss-safeguard-20b"]?.type).toBe("moderation");
+     expect(
+diff --git a/packages/core/test/model-file-v2.test.ts b/packages/core/test/model-file-v2.test.ts
+index 7c5c219f8..a399c56d7 100644
+--- a/packages/core/test/model-file-v2.test.ts
++++ b/packages/core/test/model-file-v2.test.ts
+@@ -6,3 +6,3 @@ import path from "node:path";
+ import { formatModelV2, formatTomlValue, patchModelV2, providerModelToV2 } from "../src/model-file-v2.js";
+-import { explicitFalseFlags, modelV2ToV1, readLabMetadata } from "../src/translate.js";
++import { explicitFalseFlags, modelV2ToV1, readLabMetadata, v1ModelType } from "../src/translate.js";
+ 
+@@ -409 +409,6 @@ test("patchModelV2 keeps a type that v1 can't carry", () => {
+ });
++
++test("v1 publishes moderation models untyped, without v2_only", () => {
++  expect(v1ModelType("moderation", undefined)).toBeUndefined();
++  expect(() => v1ModelType("extraction", undefined)).toThrow();
++});
+diff --git a/providers/cortecs/models/qwen3guard-gen-0.6b.toml b/providers/cortecs/models/qwen3guard-gen-0.6b.toml
+index b3128ffdc..898eebb85 100644
+--- a/providers/cortecs/models/qwen3guard-gen-0.6b.toml
++++ b/providers/cortecs/models/qwen3guard-gen-0.6b.toml
+@@ -3,2 +3,3 @@
+ schema = 2
++type = "moderation"
+ name = "qwen3guard-gen-0.6b"
+diff --git a/providers/cortecs/models/qwen3guard-gen-8b.toml b/providers/cortecs/models/qwen3guard-gen-8b.toml
+index f2b2ff5c0..ab383b958 100644
+--- a/providers/cortecs/models/qwen3guard-gen-8b.toml
++++ b/providers/cortecs/models/qwen3guard-gen-8b.toml
+@@ -3,2 +3,3 @@
+ schema = 2
++type = "moderation"
+ name = "qwen3guard-gen-8b"
+diff --git a/providers/helicone/models/llama-guard-4.toml b/providers/helicone/models/llama-guard-4.toml
+index 462d51cb5..b585befd9 100644
+--- a/providers/helicone/models/llama-guard-4.toml
++++ b/providers/helicone/models/llama-guard-4.toml
+@@ -1,2 +1,3 @@
+ schema = 2
++type = "moderation"
+ name = "Meta Llama Guard 4 12B"
+diff --git a/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml b/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
+index 17028a66c..759cfef8a 100644
+--- a/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
++++ b/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
+@@ -2,2 +2,3 @@
+ schema = 2
++type = "moderation"
+ name = "Qwen3Guard-Gen-0.6B"
+diff --git a/providers/ovhcloud/models/qwen3guard-gen-8b.toml b/providers/ovhcloud/models/qwen3guard-gen-8b.toml
+index a1581ef87..b20b4ba89 100644
+--- a/providers/ovhcloud/models/qwen3guard-gen-8b.toml
++++ b/providers/ovhcloud/models/qwen3guard-gen-8b.toml
+@@ -2,2 +2,3 @@
+ schema = 2
++type = "moderation"
+ name = "Qwen3Guard-Gen-8B"
+diff --git a/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml b/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml
+index b7dc984fa..7c3cb84f2 100644
+--- a/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml
++++ b/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml
+@@ -7,2 +7,3 @@
+ schema = 2
++type = "moderation"
+ name = "GLiGuard LLM Guardrails 300M"
+diff --git a/providers/pioneer/models/fastino/gliguard-PII-multi.toml b/providers/pioneer/models/fastino/gliguard-PII-multi.toml
+index 3a2b7e270..1b941c959 100644
+--- a/providers/pioneer/models/fastino/gliguard-PII-multi.toml
++++ b/providers/pioneer/models/fastino/gliguard-PII-multi.toml
+@@ -12,2 +12,3 @@
+ schema = 2
++type = "moderation"
+ name = "GLiNER2-Guardrails-PII-Multi"

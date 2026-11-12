@@ -11,7 +11,7 @@ added here is also offered upstream; once a file lands there, it leaves this rep
 | Branch | Holds | Who writes it |
 |---|---|---|
 | `dev` | a byte-for-byte mirror of `anomalyco/models.dev:dev` | the `sync` job only, by force-push |
-| `otari` (default) | this README, the workflow, `scripts/`, `overlay/` | people, by pull request |
+| `otari` (default) | this README, the workflow, `scripts/`, `overlay/`, `patches/` | people, by pull request |
 | `feat/*` | one upstream contribution each, cut from `dev` | `scripts/contribute.sh` |
 
 Our commits never sit on a branch that also carries upstream history, so there is
@@ -25,13 +25,20 @@ is served as `providers/togetherai/models/<id>.toml`. A file that replaces one
 upstream already has keeps the upstream version it was written against in
 `overlay/.base/<same path>`.
 
+`patches/` holds code changes that wait for an upstream merge, such as a new model
+type. The overlay can only add or replace whole files, and upstream edits its code
+too often for a whole-file override to hold. Each patch is the commit of an open
+upstream pull request, made with `git format-patch -1 -U1` on its `feat/<name>`
+branch. The build applies the patches first, then the overlay.
+
 ## What runs every hour
 
 [`catalog.yml`](.github/workflows/catalog.yml), at :47 (upstream syncs its catalogs at :17),
 on every push to `otari`, and on demand:
 
 1. `sync` force-pushes upstream's `dev` to ours.
-2. `build` checks out `dev` and `otari`, runs `scripts/apply-overlay.sh`, then
+2. `build` checks out `dev` and `otari`, runs `scripts/apply-patches.sh` and
+   `scripts/apply-overlay.sh`, then
    `bun validate` and upstream's own build.
 3. `deploy` publishes the JSON endpoints to GitHub Pages. `version.json` names the
    upstream and overlay commits the site was built from.
@@ -54,6 +61,11 @@ Pull requests to `otari` run the same build without the deploy.
 | `B` differs from `U` | upstream changed a file we override | **build fails**, names `F` |
 | `U`, no `B`, differs from `F` | upstream has its own `F` | **build fails**, names `F` |
 
+`apply-patches.sh` applies each patch that applies cleanly. A patch that applies
+in reverse has landed upstream: the build warns `delete patches/<name>`. A patch
+that does neither fails the build: delete it if upstream merged a changed version,
+else rebase its `feat/<name>` branch on `dev` and regenerate it.
+
 A failure means a person looks at the file once: re-check the override and run
 `scripts/override.sh <path>` to refresh its base, or delete the override.
 
@@ -63,6 +75,9 @@ A failure means a person looks at the file once: re-check the override and run
   `overlay/models/<lab>/` when the provider file names a `base_model`), open a PR to
   `otari`. Upstream's `AGENTS.md` and `bun validate` are the rules.
 - **Change a model upstream has:** `scripts/override.sh <path>`, edit `overlay/<path>`, PR.
+- **Change upstream code:** commit on a `feat/<name>` branch cut from `dev`, open
+  the upstream PR, and add `git format-patch -1 -U1 --stdout > patches/<name>.patch`
+  to `otari` by PR. After the merge, delete the patch.
 - **Send it upstream:** `scripts/contribute.sh <name> "<PR title>" <path>...`. Keep PRs
   small, one provider or model family each. After the merge, the next hourly run warns
   `landed upstream, delete overlay/<path>`; deleting it is the whole follow-up.
