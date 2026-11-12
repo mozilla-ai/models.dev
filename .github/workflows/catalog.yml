@@ -1,7 +1,7 @@
 name: Catalog
 
 # Three jobs. sync force-pushes anomalyco/models.dev:dev to this fork's dev, so
-# dev stays a byte-for-byte mirror. build lays overlay/ over that mirror,
+# dev stays a byte-for-byte mirror. build applies patches/ and lays overlay/ over that mirror,
 # validates, and builds the catalog JSON the way upstream's deploy does. deploy
 # publishes it to GitHub Pages, so https://mozilla-ai.github.io/models.dev/
 # serves what https://models.dev/ serves upstream, plus the overlay.
@@ -64,6 +64,9 @@ jobs:
         with:
           path: overlay-src
           persist-credentials: false
+
+      - name: Apply the patches
+        run: overlay-src/scripts/apply-patches.sh overlay-src/patches upstream
 
       - name: Apply the overlay
         run: overlay-src/scripts/apply-overlay.sh overlay-src/overlay upstream
