@@ -1,0 +1,33 @@
+# Model card: https://huggingface.co/Qwen/Qwen2-1.5B-Instruct (Apache 2.0; config.json max_position_embeddings 32,768).
+# Released with the Qwen2 family on 2024-06-07: https://qwenlm.github.io/blog/qwen2/ ("the two smaller models in the
+#   lineup support contexts of 32k").
+# Tools: the chat template in tokenizer_config.json renders only role and content, with no tool block.
+# Output: the card gives one context window and no separate generation cap.
+# Sampling: open weights, so temperature, top_p and top_k are runtime settings of the host.
+schema = 2
+v2_only = true
+name = "Qwen2 1.5B Instruct"
+description = "Small open Qwen2 instruction model for chat"
+family = "qwen"
+open_weights = true
+release_date = "2024-06-07"
+license = "Apache 2.0"
+
+[modalities]
+input = ["text"]
+output = ["text"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = true
+top_p = true
+top_k = true
+
+[limit]
+context = 32_768
+output = 32_768
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/Qwen/Qwen2-1.5B-Instruct"

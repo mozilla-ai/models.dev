@@ -1,0 +1,25 @@
+# Source: Together's model listing returns this id beside alibaba/happyhorse-1.0-t2v (seen 2026-11-12); the docs
+# table and https://www.together.ai/models/happyhorse-1-0-t2v name only the alibaba/ id. Same model and price as
+# that route. Together: "$0.14/sec" at 720P and "$0.24/sec at 1080p" (GET /v1/models on 2026-11-11, for
+# alibaba/happyhorse-1.0-t2v).
+# Unit: "Video generation: Per second of output" (https://docs.together.ai/docs/serverless/overview).
+# API: async POST https://api.together.ai/v2/videos, then poll: https://docs.together.ai/docs/inference/videos/overview
+schema = 2
+v2_only = true
+base_model = "alibaba/happyhorse-1.0"
+
+[modalities]
+input = ["text"]
+output = ["video/mp4"]
+
+[api.videos]
+base_url = "https://api.together.ai/v2"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.14
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.24
