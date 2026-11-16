@@ -1,37 +1,41 @@
-From 98256c7a1742d25cc227769b96cf78f9d0153b0f Mon Sep 17 00:00:00 2001
+From ee4d247754d9eb4221b8ad66aa92f07f9b416767 Mon Sep 17 00:00:00 2001
 From: Dimitris Poulopoulos <dimitris@mozilla.ai>
 Date: Thu, 12 Nov 2026 10:02:55 +0200
 Subject: [PATCH] feat(v2): add a moderation model type for guardrails
 
 ---
- AGENTS.md                                                  | 2 +-
- models/meta/llama-guard-3-8b.toml                          | 1 +
- models/meta/llama-guard-4-12b.toml                         | 1 +
- models/meta/llama-prompt-guard-2-22m.toml                  | 1 +
- models/meta/llama-prompt-guard-2-86m.toml                  | 1 +
- models/mistral/mistral-moderation-2603.toml                | 1 +
- models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml   | 1 +
- models/nvidia/nemotron-3-content-safety.toml               | 1 +
- models/nvidia/nemotron-3.5-content-safety.toml             | 1 +
- models/nvidia/nemotron-content-safety-reasoning-4b.toml    | 1 +
- models/openai/gpt-oss-safeguard-120b.toml                  | 1 +
- models/openai/gpt-oss-safeguard-20b.toml                   | 1 +
- models/openai/omni-moderation-latest.toml                  | 1 +
- packages/core/src/schema-v2.ts                             | 3 +++
- packages/core/src/translate.ts                             | 6 +++---
- packages/core/test/generate-v2.test.ts                     | 3 +++
- packages/core/test/model-file-v2.test.ts                   | 7 ++++++-
- providers/cortecs/models/qwen3guard-gen-0.6b.toml          | 1 +
- providers/cortecs/models/qwen3guard-gen-8b.toml            | 1 +
- providers/helicone/models/llama-guard-4.toml               | 1 +
- providers/ovhcloud/models/qwen3guard-gen-0.6b.toml         | 1 +
- providers/ovhcloud/models/qwen3guard-gen-8b.toml           | 1 +
- .../models/fastino/gliguard-LLMGuardrails-300M.toml        | 1 +
- providers/pioneer/models/fastino/gliguard-PII-multi.toml   | 1 +
- 24 files changed, 35 insertions(+), 5 deletions(-)
+ AGENTS.md                                     |  2 +-
+ models/alibaba/qwen3guard-gen-0.6b.toml       | 33 +++++++++++++++++++
+ models/alibaba/qwen3guard-gen-8b.toml         | 33 +++++++++++++++++++
+ models/meta/llama-guard-3-8b.toml             |  1 +
+ models/meta/llama-guard-4-12b.toml            |  1 +
+ models/meta/llama-prompt-guard-2-22m.toml     |  1 +
+ models/meta/llama-prompt-guard-2-86m.toml     |  1 +
+ models/mistral/mistral-moderation-2603.toml   |  1 +
+ ...llama-3.1-nemotron-safety-guard-8b-v3.toml |  1 +
+ models/nvidia/nemotron-3-content-safety.toml  |  1 +
+ .../nvidia/nemotron-3.5-content-safety.toml   |  1 +
+ .../nemotron-content-safety-reasoning-4b.toml |  1 +
+ models/openai/gpt-oss-safeguard-120b.toml     |  1 +
+ models/openai/gpt-oss-safeguard-20b.toml      |  1 +
+ models/openai/omni-moderation-latest.toml     |  1 +
+ packages/core/src/schema-v2.ts                |  3 ++
+ packages/core/src/translate.ts                |  6 ++--
+ packages/core/test/generate-v2.test.ts        |  3 ++
+ packages/core/test/model-file-v2.test.ts      |  7 +++-
+ .../cortecs/models/qwen3guard-gen-0.6b.toml   |  9 +----
+ .../cortecs/models/qwen3guard-gen-8b.toml     |  9 +----
+ providers/helicone/models/llama-guard-4.toml  | 15 ++-------
+ .../ovhcloud/models/qwen3guard-gen-0.6b.toml  | 11 +------
+ .../ovhcloud/models/qwen3guard-gen-8b.toml    | 11 +------
+ .../fastino/gliguard-LLMGuardrails-300M.toml  |  1 +
+ .../models/fastino/gliguard-PII-multi.toml    |  1 +
+ 26 files changed, 102 insertions(+), 54 deletions(-)
+ create mode 100644 models/alibaba/qwen3guard-gen-0.6b.toml
+ create mode 100644 models/alibaba/qwen3guard-gen-8b.toml
 
 diff --git a/AGENTS.md b/AGENTS.md
-index 8deb83964..83918147f 100644
+index cb4ce0126..0bdb3d0f5 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
 @@ -63,3 +63,3 @@ output = 128_000
@@ -39,6 +43,84 @@ index 8deb83964..83918147f 100644
 -Required: `name`, `description`, `open_weights`, `release_date`, `[modalities]`, `[capabilities]` (`tools`, `reasoning = { supported = … }`, and explicit `temperature`, `top_p`, `top_k`), and `[limit]`. Recommended: `family`, `knowledge`, `type` (defaults to `"chat"`; set it on `image`, `video`, `embedding`, `reranking`, `decision`, `transcription`, `speech`, `realtime`, and `audio` (music and sound effect generation, not speech) models), `license`, `links`, `weights`, `benchmarks`.
 +Required: `name`, `description`, `open_weights`, `release_date`, `[modalities]`, `[capabilities]` (`tools`, `reasoning = { supported = … }`, and explicit `temperature`, `top_p`, `top_k`), and `[limit]`. Recommended: `family`, `knowledge`, `type` (defaults to `"chat"`; set it on `image`, `video`, `embedding`, `reranking`, `decision`, `transcription`, `speech`, `realtime`, `audio` (music and sound effect generation, not speech), and `moderation` (guardrails that classify content as safe or unsafe, such as Llama Guard or gpt-oss-safeguard; v1 keeps publishing them untyped) models), `license`, `links`, `weights`, `benchmarks`.
  
+diff --git a/models/alibaba/qwen3guard-gen-0.6b.toml b/models/alibaba/qwen3guard-gen-0.6b.toml
+new file mode 100644
+index 000000000..af112e06a
+--- /dev/null
++++ b/models/alibaba/qwen3guard-gen-0.6b.toml
+@@ -0,0 +1,33 @@
++# Sources (accessed 2026-11-12): https://huggingface.co/Qwen/Qwen3Guard-Gen-0.6B (Apache-2.0; fine-tuned from
++#   Qwen/Qwen3-0.6B; published 2025-09-23 per the Hugging Face API createdAt), https://github.com/QwenLM/Qwen3Guard.
++#   Generative safety classifier: labels a prompt or a response Safe, Controversial or Unsafe and names the
++#   categories, as text; 119 languages. Context: max_position_embeddings 32,768 in config.json, no rope scaling.
++# Not v2_only: v1 already serves it (cortecs, ovhcloud).
++# Sampling: open weights, so temperature, top_p and top_k are runtime sampler settings on any host.
++schema = 2
++type = "moderation"
++name = "Qwen3Guard-Gen-0.6B"
++description = "Multilingual Qwen3-based safety classifier that labels prompts and responses safe, controversial, or unsafe"
++family = "qwen"
++open_weights = true
++release_date = "2025-09-23"
++license = "Apache-2.0"
++
++[modalities]
++input = ["text"]
++output = ["text"]
++
++[capabilities]
++tools = { supported = false }
++reasoning = { supported = false }
++temperature = true
++top_p = true
++top_k = true
++
++[limit]
++context = 32_768
++output = 32_768
++
++[[weights]]
++label = "Hugging Face"
++url = "https://huggingface.co/Qwen/Qwen3Guard-Gen-0.6B"
+diff --git a/models/alibaba/qwen3guard-gen-8b.toml b/models/alibaba/qwen3guard-gen-8b.toml
+new file mode 100644
+index 000000000..8b239aa08
+--- /dev/null
++++ b/models/alibaba/qwen3guard-gen-8b.toml
+@@ -0,0 +1,33 @@
++# Sources (accessed 2026-11-12): https://huggingface.co/Qwen/Qwen3Guard-Gen-8B (Apache-2.0; fine-tuned from
++#   Qwen/Qwen3-8B; published 2025-09-23 per the Hugging Face API createdAt), https://github.com/QwenLM/Qwen3Guard.
++#   Generative safety classifier: labels a prompt or a response Safe, Controversial or Unsafe and names the
++#   categories, as text; 119 languages. Context: max_position_embeddings 32,768 in config.json, no rope scaling.
++# Not v2_only: v1 already serves it (cortecs, ovhcloud).
++# Sampling: open weights, so temperature, top_p and top_k are runtime sampler settings on any host.
++schema = 2
++type = "moderation"
++name = "Qwen3Guard-Gen-8B"
++description = "Multilingual Qwen3-based safety classifier that labels prompts and responses safe, controversial, or unsafe"
++family = "qwen"
++open_weights = true
++release_date = "2025-09-23"
++license = "Apache-2.0"
++
++[modalities]
++input = ["text"]
++output = ["text"]
++
++[capabilities]
++tools = { supported = false }
++reasoning = { supported = false }
++temperature = true
++top_p = true
++top_k = true
++
++[limit]
++context = 32_768
++output = 32_768
++
++[[weights]]
++label = "Hugging Face"
++url = "https://huggingface.co/Qwen/Qwen3Guard-Gen-8B"
 diff --git a/models/meta/llama-guard-3-8b.toml b/models/meta/llama-guard-3-8b.toml
 index a95dad86c..d4bc268f9 100644
 --- a/models/meta/llama-guard-3-8b.toml
@@ -112,10 +194,10 @@ index c6afd6169..eac47102f 100644
 +type = "moderation"
  name = "Nemotron Content Safety Reasoning 4B"
 diff --git a/models/openai/gpt-oss-safeguard-120b.toml b/models/openai/gpt-oss-safeguard-120b.toml
-index 26d8d58ff..c5a9e8e22 100644
+index 97118aa2c..82a39d14a 100644
 --- a/models/openai/gpt-oss-safeguard-120b.toml
 +++ b/models/openai/gpt-oss-safeguard-120b.toml
-@@ -1,2 +1,3 @@
+@@ -4,2 +4,3 @@
  schema = 2
 +type = "moderation"
  name = "GPT OSS Safeguard 120B"
@@ -136,7 +218,7 @@ index 06f419613..a873e5d9b 100644
 +type = "moderation"
  name = "omni-moderation"
 diff --git a/packages/core/src/schema-v2.ts b/packages/core/src/schema-v2.ts
-index 8da2503d1..38e88bc5f 100644
+index 41ddccd6a..0e1ba03b0 100644
 --- a/packages/core/src/schema-v2.ts
 +++ b/packages/core/src/schema-v2.ts
 @@ -24,2 +24,5 @@ export const ModelTypeV2Values = [
@@ -188,45 +270,107 @@ index 7c5c219f8..a399c56d7 100644
 +  expect(() => v1ModelType("extraction", undefined)).toThrow();
 +});
 diff --git a/providers/cortecs/models/qwen3guard-gen-0.6b.toml b/providers/cortecs/models/qwen3guard-gen-0.6b.toml
-index b3128ffdc..898eebb85 100644
+index b3128ffdc..2a826613b 100644
 --- a/providers/cortecs/models/qwen3guard-gen-0.6b.toml
 +++ b/providers/cortecs/models/qwen3guard-gen-0.6b.toml
-@@ -3,2 +3,3 @@
+@@ -3,10 +3,3 @@
  schema = 2
-+type = "moderation"
- name = "qwen3guard-gen-0.6b"
+-name = "qwen3guard-gen-0.6b"
+-description = "Qwen3Guard-Gen-0.6B is a lightweight multilingual safety moderation model that classifies prompts and responses into safe, controversial, or unsafe categories."
+-open_weights = false
+-release_date = "2026-02-04"
+-
+-[modalities]
+-input = ["text"]
+-output = ["text"]
++base_model = "alibaba/qwen3guard-gen-0.6b"
+ 
 diff --git a/providers/cortecs/models/qwen3guard-gen-8b.toml b/providers/cortecs/models/qwen3guard-gen-8b.toml
-index f2b2ff5c0..ab383b958 100644
+index f2b2ff5c0..54db0e665 100644
 --- a/providers/cortecs/models/qwen3guard-gen-8b.toml
 +++ b/providers/cortecs/models/qwen3guard-gen-8b.toml
-@@ -3,2 +3,3 @@
+@@ -3,10 +3,3 @@
  schema = 2
-+type = "moderation"
- name = "qwen3guard-gen-8b"
+-name = "qwen3guard-gen-8b"
+-description = "Qwen3Guard-Gen-8B is a large-scale multilingual safety moderation model designed for high-accuracy prompt and response classification."
+-open_weights = false
+-release_date = "2026-02-04"
+-
+-[modalities]
+-input = ["text"]
+-output = ["text"]
++base_model = "alibaba/qwen3guard-gen-8b"
+ 
 diff --git a/providers/helicone/models/llama-guard-4.toml b/providers/helicone/models/llama-guard-4.toml
-index 462d51cb5..b585befd9 100644
+index 462d51cb5..c00abbae9 100644
 --- a/providers/helicone/models/llama-guard-4.toml
 +++ b/providers/helicone/models/llama-guard-4.toml
-@@ -1,2 +1,3 @@
+@@ -1,17 +1,6 @@
++# knowledge: kept from v1, where the generator copied the Helicone registry trainingDate; unsourced (lab: none).
  schema = 2
-+type = "moderation"
++base_model = "meta/llama-guard-4-12b"
  name = "Meta Llama Guard 4 12B"
+-description = "Safety model for policy screening, moderation, and risk-aware routing workflows"
+-family = "llama"
+-open_weights = false
+ knowledge = "2025-01"
+-release_date = "2025-01-01"
+-
+-[modalities]
+-input = ["text", "image"]
+-output = ["text"]
+-
+-[capabilities]
+-tools = { supported = false }
+-reasoning = { supported = false }
+-temperature = true
+ 
 diff --git a/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml b/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
-index 17028a66c..759cfef8a 100644
+index 17028a66c..9447c1f37 100644
 --- a/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
 +++ b/providers/ovhcloud/models/qwen3guard-gen-0.6b.toml
-@@ -2,2 +2,3 @@
+@@ -2,10 +2,3 @@
  schema = 2
-+type = "moderation"
- name = "Qwen3Guard-Gen-0.6B"
+-name = "Qwen3Guard-Gen-0.6B"
+-description = "Open-weight instruction model for adaptable chat and self-hosted production workloads"
+-open_weights = true
+-release_date = "2026-01-22"
+-
+-[modalities]
+-input = ["text"]
+-output = ["text"]
++base_model = "alibaba/qwen3guard-gen-0.6b"
+ 
+@@ -14,6 +7,4 @@ tools = { supported = false }
+ reasoning = { supported = false }
+-temperature = true
+ 
+ [limit]
+-context = 32_768
+ output = 16_384
 diff --git a/providers/ovhcloud/models/qwen3guard-gen-8b.toml b/providers/ovhcloud/models/qwen3guard-gen-8b.toml
-index a1581ef87..b20b4ba89 100644
+index a1581ef87..e6a0bf2fd 100644
 --- a/providers/ovhcloud/models/qwen3guard-gen-8b.toml
 +++ b/providers/ovhcloud/models/qwen3guard-gen-8b.toml
-@@ -2,2 +2,3 @@
+@@ -2,10 +2,3 @@
  schema = 2
-+type = "moderation"
- name = "Qwen3Guard-Gen-8B"
+-name = "Qwen3Guard-Gen-8B"
+-description = "Open-weight instruction model for adaptable chat and self-hosted production workloads"
+-open_weights = true
+-release_date = "2026-01-22"
+-
+-[modalities]
+-input = ["text"]
+-output = ["text"]
++base_model = "alibaba/qwen3guard-gen-8b"
+ 
+@@ -14,6 +7,4 @@ tools = { supported = false }
+ reasoning = { supported = false }
+-temperature = true
+ 
+ [limit]
+-context = 32_768
+ output = 16_384
 diff --git a/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml b/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml
 index b7dc984fa..7c3cb84f2 100644
 --- a/providers/pioneer/models/fastino/gliguard-LLMGuardrails-300M.toml
@@ -243,3 +387,6 @@ index 3a2b7e270..1b941c959 100644
  schema = 2
 +type = "moderation"
  name = "GLiNER2-Guardrails-PII-Multi"
+-- 
+2.50.1
+
