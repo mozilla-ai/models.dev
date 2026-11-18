@@ -1,0 +1,17 @@
+# Tencent Cloud TokenHub (international site). Model row: IndexTTS-2 (indextts-2)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Speech Models table: USD 1.6 per 1M tokens, 290,000 tokens and USD 0.46
+#   per "10,000 bytes"), accessed 2026-11-18. Not probed live.
+# Unit: the China-site price table gives the same row per 10,000 characters (万字符:
+#   https://cloud.tencent.com/document/product/1823/130055), so "bytes" is read as characters: USD 46 per 1M characters.
+#   If the host really counts bytes, text outside ASCII costs more than this.
+# Model list: https://www.tencentcloud.com/document/product/1300/78934. sdk "none": no API guide for it was found on the international site.
+schema = 2
+v2_only = true
+base_model = "bilibili/indextts-2"
+
+[api.speech]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.text.input]
+unit = "character"
+price = 46
