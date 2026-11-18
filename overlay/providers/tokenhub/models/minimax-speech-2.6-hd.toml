@@ -1,0 +1,11 @@
+# Tencent Cloud TokenHub (international site). No row in the model list (https://www.tencentcloud.com/document/product/1300/78934); the Singapore endpoint
+#   (tokenhub-intl.tencentcloudmaas.com) lists minimax-speech-2.6-hd in GET /v1/models (seen 2026-11-18).
+# No cost: https://www.tencentcloud.com/document/product/1300/78937 has no row for it (accessed 2026-11-18). The China site lists a CNY price for it, but that is
+#   another price list with other token counts, so it is not used.
+# sdk "none": no API guide for it was found on the international site.
+schema = 2
+v2_only = true
+base_model = "minimax/speech-2.6-hd"
+
+[api.speech]
+sdk = { aisdk = "none", opencodeai = "none" }
