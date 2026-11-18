@@ -1,0 +1,50 @@
+# Tencent Cloud TokenHub (international site). Model row: Vidu-Image-q2 (vidu-image-q2)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Image Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Text-to-image: 1080P $0.03, 2K $0.04, 4K $0.05 per image. With 1 to 3 reference images: $0.04, $0.06, $0.1.
+# With 4 to 7 reference images: $0.05, $0.08, $0.15. Later overrides win, so the 4-image ones come last.
+# Cost conditions: resolution is the API's own, case-sensitive value ("1080p" default, "2K", "4K"); input_images counts `images`.
+# API: Vidu Image Generation API Guide, https://www.tencentcloud.com/document/product/1300/83709 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "shengshu/vidu-image-q2"
+
+[api.images]
+path = "/wand/vidu-image/generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.image.output]
+unit = "image"
+price = 0.03
+
+[[cost.image.output.overrides]]
+when = { resolution = { equals = "2K" } }
+price = 0.04
+
+[[cost.image.output.overrides]]
+when = { resolution = { equals = "4K" } }
+price = 0.05
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 1 } }
+price = 0.04
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 1 }, resolution = { equals = "2K" } }
+price = 0.06
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 1 }, resolution = { equals = "4K" } }
+price = 0.1
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 4 } }
+price = 0.05
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 4 }, resolution = { equals = "2K" } }
+price = 0.08
+
+[[cost.image.output.overrides]]
+when = { input_images = { min_items = 4 }, resolution = { equals = "4K" } }
+price = 0.15
