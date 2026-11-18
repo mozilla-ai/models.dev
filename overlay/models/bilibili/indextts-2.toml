@@ -1,0 +1,41 @@
+# Released 2025-09-08 (accessed 2026-11-18): README changelog "2025/09/08 We release IndexTTS-2": https://github.com/index-tts/index-tts
+# (the arXiv paper was submitted 2025-06-23, https://arxiv.org/abs/2506.21619, and the Hugging Face repo was created 2025-06-18; the release date follows the README, which announces the model release.)
+# Model card (zero-shot TTS, English and Chinese, safetensors): https://huggingface.co/IndexTeam/IndexTTS-2
+# License: README "released under the bilibili Model Use License Agreement" (https://github.com/index-tts/index-tts/blob/main/LICENSE).
+# Input: text plus a reference speaker audio clip for zero-shot voice cloning (per the paper title and README usage). Output is audio/wav (README examples write .wav files); the README does not document other formats.
+# Sampling: open weights, so temperature/top_p/top_k are runtime features of the host.
+schema = 2
+v2_only = true
+type = "speech"
+name = "IndexTTS-2"
+description = "Open-source zero-shot text-to-speech model with voice cloning, emotion control and duration control"
+open_weights = true
+release_date = "2025-09-08"
+license = "bilibili Model Use License Agreement"
+
+[modalities]
+input = ["text", "audio/wav"]
+output = ["audio/wav"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+label = "GitHub"
+url = "https://github.com/index-tts/index-tts"
+
+[[links]]
+label = "Paper"
+url = "https://arxiv.org/abs/2506.21619"
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/IndexTeam/IndexTTS-2"
