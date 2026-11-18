@@ -1,0 +1,24 @@
+# Tencent Cloud TokenHub (international site). Model row: Vidu-Video-q3.0-pro (vidu-video-q3-pro)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Text, image and first-last frame to video: 540P $0.045, 720P $0.1, 1080P $0.12 per second.
+# Cost condition: resolution is the API's own, case-sensitive value ("540p", "720p", "1080p").
+# API: Vidu Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/84817 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "shengshu/vidu-q3-pro"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.045
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.1
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.12

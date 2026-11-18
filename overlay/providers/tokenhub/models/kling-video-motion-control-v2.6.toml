@@ -1,0 +1,28 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Video-motion-control-v2.6 (kling-video-motion-control-v2.6)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 720P: $0.07 per second; 1080P: $0.112. The motion control prices of Kling 2.6 (providers/klingai/models/kling-v2-6.toml).
+# This host gives motion control its own id: it moves the motion of a reference video (`video`) onto a character image (`image`).
+# Cost condition: resolution = settings.resolution ("720p" default, "1080p").
+# API: Kling Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83714 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-v2.6"
+name = "Kling VIDEO 2.6 Motion Control"
+description = "Kling 2.6 motion control: moves the motion, gestures and expressions of a reference video onto a character image"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "video/mp4", "video/quicktime"]
+output = ["video/mp4"]
+
+[api.videos]
+path = "/wand/kling/motion-control"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.07
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.112
