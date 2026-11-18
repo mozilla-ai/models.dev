@@ -1,0 +1,47 @@
+# Tencent HunyuanVideo-1.5, served by Tencent Cloud as Hy-Video-1.5 (API id hy-video-v1.5).
+# Sources (accessed 2026-11-18):
+# - Released 2025-11-20 ("Nov 20, 2025: We release the inference code and model weights of HunyuanVideo-1.5"):
+#   https://huggingface.co/tencent/HunyuanVideo-1.5 and https://github.com/Tencent-Hunyuan/HunyuanVideo-1.5
+#   (the LICENSE file is dated one day later, "Release Date: November 21, 2025"; the README news date is kept).
+# - Open weights under the Tencent Hunyuan Community License Agreement:
+#   https://huggingface.co/tencent/HunyuanVideo-1.5/blob/main/LICENSE
+# - 8.3B parameters, text-to-video and image-to-video at 480p and 720p: same model card; paper https://arxiv.org/abs/2511.18870
+# - Tencent Cloud names it Hy-Video-1.5 / hy-video-v1.5 (https://www.tencentcloud.com/document/product/1300/78934);
+#   its API guide takes jpg/jpeg and png reference images and returns an .mp4 file:
+#   https://www.tencentcloud.com/document/product/1300/83716
+schema = 2
+v2_only = true
+type = "video"
+name = "HunyuanVideo 1.5"
+description = "8.3B-parameter open video model for text-to-video and image-to-video generation at 480p and 720p"
+family = "Hy"
+open_weights = true
+release_date = "2025-11-20"
+license = "Tencent Hunyuan Community License"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png"]
+output = ["video/mp4"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+label = "GitHub"
+url = "https://github.com/Tencent-Hunyuan/HunyuanVideo-1.5"
+
+[[links]]
+label = "Paper"
+url = "https://arxiv.org/abs/2511.18870"
+
+[[weights]]
+label = "Hugging Face"
+url = "https://huggingface.co/tencent/HunyuanVideo-1.5"
