@@ -1,0 +1,30 @@
+# https://www.tencentcloud.com/document/product/1300/81297 (4,096 dimensions, 32k context, 30+ languages; text, image and video input;
+#   images: JPEG, PNG, WEBP, BMP, TIFF; videos: MP4, AVI, MOV; page last updated 2026-07-09). Accessed 2026-11-18.
+# Weights are not published. Release month: the doc presents the text and multimodal embedding models as one launch,
+#   so it is the month of models/tencent/kinfra-text-embedding-4b.toml.
+schema = 2
+v2_only = true
+type = "embedding"
+name = "Kinfra VL Embedding 8B"
+description = "High-precision Tencent multimodal embedding model producing 4,096-dimensional vectors from text, images and video"
+open_weights = false
+release_date = "2026-07"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp", "image/bmp", "image/tiff", "video/mp4", "video/x-msvideo", "video/quicktime"]
+output = ["embedding"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 32_768
+output = 0
+
+[[links]]
+url = "https://www.tencentcloud.com/document/product/1300/81297"
+type = "docs"
