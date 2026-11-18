@@ -1,0 +1,37 @@
+# Sources (accessed 2026-11-18):
+# - https://pixverse.ai/blog/pixverse-introduces-c1-ai-video-model-for-film-production (dated 7 April 2026: built for film
+#   production; storyboard to video, text, image and reference-guided generation; up to 15 s at 1080p with native audio)
+# - https://docs.platform.pixverse.ai/model-capability-map-2394982m0.md (PixVerse C1: text and image input, 1-15 s,
+#   360p/540p/720p/1080p; text to video, image to video, first and last frame, multi-subject image references; no video
+#   references or extension)
+# - https://docs.platform.pixverse.ai/upload-image-13016631e0.md (image uploads: JPEG, PNG and WebP)
+# Released 2026-04-07: the blog post above, and the API changelog entry of the same date, "Added C1 support for
+#   Text-to-Video, Image-to-Video, First and Last Frame Video, and Reference-to-Video (Fusion)"
+#   (https://docs.platform.pixverse.ai/changelog-2394996m0.md).
+# Output: PixVerse doesn't document the video file format, so output stays generic.
+schema = 2
+v2_only = true
+type = "video"
+name = "PixVerse C1"
+description = "Film production video model with 15-second 1080p clips, native audio, and storyboard, first-last frame and reference image input"
+open_weights = false
+release_date = "2026-04-07"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://docs.platform.pixverse.ai/model-capability-map-2394982m0"
+type = "docs"
