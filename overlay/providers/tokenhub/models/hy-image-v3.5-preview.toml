@@ -1,0 +1,22 @@
+# Tencent Cloud TokenHub (international site). Model row: Hy-Image-3.5-preview (hy-image-v3.5-preview)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Image Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 1K and 2K: $0.024 per image; 4K: $0.032.
+# Cost condition: the API takes size as "<width>x<height>", not a tier. Its 2K tier is 4,194,304 pixels (generate_max_pixels),
+#   so an output above 4.194304 megapixels is read as the 4K price.
+# API: Hy Image Generation API Guide, https://www.tencentcloud.com/document/product/1300/83708 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "tencent/hy-image-v3.5-preview"
+
+[api.images]
+path = "/wand/hunyuan-image/v35-generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.image.output]
+unit = "image"
+price = 0.024
+
+[[cost.image.output.overrides]]
+when = { megapixels = { gt = 4.194304 } }
+price = 0.032
