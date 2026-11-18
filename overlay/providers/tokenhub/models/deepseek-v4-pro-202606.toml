@@ -1,0 +1,29 @@
+# Tencent Cloud TokenHub (international site). Model row: DeepSeek-V4-Pro 0813 GA (Vendor Direct) (deepseek-v4-pro-202606, also deepseek/deepseek-v4-pro-0813 and deepseek/deepseek-v4-pro)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Off-peak base; peak is 2x on input, output and cache hit: weekdays 09:00-12:00 and 14:00-18:00 Beijing time
+#   (01:00-04:00 and 06:00-10:00 UTC), by the time the platform receives the request. Weekends are off-peak.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as providers/tencent-token-plan/models/deepseek (same platform): thinking.type = enabled|disabled; reasoning_effort = low|high|max.
+schema = 2
+base_model = "deepseek/deepseek-v4-pro-0813"
+
+[capabilities]
+reasoning = { supported = true, toggle = true, effort = ["low", "high", "max"] }
+structured_output = true
+top_k = false
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 0.66
+cache = { read = 0.022 }
+
+[cost.text.output]
+price = 1.98
+
+[[cost.multipliers]]
+when = { utc_days = { in = ["mon", "tue", "wed", "thu", "fri"] }, any = [{ all = [{ utc_hours = { gte = "01:00" } }, { utc_hours = { lt = "04:00" } }] }, { all = [{ utc_hours = { gte = "06:00" } }, { utc_hours = { lt = "10:00" } }] }] }
+factor = 2
