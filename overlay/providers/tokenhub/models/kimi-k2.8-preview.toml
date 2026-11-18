@@ -1,0 +1,26 @@
+# Tencent Cloud TokenHub (international site). Model row: Kimi K2.8 Preview (kimi-k2.8-preview)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Output limit: the model list gives 1m, and the lab file has none.
+# Controls as providers/volcengine-coding-plan/models/kimi-k2.8-preview.toml: reasoning_effort = none|low|high|max (the lab's own host has no entry).
+schema = 2
+base_model = "moonshotai/kimi-k2.8-preview"
+
+[capabilities]
+reasoning = { supported = true, effort = ["none", "low", "high", "max"] }
+structured_output = true
+cache = { implicit = true }
+
+[limit]
+output = 1_048_576
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 1
+cache = { read = 0.25 }
+
+[cost.text.output]
+price = 4
