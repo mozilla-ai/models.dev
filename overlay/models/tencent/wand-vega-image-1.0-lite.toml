@@ -1,0 +1,35 @@
+# Sources (accessed 2026-11-18):
+# - https://www.tencentcloud.com/document/product/1300/83859 (WAND Image Generation API Guide: WAND-Vega-Image-1.0-Lite, API id wand-vega-image-lite;
+#   text plus 0 to 3 reference images, png or jpeg, 10 MB each; preset sizes in 1K, 2K and 4K tiers; the output format is
+#   not stated, so output stays generic)
+# - https://www.tencentcloud.com/document/product/1300/78934 (model list: text-to-image and image-to-image)
+# WAND is Tencent Cloud's media AI brand ("In 2026, Tencent Cloud launched WAND, its Media AI brand": https://wand.tencentcloud.com/;
+#   https://cloud.tencent.com/product/wand lists WAND-Vega-Image and WAND-Vega-Video). Weights are not published.
+# Release date: Tencent publishes no launch date for this model. "2026-09" is the month of the earliest dated Tencent
+#   document that lists the id (the API guide above, last updated 2026-09-16), so the model is not newer than that.
+schema = 2
+v2_only = true
+type = "image"
+name = "WAND Vega Image 1.0 Lite"
+description = "Lower-cost, faster WAND Vega image model for text-to-image and image-to-image at 1K to 4K"
+open_weights = false
+release_date = "2026-09"
+
+[modalities]
+input = ["text", "image/png", "image/jpeg"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://www.tencentcloud.com/document/product/1300/83859"
+type = "docs"

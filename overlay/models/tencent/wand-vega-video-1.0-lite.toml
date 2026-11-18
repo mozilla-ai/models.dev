@@ -1,0 +1,34 @@
+# Sources (accessed 2026-11-18):
+# - https://www.tencentcloud.com/document/product/1300/84930 (WAND Video Generation API Guide: WAND-Vega-Video-1.0-Lite, API id wand-vega-video-1.0-lite;
+#   text plus first and last frame images, reference images, reference videos and reference audio; 768P, 1080P, 2K, 4K;
+#   4 to 15 seconds. File formats are not stated, so the modalities stay generic)
+# WAND is Tencent Cloud's media AI brand ("In 2026, Tencent Cloud launched WAND, its Media AI brand": https://wand.tencentcloud.com/;
+#   https://cloud.tencent.com/product/wand lists WAND-Vega-Image and WAND-Vega-Video). Weights are not published.
+# Release date: Tencent publishes no launch date for this model. "2026-10" is the month of the earliest dated Tencent
+#   document that lists the id (the API guide above, last updated 2026-10-16), so the model is not newer than that.
+schema = 2
+v2_only = true
+type = "video"
+name = "WAND Vega Video 1.0 Lite"
+description = "Lower-cost WAND Vega video model for text, image and reference to video at up to 4K, 4 to 15 seconds"
+open_weights = false
+release_date = "2026-10"
+
+[modalities]
+input = ["text", "image", "video", "audio"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://www.tencentcloud.com/document/product/1300/84930"
+type = "docs"
