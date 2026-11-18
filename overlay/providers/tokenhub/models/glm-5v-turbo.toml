@@ -1,0 +1,42 @@
+# Tencent Cloud TokenHub (international site). Model row: GLM-5V-Turbo (glm-5v-turbo); the model list marks it "To be discontinued on 2026-10-30"
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab prices it by input length: under 32k tokens 0.7 / 3.08 / 0.168, from 32k tokens 0.98 / 3.64 / 0.252.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as the lab's own host (providers/zhipuai): thinking.type = enabled|disabled.
+schema = 2
+base_model = "zhipuai/glm-5v-turbo"
+status = "deprecated"
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+structured_output = true
+top_k = false
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 1.2
+cache = { read = 0.24 }
+
+[[cost.text.input.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 0.7
+cache = { read = 0.168 }
+
+[[cost.text.input.overrides]]
+when = { region = { equals = "ap-guangzhou" }, context = { gte = 32_000 } }
+price = 0.98
+cache = { read = 0.252 }
+
+[cost.text.output]
+price = 4
+
+[[cost.text.output.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 3.08
+
+[[cost.text.output.overrides]]
+when = { region = { equals = "ap-guangzhou" }, context = { gte = 32_000 } }
+price = 3.64

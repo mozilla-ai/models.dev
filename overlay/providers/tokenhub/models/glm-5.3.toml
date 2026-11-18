@@ -1,0 +1,32 @@
+# Tencent Cloud TokenHub (international site). Model row: GLM-5.3 (glm-5.3)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists other prices: they are the region = "ap-guangzhou" overrides.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as providers/tencent-token-plan (same platform): reasoning_effort = low|high|max; thinking cannot be disabled.
+schema = 2
+base_model = "zhipuai/glm-5.3"
+
+[capabilities]
+reasoning = { supported = true, effort = ["low", "high", "max"] }
+structured_output = true
+top_k = false
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 1.4
+cache = { read = 0.26 }
+
+[[cost.text.input.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 1.1116
+cache = { read = 0.2779 }
+
+[cost.text.output]
+price = 4.4
+
+[[cost.text.output.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 3.8907

@@ -1,0 +1,12 @@
+# Tencent Cloud TokenHub (international site). Model row: none. The Silicon Valley endpoint (tokenhub-us.tencentcloudmaas.com) lists glm-5.1 in GET /v1/models (seen 2026-11-18).
+# No cost: https://www.tencentcloud.com/document/product/1300/78937 has no row for it in any region (accessed 2026-11-18), and https://www.tencentcloud.com/document/product/1300/78934 does not list it.
+# Controls as the lab's own host (providers/zhipuai): thinking.type = enabled|disabled.
+schema = 2
+base_model = "zhipuai/glm-5.1"
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+top_k = false
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
