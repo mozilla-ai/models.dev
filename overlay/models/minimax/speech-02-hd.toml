@@ -1,0 +1,26 @@
+# Released 2025-04-02 (accessed 2026-11-18): https://platform.minimax.io/docs/release-notes/models lists 'Apr. 2, 2025: Speech-02-turbo / Speech-02-hd'; news post dated 2025.04.02: https://www.minimax.io/news/speech-02-series
+# Output formats (audio_setting.format mp3, pcm, flac, wav, pcmu_raw/pcmu_wav μ-law, opus; speech-02-hd is a listed model id): https://platform.minimax.io/docs/api-reference/speech-t2a-http
+# Sampling: the T2A API has no temperature/top_p/top_k (only voice_setting speed, vol, pitch), same as the 2.8 files.
+schema = 2
+v2_only = true
+type = "speech"
+name = "Speech-02-HD"
+description = "High-fidelity text-to-speech model for voiceovers and audiobooks"
+family = "minimax"
+open_weights = false
+release_date = "2025-04-02"
+
+[modalities]
+input = ["text"]
+output = ["audio/mpeg", "audio/pcm", "audio/flac", "audio/wav", "audio/basic", "audio/opus"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
