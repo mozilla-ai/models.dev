@@ -1,0 +1,22 @@
+# Tencent Cloud TokenHub (international site). Model row: WAND-Vega-Image-1.0-Lite (wand-vega-image-lite)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Image Generation table: USD 1.6 per 1M tokens and a fixed token count per image; the table's
+#   "reference cost" per image is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 1K and 2K: $0.0216 per image; 4K: $0.0288. Input images are free.
+# Cost condition: the API takes size as "<width>x<height>", not a tier. In its preset list the largest 1K size is
+#   1080x1920 (2.0736 megapixels), 2K sizes run from 2520x1080 to 2880x2160 (6.2208 megapixels) and 4K starts at 3840x2160.
+# API: WAND Image Generation API Guide, https://www.tencentcloud.com/document/product/1300/83859 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "tencent/wand-vega-image-1.0-lite"
+
+[api.images]
+path = "/wand/vega-images/generations"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.image.output]
+unit = "image"
+price = 0.0216
+
+[[cost.image.output.overrides]]
+when = { megapixels = { gt = 6.2208 } }
+price = 0.0288
