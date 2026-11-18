@@ -1,0 +1,16 @@
+# Tencent Cloud TokenHub (international site). Model row: Seedream-Image-v5.0-flash (seedream-image-v5.0-flash)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Image Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# $0.018 per image at every size.
+# API: Seedream Image Generation API Guide, https://www.tencentcloud.com/document/product/1300/83710 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "bytedance-seed/seedream-5.0-flash"
+
+[api.images]
+path = "/wand/si-image/generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.image.output]
+unit = "image"
+price = 0.018

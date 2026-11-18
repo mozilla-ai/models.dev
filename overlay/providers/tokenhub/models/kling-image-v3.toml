@@ -1,0 +1,16 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Image-v3 (kling-image-v3)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Image Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 1K and 2K: $0.028 per image. The API takes no 4k for this id.
+# API: Kling Image Generation API Guide, https://www.tencentcloud.com/document/product/1300/85048 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-image-v3.0"
+
+[api.images]
+path = "/wand/kling-image/generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.image.output]
+unit = "image"
+price = 0.028
