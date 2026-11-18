@@ -1,0 +1,24 @@
+# Tencent Cloud TokenHub (international site). Model row: DeepSeek-V4-Pro (deepseek-v4-pro)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Flat price: the pricing table gives this id no peak or off-peak rows.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as providers/tencent-token-plan/models/deepseek (same platform): thinking.type = enabled|disabled; reasoning_effort = low|high|max.
+schema = 2
+base_model = "deepseek/deepseek-v4-pro"
+
+[capabilities]
+reasoning = { supported = true, toggle = true, effort = ["low", "high", "max"] }
+structured_output = true
+top_k = false
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 1.74
+cache = { read = 0.145 }
+
+[cost.text.output]
+price = 3.48
