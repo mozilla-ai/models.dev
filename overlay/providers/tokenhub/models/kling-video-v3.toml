@@ -1,0 +1,37 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Video-V3 (kling-video-v3)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Silent: 720P $0.084, 1080P $0.112 per second. With audio (unspecified voice): $0.126, $0.168.
+# 4K is $0.42 with or without audio, so the 4k override comes last. The same prices as providers/klingai/models/kling-3.0.toml.
+# The table's motion control rows are the prices of kling-video-motion-control-v3.0: this host gives motion control its own id.
+# Cost conditions: resolution = settings.resolution ("720p", "1080p", "4k"); generate_audio = settings.audio "native" (default "off").
+# One id for 720p to 4k, so the name and description are not the base model's "Pro" ones.
+# API: Kling Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83714 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-v3.0-pro"
+name = "Kling VIDEO 3.0"
+description = "Kling 3.0 video model with first and last frame control, multi-shot storyboards and native audio"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.084
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.112
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true } }
+price = 0.126
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true }, resolution = { equals = "1080p" } }
+price = 0.168
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "4k" } }
+price = 0.42

@@ -1,0 +1,16 @@
+# Tencent Cloud TokenHub (international site). Model row: Hy-Video-1.5 (hy-video-v1.5)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 720P: $0.048 per second. The API fixes resolution at 720p and duration at 5 seconds.
+# API: Hy Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83716 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "tencent/hy-video-v1.5"
+
+[api.videos]
+path = "/wand/hunyuan-video/generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.048

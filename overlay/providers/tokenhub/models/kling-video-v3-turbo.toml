@@ -1,0 +1,21 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Video-V3-turbo (kling-video-v3-turbo)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 720P $0.112, 1080P $0.14 per second (the table's only rows, labelled "With audio"; the API has no audio setting for this id).
+# The same prices as providers/klingai/models/kling-3.0-turbo.toml.
+# Cost condition: resolution = settings.resolution ("720p" default, "1080p").
+# API: Kling Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83714 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-v3.0-turbo"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.112
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.14

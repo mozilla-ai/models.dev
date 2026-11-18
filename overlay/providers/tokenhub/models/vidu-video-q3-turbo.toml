@@ -1,0 +1,38 @@
+# Tencent Cloud TokenHub (international site). Model row: Vidu-Video-q3.0-turbo (vidu-video-q3-turbo)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Text, image and first-last frame to video: 540P $0.035, 720P $0.06, 1080P $0.065 per second.
+# Reference-to-video (the table's "With reference video" rows; it takes reference images): $0.02, $0.05, $0.065.
+# Cost condition: resolution is the API's own, case-sensitive value ("540p", "720p", "1080p"); mode = "reference-to-video" is the
+#   /v1/wand/vidu/reference-to-video endpoint (the host has no mode parameter: the endpoint path selects it).
+# API: Vidu Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/84817 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "shengshu/vidu-q3-turbo"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.035
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.06
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.065
+
+[[cost.video.output.overrides]]
+when = { mode = { equals = "reference-to-video" } }
+price = 0.02
+
+[[cost.video.output.overrides]]
+when = { mode = { equals = "reference-to-video" }, resolution = { equals = "720p" } }
+price = 0.05
+
+[[cost.video.output.overrides]]
+when = { mode = { equals = "reference-to-video" }, resolution = { equals = "1080p" } }
+price = 0.065

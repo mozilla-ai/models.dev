@@ -1,0 +1,43 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Video-V3-omni (kling-video-v3-omni)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Without a reference video, silent: 720P $0.084, 1080P $0.112 per second; with audio: $0.112, $0.14.
+# With a reference video (silent): $0.126, $0.168. 4K is $0.42 in every case, so the 4k override comes last.
+# The same prices and layout as providers/klingai/models/kling-3.0-omni.toml.
+# Cost conditions: resolution = settings.resolution ("720p", "1080p", "4k"); generate_audio = settings.audio "native"; input_video = a feature_video or base_video item in contents.
+# API: Kling Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83714 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-v3.0-omni"
+
+[api.videos]
+path = "/wand/kling/omni-video"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.084
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.112
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true } }
+price = 0.112
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true }, resolution = { equals = "1080p" } }
+price = 0.14
+
+[[cost.video.output.overrides]]
+when = { input_video = { equals = true } }
+price = 0.126
+
+[[cost.video.output.overrides]]
+when = { input_video = { equals = true }, resolution = { equals = "1080p" } }
+price = 0.168
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "4k" } }
+price = 0.42

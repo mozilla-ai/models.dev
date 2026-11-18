@@ -1,0 +1,44 @@
+# Tencent Cloud TokenHub (international site). Model row: PixVerse-Video-c1 (pixverse-video-c1)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Silent: 360p $0.02667, 540p $0.03556, 720p $0.04444, 1080p $0.08444 per second. With audio: $0.03556, $0.04444, $0.05778, $0.10667.
+# Cost conditions: resolution = quality ("360p", "540p", "720p", "1080p"; required); generate_audio = generate_audio_switch (default false).
+# API: PixVerse Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83713 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "pixverse/pixverse-c1"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.02667
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "540p" } }
+price = 0.03556
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.04444
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "1080p" } }
+price = 0.08444
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true } }
+price = 0.03556
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true }, resolution = { equals = "540p" } }
+price = 0.04444
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true }, resolution = { equals = "720p" } }
+price = 0.05778
+
+[[cost.video.output.overrides]]
+when = { generate_audio = { equals = true }, resolution = { equals = "1080p" } }
+price = 0.10667

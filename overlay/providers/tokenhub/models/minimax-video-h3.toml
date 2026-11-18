@@ -1,0 +1,30 @@
+# Tencent Cloud TokenHub (international site). Model row: MiniMax-Video-H3 (minimax-video-h3)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# 768P: $0.08 per second of output video and of input video; 2K: $0.13.
+# Not recorded: the first 5 input images are free, each more costs $0.04.
+# Cost condition: resolution is the API's own value ("768P" or "2K"; it is required and has no default).
+# API: MiniMax Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83715 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "minimax/MiniMax-H3"
+
+[api.videos]
+path = "/wand/minimax-video-v2/generation"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.08
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "2K" } }
+price = 0.13
+
+[cost.video.input]
+unit = "second"
+price = 0.08
+
+[[cost.video.input.overrides]]
+when = { resolution = { equals = "2K" } }
+price = 0.13

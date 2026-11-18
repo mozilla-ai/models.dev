@@ -1,0 +1,38 @@
+# Tencent Cloud TokenHub (international site). Model row: Kling-Video-v4 (kling-video-v4)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Video Generation table: USD 1.6 per 1M tokens and a fixed token count per unit; the table's
+#   "reference cost" per unit is recorded; no region tabs), accessed 2026-11-18. Not probed live.
+# Without a reference video: 720P $0.14, 1080P $0.21 per second. With one: $0.084, $0.126 per second of total duration.
+# Total duration: twice the output when the input is not longer than the output, else input plus output. It is recorded as
+#   the same price on input and output seconds, as providers/klingai/models/kling-4.0.toml does.
+# Cost conditions: resolution = settings.resolution ("1080p" default, so it is the base; "720p"); input_video = a feature_video item.
+# API: Kling Video Generation API Guide, https://www.tencentcloud.com/document/product/1300/83714 (accessed 2026-11-18). sdk "none": the request format is Tencent's own.
+schema = 2
+v2_only = true
+base_model = "kuaishou/kling-v4.0"
+
+[api.videos]
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.video.output]
+unit = "second"
+price = 0.21
+
+[[cost.video.output.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.14
+
+[[cost.video.output.overrides]]
+when = { input_video = { equals = true } }
+price = 0.126
+
+[[cost.video.output.overrides]]
+when = { input_video = { equals = true }, resolution = { equals = "720p" } }
+price = 0.084
+
+[cost.video.input]
+unit = "second"
+price = 0.126
+
+[[cost.video.input.overrides]]
+when = { resolution = { equals = "720p" } }
+price = 0.084
