@@ -1,0 +1,39 @@
+# Sources (accessed 2026-11-18):
+# - https://platform.vidu.com/docs/api-reference/updates (ShengShu's API changelog, 2026/10/7: "[New Models]-Vidu Q4
+#   preview", reference voices, 2K and 4K output, up to 15 reference images)
+# - https://platform.vidu.com/docs/overview/model-map (Vidu Q4 Preview, API id viduq4-preview: 540p/720p/1080p/2K/4K, 24 fps,
+#   image to video and reference to video)
+# - https://platform.vidu.com/docs/api-reference/video-models/vidu-q4-preview/image-to-video (one image: png, jpeg, jpg,
+#   webp; 3-16 s; audio defaults to true)
+# - https://platform.vidu.com/docs/api-reference/video-models/vidu-q4-preview/reference-to-video (1 to 15 images: png, jpeg,
+#   jpg, webp; 0 to 3 reference audio files, mp3, 3-12 s each)
+# Released 2026-10-07, the changelog date; press coverage of the launch carries the same date
+#   (https://www.chinatechnews.com/2026/10/08/130490-shengshu-technology-launches-vidu-q4-preview-a-next-generation-ai-video-model-built-for-lifelike-performances).
+# Both endpoints require at least one image, so there is no prompt-only text to video; the prompt is still a text input.
+# Output: the API returns video URLs and doesn't document the file format, so output stays generic.
+schema = 2
+v2_only = true
+type = "video"
+name = "Vidu Q4 Preview"
+description = "Preview video model with native audio and up to 4K output for image and reference to video, with image and voice references"
+open_weights = false
+release_date = "2026-10-07"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp", "audio/mpeg"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://platform.vidu.com/docs/api-reference/video-models/vidu-q4-preview/image-to-video"
+type = "docs"
