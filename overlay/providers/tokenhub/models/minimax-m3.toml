@@ -1,0 +1,31 @@
+# Tencent Cloud TokenHub (international site). Model row: MiniMax-M3 (minimax-m3)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Input length over 512k tokens doubles every price (rows "(0, 512k]" and "512k+").
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as providers/tencent-token-plan/models/minimax-m3.toml (same platform): thinking.type = adaptive|disabled.
+schema = 2
+base_model = "minimax/MiniMax-M3"
+
+[capabilities]
+reasoning = { supported = true, toggle = true }
+cache = { implicit = true }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 0.3
+cache = { read = 0.06 }
+
+[[cost.text.input.overrides]]
+when = { context = { gt = 512_000 } }
+price = 0.6
+cache = { read = 0.12 }
+
+[cost.text.output]
+price = 1.2
+
+[[cost.text.output.overrides]]
+when = { context = { gt = 512_000 } }
+price = 2.4
