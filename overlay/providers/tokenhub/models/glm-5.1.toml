@@ -1,12 +1,36 @@
-# Tencent Cloud TokenHub (international site). Model row: none. The Silicon Valley endpoint (tokenhub-us.tencentcloudmaas.com) lists glm-5.1 in GET /v1/models (seen 2026-11-18).
-# No cost: https://www.tencentcloud.com/document/product/1300/78937 has no row for it in any region (accessed 2026-11-18), and https://www.tencentcloud.com/document/product/1300/78934 does not list it.
-# Controls as the lab's own host (providers/zhipuai): thinking.type = enabled|disabled.
+# Tencent Cloud TokenHub (international site). Tencent retired GLM-5.1 at 00:00 Beijing time on 2026-10-09:
+#   https://www.tencentcloud.com/announce/detail/101510 (accessed 2026-11-18). A request that still names the id is
+#   switched to GLM-5.3, and "related calls will be billed according to the pricing rules of the switched-to model".
+#   So this file is the GLM-5.3 entry (providers/tokenhub/models/glm-5.3.toml) under the old id: its base model, limits,
+#   controls and prices. The Silicon Valley endpoint still lists the id in GET /v1/models (seen 2026-11-18).
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (GLM-5.3 row, Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists other prices: they are the region = "ap-guangzhou" overrides. Not probed live.
 schema = 2
-base_model = "zhipuai/glm-5.1"
+base_model = "zhipuai/glm-5.3"
+name = "GLM-5.1 (served by GLM-5.3)"
+status = "deprecated"
 
 [capabilities]
-reasoning = { supported = true, toggle = true }
+reasoning = { supported = true, effort = ["low", "high", "max"] }
+structured_output = true
 top_k = false
+cache = { implicit = true }
 
 [api.chat-completions]
 compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 1.4
+cache = { read = 0.26 }
+
+[[cost.text.input.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 1.1116
+cache = { read = 0.2779 }
+
+[cost.text.output]
+price = 4.4
+
+[[cost.text.output.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 3.8907
