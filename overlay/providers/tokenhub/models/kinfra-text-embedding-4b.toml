@@ -1,0 +1,15 @@
+# Tencent Cloud TokenHub (international site). Model row: kinfra-text-embedding-4b
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Embedding Model table, USD per 1M tokens; no region tabs), accessed 2026-11-18.
+# API: https://www.tencentcloud.com/document/product/1300/81297 (POST /v1/embeddings, OpenAI-compatible; each input text is at most 2,000 characters). Not probed live.
+schema = 2
+v2_only = true
+base_model = "tencent/kinfra-text-embedding-4b"
+
+[api.embeddings]
+sdk = { opencodeai = "@opencode/ai/providers/openai-compatible/embeddings" }
+
+[cost.text.input]
+price = 0.084
+
+[cost.text.output]
+price = 0

@@ -1,0 +1,20 @@
+# Tencent Cloud TokenHub (international site). Model row: Hy4 (hy4)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Controls as providers/tencent-tokenhub (China site, same platform): thinking.type and reasoning_effort.
+# Promotion not recorded: 50% of list price until 2026-12-31 23:59:59 Beijing time.
+schema = 2
+base_model = "tencent/hy4"
+
+[capabilities]
+reasoning = { supported = true, effort = ["none", "high"] }
+structured_output = true
+cache = { implicit = true }
+
+[cost.text.input]
+price = 0.834
+cache = { read = 0.042 }
+
+[cost.text.output]
+price = 2.501

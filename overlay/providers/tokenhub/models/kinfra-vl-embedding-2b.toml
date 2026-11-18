@@ -1,0 +1,23 @@
+# Tencent Cloud TokenHub (international site). Model row: kinfra-vl-embedding-2b
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Embedding Model table: text, image and video input, USD per 1M tokens; no region tabs), accessed 2026-11-18.
+# API: https://www.tencentcloud.com/document/product/1300/81297 (POST /v1/embeddings/multimodal; usage reports text_tokens, image_tokens and video_tokens). Not probed live.
+# sdk: the request body is Tencent's own (input items of type text, image_url, video_url), so no package is named.
+schema = 2
+v2_only = true
+base_model = "tencent/kinfra-vl-embedding-2b"
+
+[api.embeddings]
+path = "/embeddings/multimodal"
+sdk = { aisdk = "none", opencodeai = "none" }
+
+[cost.text.input]
+price = 0.07
+
+[cost.text.output]
+price = 0
+
+[cost.image.input]
+price = 0.098
+
+[cost.video.input]
+price = 0.21

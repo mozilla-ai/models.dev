@@ -1,0 +1,16 @@
+# Tencent Cloud TokenHub, international site (tencentcloud.com). providers/tencent-tokenhub is the China site
+#   (cloud.tencent.com, tokenhub.tencentmaas.com, CNY list prices): another account system and another price list.
+# One API key system, three regional endpoints (https://www.tencentcloud.com/document/product/1300/78941, accessed 2026-11-18):
+#   Singapore       https://tokenhub-intl.tencentcloudmaas.com  (region "ap-singapore", the default here)
+#   Guangzhou       https://tokenhub.tencentcloudmaas.com       (region "ap-guangzhou")
+#   Silicon Valley  https://tokenhub-us.tencentcloudmaas.com    (region "na-siliconvalley")
+# Prices: https://www.tencentcloud.com/document/product/1300/78937 has one language-model table per region. The Singapore table is the base price of
+#   each model; where the Guangzhou table differs, the model has region = "ap-guangzhou" overrides. The Silicon Valley
+#   table lists GLM-5.2 only, at the Singapore price. Region names are Tencent Cloud's region ids.
+# OpenAI-compatible and Anthropic-compatible; only the OpenAI-compatible API is recorded.
+name = "Tencent TokenHub (International)"
+env = ["TOKENHUB_API_KEY"]
+npm = "@ai-sdk/openai-compatible"
+opencodeai = "@opencode/ai/providers/openai-compatible"
+doc = "https://www.tencentcloud.com/document/product/1300/78933"
+api = "https://tokenhub-intl.tencentcloudmaas.com/v1"

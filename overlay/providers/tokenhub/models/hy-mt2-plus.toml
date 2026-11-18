@@ -1,0 +1,15 @@
+# Tencent Cloud TokenHub (international site). Model row: Hy-MT2-Plus (hy-mt2-plus)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists the same prices.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Translation model: the model list gives no reasoning, tools or caching for it.
+# Weights: Pro is the 30B-A3B model, Plus the 7B and Lite the 1.8B (as providers/kilo/models/tencent/hy-mt2-*.toml describe them).
+schema = 2
+base_model = "tencent/hy-mt2-7b"
+name = "Hy-MT2-Plus"
+
+[cost.text.input]
+price = 0.074
+
+[cost.text.output]
+price = 0.295
