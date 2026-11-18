@@ -1,0 +1,34 @@
+# Tencent Cloud TokenHub (international site). Model row: Kimi K3.1 Pro HighSpeed (kimi-k3.1-pro-highspeed)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (Singapore tab, USD per 1M tokens, list price), accessed 2026-11-18.
+# The Guangzhou tab lists other prices: they are the region = "ap-guangzhou" overrides.
+# Cache: the pricing table has a cache hit price and 5-minute and 1-hour cache write prices.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-18). Not probed live.
+# Faster serving option of Kimi K3.1 Pro; base model and name as providers/moonshotai/models/kimi-k3.1-pro-highspeed.toml.
+# Controls as that file: reasoning_effort = low|high|max.
+schema = 2
+base_model = "moonshotai/kimi-k3.1-pro"
+name = "Kimi K3.1 Pro Highspeed"
+
+[capabilities]
+reasoning = { supported = true, effort = ["low", "high", "max"] }
+structured_output = true
+cache = { implicit = { ttl = ["5m", "1h"] } }
+
+[api.chat-completions]
+compatibility = { reasoning_field = "reasoning_content" }
+
+[cost.text.input]
+price = 4
+cache = { read = 0.2, write = { "5m" = 4, "1h" = 8 } }
+
+[[cost.text.input.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 3.55
+cache = { read = 0.177, write = { "5m" = 3.55, "1h" = 7.099 } }
+
+[cost.text.output]
+price = 20
+
+[[cost.text.output.overrides]]
+when = { region = { equals = "ap-guangzhou" } }
+price = 18.567
