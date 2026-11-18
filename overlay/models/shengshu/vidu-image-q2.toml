@@ -1,0 +1,36 @@
+# Sources (accessed 2026-11-18):
+# - https://platform.vidu.com/docs/api-reference/image-generation (model viduq2: text to image, reference to image and image
+#   editing; 0 to 7 input images: png, jpeg, jpg, webp; 1080p, 2K or 4K output)
+# - https://platform.vidu.com/docs/overview/model-map (image generation: viduq2, 1080p/2K/4K, 0-7 input images)
+# Released 2025-12-01: ShengShu's API changelog entry of 2025/12/01, "The viduq2 model now adds Text-to-Image,
+#   Reference-to-Image, and Image Editing capabilities" (https://platform.vidu.com/docs/api-reference/updates), and its
+#   press release of the same day
+#   (https://technode.global/prnasia/vidu-launches-q2-image-generation-with-unlimited-free-access-challenging-top-global-image-models/).
+# ShengShu's API id is viduq2, shared with the Vidu Q2 video model; it calls the image side "Q2 Image Generation".
+# Output: the API returns image URLs and doesn't document the file format, so output stays generic.
+schema = 2
+v2_only = true
+type = "image"
+name = "Vidu Q2 Image"
+description = "Image model for text to image, image editing and generation from up to 7 reference images at up to 4K"
+open_weights = false
+release_date = "2025-12-01"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["image"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://platform.vidu.com/docs/api-reference/image-generation"
+type = "docs"

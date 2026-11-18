@@ -1,0 +1,38 @@
+# Sources (accessed 2026-11-18):
+# - https://platform.vidu.com/docs/api-reference/updates (ShengShu's API changelog, 2026/1/27: "Added viduq3-pro model to
+#   Text-to-Video and Image-to-Video"; 2026/2/11: "Added viduq3-pro, viduq3-turbo models to Start-End Frame")
+# - https://platform.vidu.com/docs/overview/model-map (Vidu Q3 Pro, API id viduq3-pro: 540p/720p/1080p, 24 fps, 1-16 s,
+#   synchronized audio-video output and shot switching)
+# - https://platform.vidu.com/docs/api-reference/video-models/vidu-q3/image-to-video (one start image: png, jpeg, jpg, webp;
+#   audio defaults to true)
+# Released 2026-01-27, the changelog date. It is the only dated ShengShu source found; the press launch of the Q3 family
+#   was reported three days later (2026-01-30: https://cgworld.jp/flashnews/01-202602-ViduQ3.html).
+# Reference to video isn't offered for viduq3-pro (the Q3 reference-to-video page lists viduq3, viduq3-turbo, viduq3-mix,
+#   viduq3-ad and viduq3-drama only): https://platform.vidu.com/docs/api-reference/video-models/vidu-q3/reference-to-video
+# Output: the API returns video URLs and doesn't document the file format, so output stays generic.
+schema = 2
+v2_only = true
+type = "video"
+name = "Vidu Q3 Pro"
+description = "1080p video model with native audio for text, image and start-end frame to video"
+open_weights = false
+release_date = "2026-01-27"
+
+[modalities]
+input = ["text", "image/jpeg", "image/png", "image/webp"]
+output = ["video"]
+
+[capabilities]
+tools = { supported = false }
+reasoning = { supported = false }
+temperature = false
+top_p = false
+top_k = false
+
+[limit]
+context = 0
+output = 0
+
+[[links]]
+url = "https://platform.vidu.com/docs/api-reference/video-models/vidu-q3/text-to-video"
+type = "docs"
