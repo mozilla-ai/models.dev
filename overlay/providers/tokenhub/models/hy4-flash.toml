@@ -1,0 +1,19 @@
+# Tencent Cloud TokenHub (international site). Model row: Hy4 flash (hy4-flash)
+# Pricing: https://www.tencentcloud.com/document/product/1300/78937 (USD per 1M tokens, list price), accessed 2026-11-19.
+# Limits and capabilities: https://www.tencentcloud.com/document/product/1300/78934 (accessed 2026-11-19). Not probed live.
+# Controls as hy4 here: the model list gives both the same Deep Reasoning (Preserved Thinking) row.
+# Promotion not recorded: 50% of list price until 2026-11-30 12:00:00 Beijing time.
+schema = 2
+base_model = "tencent/hy4-flash"
+
+[capabilities]
+reasoning = { supported = true, effort = ["none", "high"] }
+structured_output = true
+cache = { implicit = true }
+
+[cost.text.input]
+price = 0.07
+cache = { read = 0.003 }
+
+[cost.text.output]
+price = 0.281
