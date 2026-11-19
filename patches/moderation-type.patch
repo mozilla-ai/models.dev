@@ -1,4 +1,4 @@
-From ee4d247754d9eb4221b8ad66aa92f07f9b416767 Mon Sep 17 00:00:00 2001
+From 24615f643d3b787765e78706f3604b9ec8ca4dcc Mon Sep 17 00:00:00 2001
 From: Dimitris Poulopoulos <dimitris@mozilla.ai>
 Date: Thu, 12 Nov 2026 10:02:55 +0200
 Subject: [PATCH] feat(v2): add a moderation model type for guardrails
@@ -35,7 +35,7 @@ Subject: [PATCH] feat(v2): add a moderation model type for guardrails
  create mode 100644 models/alibaba/qwen3guard-gen-8b.toml
 
 diff --git a/AGENTS.md b/AGENTS.md
-index cb4ce0126..0bdb3d0f5 100644
+index 3299ab0a6..f074e2218 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
 @@ -63,3 +63,3 @@ output = 128_000
@@ -218,7 +218,7 @@ index 06f419613..a873e5d9b 100644
 +type = "moderation"
  name = "omni-moderation"
 diff --git a/packages/core/src/schema-v2.ts b/packages/core/src/schema-v2.ts
-index 41ddccd6a..0e1ba03b0 100644
+index 8811464c2..3bf9ff619 100644
 --- a/packages/core/src/schema-v2.ts
 +++ b/packages/core/src/schema-v2.ts
 @@ -24,2 +24,5 @@ export const ModelTypeV2Values = [
@@ -228,33 +228,33 @@ index 41ddccd6a..0e1ba03b0 100644
 +  "moderation",
  ] as const;
 diff --git a/packages/core/src/translate.ts b/packages/core/src/translate.ts
-index ccf3ed86f..835114915 100644
+index 18053b654..dac950296 100644
 --- a/packages/core/src/translate.ts
 +++ b/packages/core/src/translate.ts
-@@ -81,4 +81,4 @@ export function providerTomlToV1(toml: Record<string, unknown>): Record<string,
+@@ -83,4 +83,4 @@ export function providerTomlToV1(toml: Record<string, unknown>): Record<string,
  // must set `v2_only = true`, and v1 leaves the type out. `audio` (music, sound
 -// effects) is the exception: those models were in v1 untyped before the type
 -// existed, so v1 keeps publishing them untyped.
 +// effects) and `moderation` (guardrails) are the exceptions: those models were
 +// in v1 untyped before the type existed, so v1 keeps publishing them untyped.
  export function v1ModelType(
-@@ -89,3 +89,3 @@ export function v1ModelType(
+@@ -91,3 +91,3 @@ export function v1ModelType(
    if (type === undefined || (MODEL_TYPES as readonly string[]).includes(type)) return type;
 -  if (type === "audio") return undefined;
 +  if (type === "audio" || type === "moderation") return undefined;
    if (v2Only !== true) {
 diff --git a/packages/core/test/generate-v2.test.ts b/packages/core/test/generate-v2.test.ts
-index c5adbd911..629f63b12 100644
+index 03717b653..7942a6dbb 100644
 --- a/packages/core/test/generate-v2.test.ts
 +++ b/packages/core/test/generate-v2.test.ts
-@@ -161,2 +161,5 @@ describe("v2 catalog generation", () => {
-     expect(providersV2["cloudflare-workers-ai"]?.models["@cf/cloudflare/clairic"]?.type).toBe("extraction");
+@@ -168,2 +168,5 @@ describe("v2 catalog generation", () => {
+     expect(Object.keys(gemini?.api ?? {})).toEqual(["generate-content", "chat-completions", "interactions"]);
 +    // Guardrails are typed in v2 only; v1 keeps publishing them untyped.
 +    expect(providersV2.groq?.models["meta-llama/llama-prompt-guard-2-86m"]?.type).toBe("moderation");
 +    expect(providersV2.openrouter?.models["openai/gpt-oss-safeguard-20b"]?.type).toBe("moderation");
      expect(
 diff --git a/packages/core/test/model-file-v2.test.ts b/packages/core/test/model-file-v2.test.ts
-index 7c5c219f8..a399c56d7 100644
+index a8abbafd1..f75e7b877 100644
 --- a/packages/core/test/model-file-v2.test.ts
 +++ b/packages/core/test/model-file-v2.test.ts
 @@ -6,3 +6,3 @@ import path from "node:path";
@@ -262,7 +262,7 @@ index 7c5c219f8..a399c56d7 100644
 -import { explicitFalseFlags, modelV2ToV1, readLabMetadata } from "../src/translate.js";
 +import { explicitFalseFlags, modelV2ToV1, readLabMetadata, v1ModelType } from "../src/translate.js";
  
-@@ -409 +409,6 @@ test("patchModelV2 keeps a type that v1 can't carry", () => {
+@@ -426 +426,6 @@ test("patchModelV2 keeps a type that v1 can't carry", () => {
  });
 +
 +test("v1 publishes moderation models untyped, without v2_only", () => {
