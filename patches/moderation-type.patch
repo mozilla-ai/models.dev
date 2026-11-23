@@ -1,4 +1,4 @@
-From 24615f643d3b787765e78706f3604b9ec8ca4dcc Mon Sep 17 00:00:00 2001
+From 29b88c04329bd48cef0bdf98bca065a465f36209 Mon Sep 17 00:00:00 2001
 From: Dimitris Poulopoulos <dimitris@mozilla.ai>
 Date: Thu, 12 Nov 2026 10:02:55 +0200
 Subject: [PATCH] feat(v2): add a moderation model type for guardrails
@@ -35,7 +35,7 @@ Subject: [PATCH] feat(v2): add a moderation model type for guardrails
  create mode 100644 models/alibaba/qwen3guard-gen-8b.toml
 
 diff --git a/AGENTS.md b/AGENTS.md
-index 3299ab0a6..f074e2218 100644
+index dc597b87f..6d6e3e33c 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
 @@ -63,3 +63,3 @@ output = 128_000
@@ -122,7 +122,7 @@ index 000000000..8b239aa08
 +label = "Hugging Face"
 +url = "https://huggingface.co/Qwen/Qwen3Guard-Gen-8B"
 diff --git a/models/meta/llama-guard-3-8b.toml b/models/meta/llama-guard-3-8b.toml
-index a95dad86c..d4bc268f9 100644
+index 30d41d1e7..f3b43de05 100644
 --- a/models/meta/llama-guard-3-8b.toml
 +++ b/models/meta/llama-guard-3-8b.toml
 @@ -1,2 +1,3 @@
@@ -130,7 +130,7 @@ index a95dad86c..d4bc268f9 100644
 +type = "moderation"
  name = "Llama-Guard-3-8B"
 diff --git a/models/meta/llama-guard-4-12b.toml b/models/meta/llama-guard-4-12b.toml
-index 53e93bd3e..65fb059a8 100644
+index 7f1f01253..2859ff3fd 100644
 --- a/models/meta/llama-guard-4-12b.toml
 +++ b/models/meta/llama-guard-4-12b.toml
 @@ -7,2 +7,3 @@
@@ -138,7 +138,7 @@ index 53e93bd3e..65fb059a8 100644
 +type = "moderation"
  name = "Llama Guard 4 12B"
 diff --git a/models/meta/llama-prompt-guard-2-22m.toml b/models/meta/llama-prompt-guard-2-22m.toml
-index 91296ad3b..885be0d10 100644
+index 4dd9e7da4..41d9170ce 100644
 --- a/models/meta/llama-prompt-guard-2-22m.toml
 +++ b/models/meta/llama-prompt-guard-2-22m.toml
 @@ -8,2 +8,3 @@
@@ -146,7 +146,7 @@ index 91296ad3b..885be0d10 100644
 +type = "moderation"
  name = "Llama Prompt Guard 2 22M"
 diff --git a/models/meta/llama-prompt-guard-2-86m.toml b/models/meta/llama-prompt-guard-2-86m.toml
-index 04c421ec2..1136eb6d3 100644
+index 5604a2fba..e0bce9c68 100644
 --- a/models/meta/llama-prompt-guard-2-86m.toml
 +++ b/models/meta/llama-prompt-guard-2-86m.toml
 @@ -8,2 +8,3 @@
@@ -154,7 +154,7 @@ index 04c421ec2..1136eb6d3 100644
 +type = "moderation"
  name = "Llama Prompt Guard 2 86M"
 diff --git a/models/mistral/mistral-moderation-2603.toml b/models/mistral/mistral-moderation-2603.toml
-index f24fe7047..f34980cb0 100644
+index bc7c3e22e..73f19966c 100644
 --- a/models/mistral/mistral-moderation-2603.toml
 +++ b/models/mistral/mistral-moderation-2603.toml
 @@ -7,2 +7,3 @@ schema = 2
@@ -162,7 +162,7 @@ index f24fe7047..f34980cb0 100644
 +type = "moderation"
  name = "Mistral Moderation 26.03"
 diff --git a/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml b/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
-index cff473209..5c573c2e0 100644
+index f17d2e71b..8f5336ea0 100644
 --- a/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
 +++ b/models/nvidia/llama-3.1-nemotron-safety-guard-8b-v3.toml
 @@ -2,2 +2,3 @@
@@ -170,7 +170,7 @@ index cff473209..5c573c2e0 100644
 +type = "moderation"
  name = "Llama 3.1 Nemotron Safety Guard 8B v3"
 diff --git a/models/nvidia/nemotron-3-content-safety.toml b/models/nvidia/nemotron-3-content-safety.toml
-index 063a46959..1fcb4bd5f 100644
+index f1a58e590..409d2e152 100644
 --- a/models/nvidia/nemotron-3-content-safety.toml
 +++ b/models/nvidia/nemotron-3-content-safety.toml
 @@ -3,2 +3,3 @@
@@ -178,7 +178,7 @@ index 063a46959..1fcb4bd5f 100644
 +type = "moderation"
  name = "Nemotron 3 Content Safety"
 diff --git a/models/nvidia/nemotron-3.5-content-safety.toml b/models/nvidia/nemotron-3.5-content-safety.toml
-index b74b1f6d8..5d3807575 100644
+index f683ea8e3..cb22d6da9 100644
 --- a/models/nvidia/nemotron-3.5-content-safety.toml
 +++ b/models/nvidia/nemotron-3.5-content-safety.toml
 @@ -6,2 +6,3 @@
@@ -186,7 +186,7 @@ index b74b1f6d8..5d3807575 100644
 +type = "moderation"
  name = "Nemotron 3.5 Content Safety"
 diff --git a/models/nvidia/nemotron-content-safety-reasoning-4b.toml b/models/nvidia/nemotron-content-safety-reasoning-4b.toml
-index c6afd6169..eac47102f 100644
+index afb4e9567..f0f151830 100644
 --- a/models/nvidia/nemotron-content-safety-reasoning-4b.toml
 +++ b/models/nvidia/nemotron-content-safety-reasoning-4b.toml
 @@ -2,2 +2,3 @@
@@ -194,7 +194,7 @@ index c6afd6169..eac47102f 100644
 +type = "moderation"
  name = "Nemotron Content Safety Reasoning 4B"
 diff --git a/models/openai/gpt-oss-safeguard-120b.toml b/models/openai/gpt-oss-safeguard-120b.toml
-index 97118aa2c..82a39d14a 100644
+index 442e63890..870da10af 100644
 --- a/models/openai/gpt-oss-safeguard-120b.toml
 +++ b/models/openai/gpt-oss-safeguard-120b.toml
 @@ -4,2 +4,3 @@
@@ -202,7 +202,7 @@ index 97118aa2c..82a39d14a 100644
 +type = "moderation"
  name = "GPT OSS Safeguard 120B"
 diff --git a/models/openai/gpt-oss-safeguard-20b.toml b/models/openai/gpt-oss-safeguard-20b.toml
-index 99645a604..24da3a0b9 100644
+index 770b4ac5a..ada3b1a91 100644
 --- a/models/openai/gpt-oss-safeguard-20b.toml
 +++ b/models/openai/gpt-oss-safeguard-20b.toml
 @@ -10,2 +10,3 @@
@@ -210,7 +210,7 @@ index 99645a604..24da3a0b9 100644
 +type = "moderation"
  name = "GPT OSS Safeguard 20B"
 diff --git a/models/openai/omni-moderation-latest.toml b/models/openai/omni-moderation-latest.toml
-index 06f419613..a873e5d9b 100644
+index 53cd69d3a..46e7705e6 100644
 --- a/models/openai/omni-moderation-latest.toml
 +++ b/models/openai/omni-moderation-latest.toml
 @@ -10,2 +10,3 @@ schema = 2
@@ -302,7 +302,7 @@ index f2b2ff5c0..54db0e665 100644
 +base_model = "alibaba/qwen3guard-gen-8b"
  
 diff --git a/providers/helicone/models/llama-guard-4.toml b/providers/helicone/models/llama-guard-4.toml
-index 462d51cb5..c00abbae9 100644
+index 989c1c511..c00abbae9 100644
 --- a/providers/helicone/models/llama-guard-4.toml
 +++ b/providers/helicone/models/llama-guard-4.toml
 @@ -1,17 +1,6 @@
@@ -311,7 +311,7 @@ index 462d51cb5..c00abbae9 100644
 +base_model = "meta/llama-guard-4-12b"
  name = "Meta Llama Guard 4 12B"
 -description = "Safety model for policy screening, moderation, and risk-aware routing workflows"
--family = "llama"
+-family = "llama-guard"
 -open_weights = false
  knowledge = "2025-01"
 -release_date = "2025-01-01"
