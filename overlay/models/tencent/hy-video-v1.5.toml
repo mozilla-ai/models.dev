@@ -14,7 +14,6 @@ v2_only = true
 type = "video"
 name = "HunyuanVideo 1.5"
 description = "8.3B-parameter open video model for text-to-video and image-to-video generation at 480p and 720p"
-family = "Hy"
 open_weights = true
 release_date = "2025-11-20"
 license = "Tencent Hunyuan Community License"
